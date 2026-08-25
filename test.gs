@@ -471,8 +471,23 @@ function openQuizModal_(triggerId, type) {
     }
   ];
 
+  let lastRenderedScenario = '';
+  let lastRenderedPart = '';
+
   quiz.questions.forEach(function(q) {
-    blocks.push({ type: 'divider' });
+    if (q.part && q.part !== lastRenderedPart) {
+      blocks.push({ type: 'divider' });
+      blocks.push({ type: 'header', text: { type: 'plain_text', text: '📖 ' + q.part, emoji: true } });
+      lastRenderedPart = q.part;
+    } else {
+      blocks.push({ type: 'divider' });
+    }
+
+    // 동일 지문 중복 방지 (지문이 있고 이전 문제의 지문과 다를 때만 1회 출력)
+    if (q.scenario && q.scenario !== lastRenderedScenario) {
+      blocks.push({ type: 'section', text: { type: 'mrkdwn', text: q.scenario } });
+      lastRenderedScenario = q.scenario;
+    }
 
     let label = '*' + q.number + '번';
     if (q.domain && SKCT_AREAS[q.domain]) label += ' · ' + SKCT_AREAS[q.domain].label;
@@ -480,10 +495,6 @@ function openQuizModal_(triggerId, type) {
     label += '*';
 
     blocks.push({ type: 'section', text: { type: 'mrkdwn', text: label } });
-
-    if (q.scenario) {
-      blocks.push({ type: 'section', text: { type: 'mrkdwn', text: q.scenario } });
-    }
 
     blocks.push({
       type: 'input',
@@ -610,14 +621,29 @@ function updateExplanationModal_(payload, wrongOnly) {
     blocks.push({ type: 'section', text: { type: 'mrkdwn', text: '🎉 *틀린 문제가 없습니다! 완벽합니다.*' } });
   }
 
+  let lastRenderedScenario = '';
+  let lastRenderedPart = '';
+
   targetQs.forEach(function(q) {
-    blocks.push({ type: 'divider' });
+    if (q.part && q.part !== lastRenderedPart) {
+      blocks.push({ type: 'divider' });
+      blocks.push({ type: 'header', text: { type: 'plain_text', text: '📖 ' + q.part, emoji: true } });
+      lastRenderedPart = q.part;
+    } else {
+      blocks.push({ type: 'divider' });
+    }
+
+    // 동일 지문 중복 방지 (지문이 있고 이전 문제의 지문과 다를 때만 1회 출력)
+    if (q.scenario && q.scenario !== lastRenderedScenario) {
+      blocks.push({ type: 'section', text: { type: 'mrkdwn', text: q.scenario } });
+      lastRenderedScenario = q.scenario;
+    }
+
     const userAns = sub.userAnswers[q.id];
     const isCorrect = userAns === q.answerIndex;
     const labels = ['A', 'B', 'C', 'D'];
 
     let explText = '*' + q.number + '번 · ' + (isCorrect ? '✅ 정답' : '❌ 오답') + '*\n';
-    if (q.scenario) explText += q.scenario + '\n\n';
     explText += '*' + q.question + '*\n';
     explText += '내 선택: *(' + (labels[userAns] || '미선택') + ')* | 정답: *(' + labels[q.answerIndex] + ') ' + q.options[q.answerIndex] + '*\n\n';
     explText += '*[핵심 해설]*\n' + (q.explanation || '해설 없음') + '\n\n';
