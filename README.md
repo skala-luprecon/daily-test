@@ -101,14 +101,14 @@ Slack 모달의 버튼 클릭 및 답안 제출 이벤트를 수신하기 위해
 
 Slack과 Apps Script 간의 위조 요청을 방지하기 위해 보안 시크릿을 등록합니다.
 
-1. Apps Script 에디터(`Code.gs`)로 돌아와 상단 함수 선택 드롭다운에서 **`createInteractionSecret`**을 선택하고 **실행**을 누릅니다.
+1. Apps Script 에디터(`Code.gs`)로 돌아와 상단 함수 선택 드롭다운에서 `createInteractionSecret`을 선택하고 **실행**을 누릅니다.
 2. 하단 **실행 로그**를 확인하면 다음과 같은 형식으로 시크릿이 출력됩니다:
    ```text
    Request URL 뒤에 붙일 값: ?secret=a1b2c3d4e5f6...
    ```
 3. [Slack API 콘솔](https://api.slack.com/apps) > 내 앱 > 좌측 **Interactivity & Shortcuts** 메뉴로 이동합니다.
 4. **Interactivity** 스위치를 `On`으로 켭니다.
-5. **Request URL** 입력란에 **`[5단계 웹 앱 URL] + [로그에 출력된 ?secret=값]`**을 입력합니다.
+5. **Request URL** 입력란에 `[5단계 웹 앱 URL] + [로그에 출력된 ?secret=값]`을 입력합니다.
    * 예시:
      `https://script.google.com/macros/s/AKfycb.../exec?secret=a1b2c3d4e5f6...`
 6. 우측 하단의 **Save Changes**를 클릭합니다.
@@ -124,7 +124,7 @@ Slack과 Apps Script 간의 위조 요청을 방지하기 위해 보안 시크�
    * `testFullRun()` 실행 ➡️ 채널에 TOEIC 런처 메시지가 오고, **'Daily RC 풀기'** 버튼을 눌러 모달창이 정상 작동하는지 확인합니다.
    * `testCtFullRun()` 실행 ➡️ 채널에 CT 런처 메시지가 오고, **'Daily CT 풀기'** 버튼을 눌러 모달창이 정상 작동하는지 확인합니다.
 3. **매일 아침 자동 발송 트리거 등록**:
-   * 함수 선택창에서 **`installAllDailyTriggers`**를 선택하고 **실행**합니다.
+   * 함수 선택창에서 `installAllDailyTriggers`를 선택하고 **실행**합니다.
    * 이제 매일 **오전 7시(TOEIC RC)**와 **오전 8시(CT)**에 새로운 문제가 자동으로 생성되어 Slack 채널에 출제됩니다! 🎉
 
 ---
