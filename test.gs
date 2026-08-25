@@ -415,12 +415,13 @@ function generateToeicQuizUnified_(date) {
   // Part 6 처리 (4문항)
   if (data.part6 && Array.isArray(data.part6.questions)) {
     const p6Scenario = '```\n[' + data.part6.documentType + ']\n\n' + data.part6.passage + '\n```';
-    data.part6.questions.forEach(function(q) {
+    data.part6.questions.forEach(function(q, idx) {
       q.id = 'TOEIC_Q' + qNum;
       q.number = qNum++;
       q.part = 'Part 6 · Text Completion';
+      q.blankNumber = q.blankNumber || (idx + 1);
       q.scenario = p6Scenario;
-      q.question = String(q.question || '').replace(/\[\d+\]/g, '').trim() || 'Select the best option for the blank.';
+      q.question = (q.blankNumber === 3 ? '[3]번 빈칸 (알맞은 문장 선택)' : '[' + q.blankNumber + ']번 빈칸 선택');
       q.options = q.options.map(function(o) { return String(o).slice(0, 65).trim(); });
       unifiedQuestions.push(q);
     });
@@ -520,6 +521,7 @@ function openQuizModal_(triggerId, type) {
   let lastRenderedPart = '';
 
   quiz.questions.forEach(function(q) {
+    // 1) 파트가 바뀔 때만 파트 헤더 1회 출력 (예: 📖 Part 5 · Incomplete Sentences)
     if (q.part && q.part !== lastRenderedPart) {
       blocks.push({ type: 'divider' });
       blocks.push({ type: 'header', text: { type: 'plain_text', text: '📖 ' + q.part, emoji: true } });
@@ -528,23 +530,25 @@ function openQuizModal_(triggerId, type) {
       blocks.push({ type: 'divider' });
     }
 
-    // 동일 지문 중복 방지 (지문이 있고 이전 문제의 지문과 다를 때만 1회 출력)
+    // 2) 동일 지문 중복 방지 (지문이 있고 이전 문제의 지문과 다를 때만 1회 출력)
     if (q.scenario && q.scenario !== lastRenderedScenario) {
       blocks.push({ type: 'section', text: { type: 'mrkdwn', text: q.scenario } });
       lastRenderedScenario = q.scenario;
     }
 
-    let label = '*' + q.number + '번';
-    if (q.domain && SKCT_AREAS[q.domain]) label += ' · ' + SKCT_AREAS[q.domain].label;
-    if (q.part) label += ' · ' + q.part;
-    label += '*';
+    // 3) 질문 라벨: 중복 파트명 없이 '1번. 문제내용' 형태로 깔끔하게 결합
+    let questionTitle = q.number + '번. ';
+    if (q.domain && SKCT_AREAS[q.domain]) {
+      questionTitle += '[' + SKCT_AREAS[q.domain].label + '] ';
+    }
+    questionTitle += (q.question || '정답을 선택하세요.');
+    questionTitle = questionTitle.slice(0, 1900);
 
-    blocks.push({ type: 'section', text: { type: 'mrkdwn', text: label } });
-
+    // 4) 문제 및 선택지 라디오 버튼 렌더링 (단일 input 블록으로 군더더기 없이 통합)
     blocks.push({
       type: 'input',
       block_id: q.id,
-      label: { type: 'plain_text', text: q.question || '정답을 선택하세요.' },
+      label: { type: 'plain_text', text: questionTitle },
       element: {
         type: 'radio_buttons',
         action_id: 'selected_answer',
