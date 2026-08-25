@@ -327,82 +327,132 @@ function generateSkctQuizUnified_(date) {
   };
 }
 
-/** TOEIC RC (Part 5, 6, 7) 고난도 850-950+ 킬러 생성기 (지문 코드블록 카드화) */
+/**
+ * 요일별 지문 타입 결정 함수:
+ * - 월/화 (1, 2): 'single' (단일 지문)
+ * - 수/목 (3, 4): 'double' (이중 지문)
+ * - 금 (5): 'triple' (삼중 지문 킬러)
+ * - 'all_test': 테스트용 (단일, 이중, 삼중 모두 출력)
+ */
+function getPart7Mode_() {
+  // 💡 현재는 테스트 모드이므로 'all_test'로 단일+이중+삼중 모두 생성
+  // 추후 운영 시 아래 주석을 해제하면 요일별 자동 전환이 활성화됩니다.
+  return 'all_test';
+
+  /*
+  const day = new Date().getDay(); // 0:일, 1:월, 2:화, 3:수, 4:목, 5:금, 6:토
+  if (day === 1 || day === 2) return 'single';
+  if (day === 3 || day === 4) return 'double';
+  if (day === 5) return 'triple';
+  return 'double'; // 주말
+  */
+}
+
+/** TOEIC RC 고난도 생성기 (단일 / 이중 / 삼중 연계 지문 완벽 지원) */
 function generateToeicQuizUnified_(date) {
+  const mode = getPart7Mode_();
+  let part7Instruction = '';
+
+  if (mode === 'all_test') {
+    part7Instruction = [
+      'PART 7 TEST MODE (Generate all 3 passage types for testing):',
+      '1. SET 1 - Single Passage: 1 Document (e.g. Press Release/Article) + 2 Questions.',
+      '2. SET 2 - Double Passage: 2 Linked Documents (e.g. Document 1: Job Opening Notice + Document 2: Candidate Application Email) + 2 Cross-referencing Questions.',
+      '3. SET 3 - Triple Passage: 3 Linked Documents (e.g. Document 1: Event Schedule + Document 2: Policy Update + Document 3: Customer Inquiry Email) + 2 Multi-document Cross-referencing Questions.'
+    ].join('\n');
+  } else if (mode === 'triple') {
+    part7Instruction = 'PART 7 TRIPLE PASSAGE MODE: Generate 3 heavily linked documents (e.g. Schedule + Policy + Email) + 4 challenging cross-referencing questions.';
+  } else if (mode === 'double') {
+    part7Instruction = 'PART 7 DOUBLE PASSAGE MODE: Generate 2 linked documents (e.g. Notice + Email or Order Form + Complaint) + 4 cross-referencing questions.';
+  } else {
+    part7Instruction = 'PART 7 SINGLE PASSAGE MODE: Generate 1 in-depth document (220-260 words) + 4 challenging questions.';
+  }
+
   const prompt = [
-    'You are an expert senior test writer for ETS TOEIC Advanced (Target Score Band: 850-990).',
+    'You are an expert senior test writer for ETS TOEIC Advanced (850-990 score band).',
     'Date: ' + date,
-    'Create an authentic, high-difficulty 13-question TOEIC Reading practice test: Part 5 (5 Qs), Part 6 (1 passage with 4 Qs), Part 7 (1 passage with 4 Qs).',
+    'Create an authentic TOEIC Reading test with realistic multi-document passages.',
     '',
-    'STRICT 850-950+ LEVEL QUALITY MANDATES:',
-    '1. PART 5 (5 Challenging Grammar & Advanced Vocabulary Items):',
-    '   - Long sentence structures with complex modifier traps (participial clauses, subjunctive mood with demand/mandate/insist, inverted conditionals like "Should you require", compound relative pronouns "Whoever/Whichever", or advanced prepositions/conjunctions "Notwithstanding/Given that/Provided that").',
-    '   - Advanced business collocations ("commensurate with", "contingent upon", "stringent regulations", "tentatively scheduled", "unprecedented surge").',
-    '   - ALL 4 options MUST be sophisticated words with zero obvious throwaway distractors (e.g. no malformed words like "In spite" without of).',
+    'PART 5 & 6 RULES:',
+    '- Part 5: 3 challenging grammar/vocabulary questions.',
+    '- Part 6: 1 Business Document with [1], [2], [3], [4] + 4 questions (Question [3] is Sentence Insertion).',
     '',
-    '2. PART 6 (4 Questions on a Dense 170-220 Word Business Document):',
-    '   - Realistic context: Contract revision, merger restructuring, supply chain penalty terms, or policy amendment.',
-    '   - Mark blanks strictly as [1], [2], [3], [4] in ascending order.',
-    '   - For question [3] (Sentence Insertion): ALL 4 options must contain keywords from the passage. Only ONE option must fit perfectly based on cohesive devices (demonstratives, chronological reference, cause/effect).',
-    '   - In the JSON "question" field for Part 6, write simply "Select the best option for the blank." (Never repeat bracketed markers like [1] in question).',
+    part7Instruction,
     '',
-    '3. PART 7 (4 Questions on a Dense 220-280 Word Business Notice/Article/Memo):',
-    '   - Include detailed business conditions, footnotes (*), and exception clauses ("except in cases of", "applicable only to").',
-    '   - Mandatory Question Types:',
-    '     * Q1: Complex Main Purpose (with high-level paraphrasing).',
-    '     * Q2: Negative Fact (NOT/TRUE question): "What is NOT mentioned/true regarding...?" requiring meticulous fact-checking.',
-    '     * Q3: Cross-Referencing Inference: "What is implied about...?" requiring combining clues from multiple sentences.',
-    '     * Q4: Advanced Contextual Synonym: A polysemous business word (e.g. "deliver", "entertain", "sound", "execute", "address", "secure").',
+    'CRITICAL PASSAGE FORMATTING RULES:',
+    '- Each document in Part 7 MUST have "documentType" (e.g. "Document 1: Job Posting", "Document 2: Inquiry Email", "Document 3: Confirmation Letter") and "text".',
+    '- For double/triple passages, return "documents": [ {"documentType": "...", "text": "..."}, {"documentType": "...", "text": "..."} ].',
     '',
-    'OUTPUT SCHEMA (Valid JSON only, no markdown notes):',
+    'OUTPUT SCHEMA (Strictly valid JSON only):',
     '{',
-    '  "part5": { "questions": [ { "question": "...", "options": ["A","B","C","D"], "answerIndex": 0, "explanation": "Detailed Korean solution explaining grammar rule & why distractors fail", "optionExplanations": ["A","B","C","D"] } ] },',
-    '  "part6": { "documentType": "...", "passage": "...", "passageTranslation": "...", "questions": [ { "blankNumber": 1, "question": "Select the best option for the blank.", "options": ["A","B","C","D"], "answerIndex": 0, "explanation": "Korean", "optionExplanations": ["A","B","C","D"] } ] },',
-    '  "part7": { "documentType": "...", "passage": "...", "passageTranslation": "...", "questions": [ { "question": "...", "options": ["A","B","C","D"], "answerIndex": 0, "explanation": "Korean", "optionExplanations": ["A","B","C","D"] } ] }',
+    '  "part5": { "questions": [ { "question": "...", "options": ["A","B","C","D"], "answerIndex": 0, "explanation": "Korean", "optionExplanations": ["A","B","C","D"] } ] },',
+    '  "part6": { "documentType": "Business Email", "passage": "English with [1],[2],[3],[4]", "passageTranslation": "Korean", "questions": [ { "blankNumber": 1, "question": "Select the best option for the blank.", "options": ["A","B","C","D"], "answerIndex": 0, "explanation": "Korean", "optionExplanations": ["A","B","C","D"] } ] },',
+    '  "part7": {',
+    '    "sets": [',
+    '      {',
+    '        "setName": "Part 7 · Single Passage" | "Part 7 · Double Passage" | "Part 7 · Triple Passage",',
+    '        "documents": [ { "documentType": "Document 1: ...", "text": "..." }, { "documentType": "Document 2: ...", "text": "..." } ],',
+    '        "questions": [ { "question": "...", "options": ["A","B","C","D"], "answerIndex": 0, "explanation": "Korean", "optionExplanations": ["A","B","C","D"] } ]',
+    '      }',
+    '    ]',
+    '  }',
     '}'
   ].join('\n');
 
   const res = callGeminiRobust_(prompt, 0.55);
   const data = res.data;
 
-  // 자가 치유형 통합 리스트 변환
   const unifiedQuestions = [];
   let qNum = 1;
 
   // Part 5 처리
-  data.part5.questions.forEach(function(q) {
-    q.id = 'TOEIC_Q' + qNum;
-    q.number = qNum++;
-    q.part = 'Part 5';
-    q.scenario = '';
-    q.options = q.options.map(function(o) { return String(o).slice(0, 65).trim(); });
-    unifiedQuestions.push(q);
-  });
+  if (data.part5 && Array.isArray(data.part5.questions)) {
+    data.part5.questions.forEach(function(q) {
+      q.id = 'TOEIC_Q' + qNum;
+      q.number = qNum++;
+      q.part = 'Part 5 · Incomplete Sentences';
+      q.scenario = '';
+      q.options = q.options.map(function(o) { return String(o).slice(0, 65).trim(); });
+      unifiedQuestions.push(q);
+    });
+  }
 
-  // Part 6 처리 (지문을 깔끔한 ``` 코드블록 카드로 포맷팅)
-  data.part6.questions.forEach(function(q) {
-    q.id = 'TOEIC_Q' + qNum;
-    q.number = qNum++;
-    q.part = 'Part 6';
-    q.scenario = '```\n[' + data.part6.documentType + ']\n\n' + data.part6.passage + '\n```';
-    q.question = String(q.question || '').replace(/\[\d+\]/g, '').trim() || 'Select the best option for the blank.';
-    q.options = q.options.map(function(o) { return String(o).slice(0, 65).trim(); });
-    unifiedQuestions.push(q);
-  });
+  // Part 6 처리
+  if (data.part6 && Array.isArray(data.part6.questions)) {
+    const p6Scenario = '```\n[' + data.part6.documentType + ']\n\n' + data.part6.passage + '\n```';
+    data.part6.questions.forEach(function(q) {
+      q.id = 'TOEIC_Q' + qNum;
+      q.number = qNum++;
+      q.part = 'Part 6 · Text Completion';
+      q.scenario = p6Scenario;
+      q.question = String(q.question || '').replace(/\[\d+\]/g, '').trim() || 'Select the best option for the blank.';
+      q.options = q.options.map(function(o) { return String(o).slice(0, 65).trim(); });
+      unifiedQuestions.push(q);
+    });
+  }
 
-  // Part 7 처리 (지문을 깔끔한 ``` 코드블록 카드로 포맷팅)
-  data.part7.questions.forEach(function(q) {
-    q.id = 'TOEIC_Q' + qNum;
-    q.number = qNum++;
-    q.part = 'Part 7';
-    q.scenario = '```\n[' + data.part7.documentType + ']\n\n' + data.part7.passage + '\n```';
-    q.options = q.options.map(function(o) { return String(o).slice(0, 65).trim(); });
-    unifiedQuestions.push(q);
-  });
+  // Part 7 처리 (단일/이중/삼중 지문별 독립 카드 조립)
+  if (data.part7 && Array.isArray(data.part7.sets)) {
+    data.part7.sets.forEach(function(set) {
+      // 각 문서를 독립된 ``` 코드블록 카드로 조립
+      const docCards = set.documents.map(function(doc, dIdx) {
+        return '```\n[' + (doc.documentType || ('Document ' + (dIdx + 1))) + ']\n\n' + doc.text + '\n```';
+      }).join('\n\n');
+
+      set.questions.forEach(function(q) {
+        q.id = 'TOEIC_Q' + qNum;
+        q.number = qNum++;
+        q.part = set.setName || 'Part 7 · Reading Comprehension';
+        q.scenario = docCards;
+        q.options = q.options.map(function(o) { return String(o).slice(0, 65).trim(); });
+        unifiedQuestions.push(q);
+      });
+    });
+  }
 
   return {
     type: 'TOEIC',
-    title: '📚 TOEIC RC 850+ Killer Daily Test (Part 5, 6, 7)',
+    title: '📚 TOEIC RC 850+ Killer (단일·이중·삼중 지문 실전 모의고사)',
     testId: 'TOEIC_' + date.replace(/-/g, ''),
     date: date,
     model: res.model,
