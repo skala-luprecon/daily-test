@@ -195,10 +195,13 @@ function callGeminiRobust_(prompt, customTemp) {
       const payload = {
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: {
-          temperature: customTemp || 0.6,
-          topP: 0.9,
+          temperature: customTemp || 0.5,
+          topP: 0.95,
           maxOutputTokens: APP_CONFIG.MAX_OUTPUT_TOKENS,
-          responseMimeType: 'application/json'
+          responseMimeType: 'application/json',
+          thinkingConfig: {
+            thinkingLevel: 'high'
+          }
         }
       };
 
@@ -261,7 +264,7 @@ function throttleGeminiCalls_() {
   props.setProperty(APP_CONFIG.KEYS.LAST_API_CALL, String(Date.now()));
 }
 
-/** SKCT 최신 5대 영역 통합 생성기 (고난도 실전형) */
+/** SKCT 최신 5대 영역 통합 생성기 (고난도 실전형 + 미려한 유니코드 표) */
 function generateSkctQuizUnified_(date) {
   const prompt = [
     'You are a senior test development specialist for the official Korean SKCT (SK Comprehensive Test) online cognitive aptitude test.',
@@ -272,7 +275,7 @@ function generateSkctQuizUnified_(date) {
     '',
     'DOMAIN SPECIFICATIONS (Exactly 2 questions each):',
     '1. "verbal_comprehension" (언어이해): Deep corporate/tech/economic editorial reading. Include subtle traps in options via paraphrasing, conditional qualifiers, and fact-checking.',
-    '2. "data_interpretation" (자료해석): MUST include a realistic structured numerical table inside MONOSPACE CODE FENCES (```...```). Test weighted averages, %p vs %, compound growth, and cross-column arithmetic. CRITICAL: Re-verify all mathematical calculations across all 4 options so that exactly one option is defensibly correct.',
+    '2. "data_interpretation" (자료해석): MUST format all structured numerical tables inside ``` monospace code fences using neat Unicode box-drawing characters (┌, ─, ┬, ┐, │, ├, ┼, ┤, └, ┴, ┘) with perfectly aligned columns. Test weighted averages, %p vs %, compound growth, and cross-column arithmetic. CRITICAL: Re-verify all mathematical calculations across all 4 options so that exactly one option is defensibly correct.',
     '3. "creative_math" (창의수리): Speed/distance/time with two moving bodies or varying speeds, multi-stage mixture/concentration (농도), cost-margin-discount algebra, complex work rates, or combination/probability.',
     '4. "verbal_reasoning" (언어추리): Syllogism (삼단논법/전제결론 제시형), strict truth-teller/liar puzzle (진실게임), or 4-5 entity multi-attribute grid placement under <조건>. Ensure exactly one airtight logical solution.',
     '5. "sequence_reasoning" (수열추리): Non-trivial numerical sequence deduction (e.g. geometric difference series, alternating compound operations, quadratic recurrence). Present clearly as "a, b, c, d, e, (?)" and provide the exact mathematical formula in explanation.',
@@ -283,7 +286,7 @@ function generateSkctQuizUnified_(date) {
     '    {',
     '      "domain": "verbal_comprehension" | "data_interpretation" | "creative_math" | "verbal_reasoning" | "sequence_reasoning",',
     '      "difficulty": "medium" | "hard",',
-    '      "scenario": "string (Passage, constraints under <조건>, or clean monospace ASCII/text table)",',
+    '      "scenario": "string (Passage, constraints under <조건>, or clean monospace Unicode box table inside ```...```)",',
     '      "question": "string (Standard Korean phrasing like: 다음 글을 읽고 알 수 있는 것은?, 다음 조건을 만족할 때 항상 참인 것은?)",',
     '      "options": ["A", "B", "C", "D"],',
     '      "answerIndex": 0,',
@@ -324,7 +327,7 @@ function generateSkctQuizUnified_(date) {
   };
 }
 
-/** TOEIC RC (Part 5, 6, 7) 고난도 850-950+ 킬러 생성기 */
+/** TOEIC RC (Part 5, 6, 7) 고난도 850-950+ 킬러 생성기 (지문 코드블록 카드화) */
 function generateToeicQuizUnified_(date) {
   const prompt = [
     'You are an expert senior test writer for ETS TOEIC Advanced (Target Score Band: 850-990).',
@@ -376,23 +379,23 @@ function generateToeicQuizUnified_(date) {
     unifiedQuestions.push(q);
   });
 
-  // Part 6 처리 (마커 자동 정제 적용)
+  // Part 6 처리 (지문을 깔끔한 ``` 코드블록 카드로 포맷팅)
   data.part6.questions.forEach(function(q) {
     q.id = 'TOEIC_Q' + qNum;
     q.number = qNum++;
     q.part = 'Part 6';
-    q.scenario = '[' + data.part6.documentType + ']\n' + data.part6.passage;
+    q.scenario = '```\n[' + data.part6.documentType + ']\n\n' + data.part6.passage + '\n```';
     q.question = String(q.question || '').replace(/\[\d+\]/g, '').trim() || 'Select the best option for the blank.';
     q.options = q.options.map(function(o) { return String(o).slice(0, 65).trim(); });
     unifiedQuestions.push(q);
   });
 
-  // Part 7 처리
+  // Part 7 처리 (지문을 깔끔한 ``` 코드블록 카드로 포맷팅)
   data.part7.questions.forEach(function(q) {
     q.id = 'TOEIC_Q' + qNum;
     q.number = qNum++;
     q.part = 'Part 7';
-    q.scenario = '[' + data.part7.documentType + ']\n' + data.part7.passage;
+    q.scenario = '```\n[' + data.part7.documentType + ']\n\n' + data.part7.passage + '\n```';
     q.options = q.options.map(function(o) { return String(o).slice(0, 65).trim(); });
     unifiedQuestions.push(q);
   });
