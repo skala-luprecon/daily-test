@@ -38,7 +38,7 @@ Google Apps Script와 **Google Gemini API** (기본 모델: `gemini-3.6-flash`)�
 3. 좌측 메뉴 **Incoming Webhooks**로 이동:
    * **Activate Incoming Webhooks** 스위치를 `On`으로 켭니다.
    * 하단의 **Add New Webhook to Workspace**를 클릭하여 문제가 발송될 채널을 선택합니다.
-   * 생성된 **Webhook URL**을 복사해 둡니다. (이후 `SLACK_WEBHOOK_URL` 속성으로 사용)
+   * 생성된 **Webhook URL** 을 복사해 둡니다. (이후 `SLACK_WEBHOOK_URL` 속성으로 사용)
 4. 좌측 메뉴 **OAuth & Permissions**로 이동:
    * **Scopes** > **Bot Token Scopes** 섹션에 아래 권한을 추가합니다:
      * `chat:write` (채널에 메시지 전송)
@@ -68,7 +68,7 @@ Google Apps Script와 **Google Gemini API** (기본 모델: `gemini-3.6-flash`)�
 
 ### 4단계: 스크립트 속성 (Script Properties) 환경 변수 등록
 
-1. Apps Script 좌측 메뉴에서 **프로젝트 설정 (톱니바퀴 아이콘)**을 클릭합니다.
+1. Apps Script 좌측 메뉴에서 **프로젝트 설정 (톱니바퀴 아이콘)** 을 클릭합니다.
 2. 페이지 하단의 **스크립트 속성 (Script Properties)** 섹션에서 **속성 추가**를 클릭하여 아래 3개 값을 등록합니다:
 
 | 속성 (Property) | 값 (Value) | 설명 |
@@ -86,13 +86,13 @@ Google Apps Script와 **Google Gemini API** (기본 모델: `gemini-3.6-flash`)�
 Slack 모달의 버튼 클릭 및 답안 제출 이벤트를 수신하기 위해 Apps Script를 웹 앱으로 배포해야 합니다.
 
 1. Apps Script 우측 상단의 **배포** > **새 배포**를 클릭합니다.
-2. 좌측 톱니바퀴 아이콘 > **웹 앱(Web App)**을 선택합니다.
+2. 좌측 톱니바퀴 아이콘 > **웹 앱(Web App)** 을 선택합니다.
 3. 설정을 다음과 같이 지정합니다:
    * **설명**: `Daily Test Bot v1.0`
    * **다음 사용자로 실행 (Execute as)**: `나(My account)`
    * **액세스 권한이 있는 사용자 (Who has access)**: `모든 사용자(Anyone)` ⚠️ *(반드시 Anyone으로 설정해야 Slack 서버의 요청을 수신할 수 있습니다)*
 4. **배포**를 클릭하고, 최초 1회 구글 계정 권한 승인(Advanced > Go to project > Allow)을 완료합니다.
-5. 배포 완료 창에 표시되는 **웹 앱 URL (Web App URL)**을 복사합니다.
+5. 배포 완료 창에 표시되는 **웹 앱 URL (Web App URL)** 을 복사합니다.
    * 형식: `https://script.google.com/macros/s/AKfycb.../exec`
 
 ---
@@ -101,7 +101,7 @@ Slack 모달의 버튼 클릭 및 답안 제출 이벤트를 수신하기 위해
 
 Slack과 Apps Script 간의 위조 요청을 방지하기 위해 보안 시크릿을 등록합니다.
 
-1. Apps Script 에디터(`Code.gs`)로 돌아와 상단 함수 선택 드롭다운에서 `createInteractionSecret` 함수를 선택하고 **실행**을 누릅니다.
+1. Apps Script 에디터(`Code.gs`)로 돌아와 상단 함수 선택 드롭다운에서 `createInteractionSecret` 함수를 선택하고 **실행** 을 누릅니다.
 2. 하단 **실행 로그**를 확인하면 다음과 같은 형식으로 시크릿이 출력됩니다:
    ```text
    Request URL 뒤에 붙일 값: ?secret=a1b2c3d4e5f6...
@@ -151,7 +151,7 @@ const CT_CONFIG = Object.freeze({
 ## ❓ 자주 묻는 질문 (FAQ & Troubleshooting)
 
 **Q. Slack에서 'Daily 풀기' 버튼을 눌렀는데 반응이 없거나 오류 알림이 뜹니다.**
-* Apps Script의 웹 앱 배포 시 **액세스 권한(Who has access)**이 `모든 사용자(Anyone)`로 설정되어 있는지 확인하세요.
+* Apps Script의 웹 앱 배포 시 **액세스 권한(Who has access)** 이 `모든 사용자(Anyone)`로 설정되어 있는지 확인하세요.
 * Slack 콘솔의 **Interactivity Request URL**에 `?secret=...` 쿼리 파라미터가 정확히 포함되어 있는지 확인하세요.
 * 코드를 수정한 경우 **배포 관리** > **수정(연필 아이콘)** > **버전: 새 버전**으로 선택 후 다시 배포해야 변경 사항이 반영됩니다.
 
