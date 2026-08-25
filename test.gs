@@ -328,73 +328,68 @@ function generateSkctQuizUnified_(date) {
 }
 
 /**
- * 요일별 지문 타입 결정 함수:
- * - 월/화 (1, 2): 'single' (단일 지문)
- * - 수/목 (3, 4): 'double' (이중 지문)
- * - 금 (5): 'triple' (삼중 지문 킬러)
- * - 'all_test': 테스트용 (단일, 이중, 삼중 모두 출력)
+ * 요일별 Part 7 지문 규격 및 문항 수 결정:
+ * - 월/화 (1, 2): 단일 지문 1개 (3문항) ➡️ 데일리 총 12문항
+ * - 수/목 (3, 4): 이중 지문 1세트 (5문항) ➡️ 데일리 총 14문항
+ * - 금/주말 (5, 6, 0): 삼중 지문 1세트 (5문항) ➡️ 데일리 총 14문항
  */
-function getPart7Mode_() {
-  // 💡 현재는 테스트 모드이므로 'all_test'로 단일+이중+삼중 모두 생성
-  // 추후 운영 시 아래 주석을 해제하면 요일별 자동 전환이 활성화됩니다.
-  return 'all_test';
-
-  /*
+function getPart7DayConfig_() {
   const day = new Date().getDay(); // 0:일, 1:월, 2:화, 3:수, 4:목, 5:금, 6:토
-  if (day === 1 || day === 2) return 'single';
-  if (day === 3 || day === 4) return 'double';
-  if (day === 5) return 'triple';
-  return 'double'; // 주말
-  */
+
+  if (day === 1 || day === 2) {
+    return {
+      mode: 'single',
+      dayLabel: '월·화 단일 지문 데이',
+      part7Info: 'Part 7 단일 3Q',
+      setName: 'Part 7 · Single Passage (단일 지문)',
+      instruction: 'PART 7 SINGLE PASSAGE: Generate exactly 1 comprehensive business document (Article/Notice/Memo, 200-240 words) with exactly 3 challenging questions (Q1: Purpose/Topic, Q2: NOT/TRUE Fact-check, Q3: Contextual Synonym or Inference).'
+    };
+  } else if (day === 3 || day === 4) {
+    return {
+      mode: 'double',
+      dayLabel: '수·목 이중 지문 데이',
+      part7Info: 'Part 7 이중 5Q',
+      setName: 'Part 7 · Double Passage (이중 연계 지문)',
+      instruction: 'PART 7 DOUBLE PASSAGE: Generate exactly 2 heavily linked documents (e.g. Document 1: Job Notice/Webpage + Document 2: Inquiry Email/Application) with exactly 5 challenging questions (Q1: Detail on Doc 1, Q2: Detail on Doc 2, Q3: NOT/TRUE question, Q4: CROSS-REFERENCING INFERENCE between Doc 1 & Doc 2, Q5: Synonym or 2nd Cross-referencing question).'
+    };
+  } else {
+    return {
+      mode: 'triple',
+      dayLabel: '금·주말 삼중 지문 킬러 데이 🔥',
+      part7Info: 'Part 7 삼중 5Q',
+      setName: 'Part 7 · Triple Passage (삼중 연계 지문)',
+      instruction: 'PART 7 TRIPLE PASSAGE: Generate exactly 3 heavily linked documents (e.g. Doc 1: Conference Schedule + Doc 2: Relocation Notice + Doc 3: Attendee Inquiry Email) with exactly 5 challenging questions (Q1: Detail on Doc 1, Q2: Detail on Doc 2, Q3: NOT/TRUE question, Q4: CROSS-REFERENCING between Doc 1 & 2, Q5: MULTI-DOCUMENT INFERENCE linking all 3 documents).'
+    };
+  }
 }
 
-/** TOEIC RC 고난도 생성기 (단일 / 이중 / 삼중 연계 지문 완벽 지원) */
+/** TOEIC RC 고난도 생성기 (Part 5: 5Q, Part 6: 4Q, Part 7: 3Q or 5Q) */
 function generateToeicQuizUnified_(date) {
-  const mode = getPart7Mode_();
-  let part7Instruction = '';
-
-  if (mode === 'all_test') {
-    part7Instruction = [
-      'PART 7 TEST MODE (Generate all 3 passage types for testing):',
-      '1. SET 1 - Single Passage: 1 Document (e.g. Press Release/Article) + 2 Questions.',
-      '2. SET 2 - Double Passage: 2 Linked Documents (e.g. Document 1: Job Opening Notice + Document 2: Candidate Application Email) + 2 Cross-referencing Questions.',
-      '3. SET 3 - Triple Passage: 3 Linked Documents (e.g. Document 1: Event Schedule + Document 2: Policy Update + Document 3: Customer Inquiry Email) + 2 Multi-document Cross-referencing Questions.'
-    ].join('\n');
-  } else if (mode === 'triple') {
-    part7Instruction = 'PART 7 TRIPLE PASSAGE MODE: Generate 3 heavily linked documents (e.g. Schedule + Policy + Email) + 4 challenging cross-referencing questions.';
-  } else if (mode === 'double') {
-    part7Instruction = 'PART 7 DOUBLE PASSAGE MODE: Generate 2 linked documents (e.g. Notice + Email or Order Form + Complaint) + 4 cross-referencing questions.';
-  } else {
-    part7Instruction = 'PART 7 SINGLE PASSAGE MODE: Generate 1 in-depth document (220-260 words) + 4 challenging questions.';
-  }
+  const dayCfg = getPart7DayConfig_();
 
   const prompt = [
     'You are an expert senior test writer for ETS TOEIC Advanced (850-990 score band).',
     'Date: ' + date,
-    'Create an authentic TOEIC Reading test with realistic multi-document passages.',
+    'Target Schedule: ' + dayCfg.dayLabel,
     '',
-    'PART 5 & 6 RULES:',
-    '- Part 5: 3 challenging grammar/vocabulary questions.',
-    '- Part 6: 1 Business Document with [1], [2], [3], [4] + 4 questions (Question [3] is Sentence Insertion).',
-    '',
-    part7Instruction,
+    'EXACT QUESTION STRUCTURE:',
+    '1. PART 5: Exactly 5 challenging grammar & vocabulary questions (Questions 1 to 5).',
+    '2. PART 6: Exactly 1 Business Document with blanks [1], [2], [3], [4] and exactly 4 questions (Questions 6 to 9, where Q8 is Sentence Insertion).',
+    '3. ' + dayCfg.instruction,
     '',
     'CRITICAL PASSAGE FORMATTING RULES:',
-    '- Each document in Part 7 MUST have "documentType" (e.g. "Document 1: Job Posting", "Document 2: Inquiry Email", "Document 3: Confirmation Letter") and "text".',
-    '- For double/triple passages, return "documents": [ {"documentType": "...", "text": "..."}, {"documentType": "...", "text": "..."} ].',
+    '- In Part 6, the passage must contain blanks [1], [2], [3], [4].',
+    '- In Part 7, provide "documents": [ {"documentType": "Document 1: ...", "text": "..."} ... ] (1 document for single, 2 for double, 3 for triple).',
+    '- In the JSON "question" field for Part 6, write simply "Select the best option for the blank." (Do not put [1] in question).',
     '',
     'OUTPUT SCHEMA (Strictly valid JSON only):',
     '{',
     '  "part5": { "questions": [ { "question": "...", "options": ["A","B","C","D"], "answerIndex": 0, "explanation": "Korean", "optionExplanations": ["A","B","C","D"] } ] },',
     '  "part6": { "documentType": "Business Email", "passage": "English with [1],[2],[3],[4]", "passageTranslation": "Korean", "questions": [ { "blankNumber": 1, "question": "Select the best option for the blank.", "options": ["A","B","C","D"], "answerIndex": 0, "explanation": "Korean", "optionExplanations": ["A","B","C","D"] } ] },',
     '  "part7": {',
-    '    "sets": [',
-    '      {',
-    '        "setName": "Part 7 · Single Passage" | "Part 7 · Double Passage" | "Part 7 · Triple Passage",',
-    '        "documents": [ { "documentType": "Document 1: ...", "text": "..." }, { "documentType": "Document 2: ...", "text": "..." } ],',
-    '        "questions": [ { "question": "...", "options": ["A","B","C","D"], "answerIndex": 0, "explanation": "Korean", "optionExplanations": ["A","B","C","D"] } ]',
-    '      }',
-    '    ]',
+    '    "setName": "' + dayCfg.setName + '",',
+    '    "documents": [ { "documentType": "Document 1: ...", "text": "..." } ],',
+    '    "questions": [ { "question": "...", "options": ["A","B","C","D"], "answerIndex": 0, "explanation": "Korean", "optionExplanations": ["A","B","C","D"] } ]',
     '  }',
     '}'
   ].join('\n');
@@ -405,7 +400,7 @@ function generateToeicQuizUnified_(date) {
   const unifiedQuestions = [];
   let qNum = 1;
 
-  // Part 5 처리
+  // Part 5 처리 (5문항)
   if (data.part5 && Array.isArray(data.part5.questions)) {
     data.part5.questions.forEach(function(q) {
       q.id = 'TOEIC_Q' + qNum;
@@ -417,7 +412,7 @@ function generateToeicQuizUnified_(date) {
     });
   }
 
-  // Part 6 처리
+  // Part 6 처리 (4문항)
   if (data.part6 && Array.isArray(data.part6.questions)) {
     const p6Scenario = '```\n[' + data.part6.documentType + ']\n\n' + data.part6.passage + '\n```';
     data.part6.questions.forEach(function(q) {
@@ -431,28 +426,26 @@ function generateToeicQuizUnified_(date) {
     });
   }
 
-  // Part 7 처리 (단일/이중/삼중 지문별 독립 카드 조립)
-  if (data.part7 && Array.isArray(data.part7.sets)) {
-    data.part7.sets.forEach(function(set) {
-      // 각 문서를 독립된 ``` 코드블록 카드로 조립
-      const docCards = set.documents.map(function(doc, dIdx) {
-        return '```\n[' + (doc.documentType || ('Document ' + (dIdx + 1))) + ']\n\n' + doc.text + '\n```';
-      }).join('\n\n');
+  // Part 7 처리 (단일: 3문항 / 복합: 5문항)
+  if (data.part7 && Array.isArray(data.part7.questions) && Array.isArray(data.part7.documents)) {
+    const docCards = data.part7.documents.map(function(doc, dIdx) {
+      return '```\n[' + (doc.documentType || ('Document ' + (dIdx + 1))) + ']\n\n' + doc.text + '\n```';
+    }).join('\n\n');
 
-      set.questions.forEach(function(q) {
-        q.id = 'TOEIC_Q' + qNum;
-        q.number = qNum++;
-        q.part = set.setName || 'Part 7 · Reading Comprehension';
-        q.scenario = docCards;
-        q.options = q.options.map(function(o) { return String(o).slice(0, 65).trim(); });
-        unifiedQuestions.push(q);
-      });
+    data.part7.questions.forEach(function(q) {
+      q.id = 'TOEIC_Q' + qNum;
+      q.number = qNum++;
+      q.part = data.part7.setName || dayCfg.setName;
+      q.scenario = docCards;
+      q.options = q.options.map(function(o) { return String(o).slice(0, 65).trim(); });
+      unifiedQuestions.push(q);
     });
   }
 
   return {
     type: 'TOEIC',
-    title: '📚 TOEIC RC 850+ Killer (단일·이중·삼중 지문 실전 모의고사)',
+    title: '📚 TOEIC RC 850+ Killer (' + dayCfg.dayLabel + ')',
+    part7Info: dayCfg.part7Info,
     testId: 'TOEIC_' + date.replace(/-/g, ''),
     date: date,
     model: res.model,
@@ -466,7 +459,9 @@ function generateToeicQuizUnified_(date) {
 
 function postLauncherToSlack_(type, quiz) {
   const webhookUrl = getEnv_('SLACK_WEBHOOK_URL');
-  const countText = type === 'SKCT' ? '총 10문항 (5대 영역 각 2문항) · 예상 15분' : '총 13문항 (Part 5/6/7) · 예상 12분';
+  const countText = type === 'SKCT'
+    ? '총 10문항 (5대 영역 각 2문항) · 권장 15분'
+    : '총 ' + quiz.questions.length + '문항 (Part 5: 5Q · Part 6: 4Q · ' + (quiz.part7Info || 'Part 7') + ') · 권장 ' + (quiz.questions.length > 12 ? '15' : '12') + '분';
   const actionId = type === 'SKCT' ? 'open_skct_modal' : 'open_toeic_modal';
   const btnText = type === 'SKCT' ? 'Daily SKCT 풀기 🧠' : 'Daily TOEIC 풀기 📚';
 
