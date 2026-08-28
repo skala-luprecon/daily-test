@@ -532,7 +532,7 @@ function openQuizModal_(triggerId, type) {
 
     // 2) 동일 지문 중복 방지 (지문이 있고 이전 문제의 지문과 다를 때만 1회 출력)
     if (q.scenario && q.scenario !== lastRenderedScenario) {
-      blocks.push({ type: 'section', text: { type: 'mrkdwn', text: q.scenario } });
+      addSafeSectionChunks_(blocks, q.scenario);
       lastRenderedScenario = q.scenario;
     }
 
@@ -684,7 +684,7 @@ function updateExplanationModal_(payload, wrongOnly) {
 
     // 동일 지문 중복 방지 (지문이 있고 이전 문제의 지문과 다를 때만 1회 출력)
     if (q.scenario && q.scenario !== lastRenderedScenario) {
-      blocks.push({ type: 'section', text: { type: 'mrkdwn', text: q.scenario } });
+      addSafeSectionChunks_(blocks, q.scenario);
       lastRenderedScenario = q.scenario;
     }
 
@@ -704,7 +704,7 @@ function updateExplanationModal_(payload, wrongOnly) {
       });
     }
 
-    blocks.push({ type: 'section', text: { type: 'mrkdwn', text: explText } });
+    addSafeSectionChunks_(blocks, explText);
   });
 
   callSlackWebApi_('views.update', {
@@ -739,25 +739,96 @@ function updateScoreModal_(payload) {
 
 function saveQuizData_(type, quiz) {
   const key = type === 'SKCT' ? APP_CONFIG.KEYS.SKCT_QUIZ : APP_CONFIG.KEYS.TOEIC_QUIZ;
-  PropertiesService.getScriptProperties().setProperty(key, JSON.stringify(quiz));
+  saveChunked_(key, JSON.stringify(quiz));
 }
 
 function loadQuizData_(type) {
   const key = type === 'SKCT' ? APP_CONFIG.KEYS.SKCT_QUIZ : APP_CONFIG.KEYS.TOEIC_QUIZ;
-  const raw = PropertiesService.getScriptProperties().getProperty(key);
+  const raw = loadChunked_(key);
   if (!raw) throw new Error(type + ' 퀴즈 데이터가 없습니다.');
   return JSON.parse(raw);
 }
 
 function saveUserSubmission_(sub) {
   const key = 'SUB_' + sub.type + '_' + sub.userId;
-  PropertiesService.getScriptProperties().setProperty(key, JSON.stringify(sub));
+  saveChunked_(key, JSON.stringify(sub));
 }
 
 function loadUserSubmission_(type, userId) {
-  const raw = PropertiesService.getScriptProperties().getProperty('SUB_' + type + '_' + userId);
+  const key = 'SUB_' + type + '_' + userId;
+  const raw = loadChunked_(key);
   if (!raw) throw new Error('제출 기록을 찾을 수 없습니다.');
   return JSON.parse(raw);
+}
+
+/** Google Apps Script Properties 9KB 용량 제한 우회 분할 저장기 */
+function saveChunked_(baseKey, strValue) {
+  const props = PropertiesService.getScriptProperties();
+  const CHUNK_SIZE = 7500;
+  const totalChunks = Math.ceil(strValue.length / CHUNK_SIZE);
+
+  // 기존 청크 정리
+  const oldMeta = props.getProperty(baseKey + '_META');
+  if (oldMeta) {
+    const count = Number(oldMeta) || 0;
+    for (let i = 0; i < count; i++) {
+      props.deleteProperty(baseKey + '_C' + i);
+    }
+  }
+
+  if (totalChunks <= 1) {
+    props.setProperty(baseKey, strValue);
+    props.deleteProperty(baseKey + '_META');
+    return;
+  }
+
+  props.deleteProperty(baseKey);
+  props.setProperty(baseKey + '_META', String(totalChunks));
+  for (let i = 0; i < totalChunks; i++) {
+    const chunk = strValue.slice(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE);
+    props.setProperty(baseKey + '_C' + i, chunk);
+  }
+}
+
+/** 분할 저장된 대용량 퀴즈 데이터 복원 로더 */
+function loadChunked_(baseKey) {
+  const props = PropertiesService.getScriptProperties();
+  const meta = props.getProperty(baseKey + '_META');
+
+  if (!meta) {
+    return props.getProperty(baseKey);
+  }
+
+  const totalChunks = Number(meta) || 0;
+  let fullStr = '';
+  for (let i = 0; i < totalChunks; i++) {
+    const chunk = props.getProperty(baseKey + '_C' + i);
+    if (chunk) fullStr += chunk;
+  }
+  return fullStr || null;
+}
+
+/** Slack Section 블록 3,000자 초과 방지 안전 분할기 */
+function addSafeSectionChunks_(blocks, text) {
+  if (!text) return;
+  const MAX_CHUNK = 2800;
+  if (text.length <= MAX_CHUNK) {
+    blocks.push({ type: 'section', text: { type: 'mrkdwn', text: text } });
+    return;
+  }
+  let pos = 0;
+  while (pos < text.length) {
+    let nextPos = pos + MAX_CHUNK;
+    if (nextPos < text.length) {
+      const splitIdx = text.lastIndexOf('\n', nextPos);
+      if (splitIdx > pos + 1000) nextPos = splitIdx + 1;
+    }
+    const chunk = text.slice(pos, nextPos).trim();
+    if (chunk) {
+      blocks.push({ type: 'section', text: { type: 'mrkdwn', text: chunk } });
+    }
+    pos = nextPos;
+  }
 }
 
 function callSlackWebApi_(method, payload) {
