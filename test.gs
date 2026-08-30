@@ -554,7 +554,7 @@ function openQuizModal_(triggerId, type) {
 
     // 2) 동일 지문 중복 방지 (지문이 있고 이전 문제의 지문과 다를 때만 1회 출력)
     if (q.scenario && q.scenario !== lastRenderedScenario) {
-      addSafeSectionChunks_(blocks, q.scenario);
+      renderScenarioCards_(blocks, q.scenario);
       lastRenderedScenario = q.scenario;
     }
 
@@ -706,7 +706,7 @@ function updateExplanationModal_(payload, wrongOnly) {
 
     // 동일 지문 중복 방지 (지문이 있고 이전 문제의 지문과 다를 때만 1회 출력)
     if (q.scenario && q.scenario !== lastRenderedScenario) {
-      addSafeSectionChunks_(blocks, q.scenario);
+      renderScenarioCards_(blocks, q.scenario);
       lastRenderedScenario = q.scenario;
     }
 
@@ -828,6 +828,28 @@ function loadChunked_(baseKey) {
     if (chunk) fullStr += chunk;
   }
   return fullStr || null;
+}
+
+/** 지문 카드를 Slack Block Kit의 독립된 개별 section들로 안전하게 분리 렌더링 (백틱 깨짐 0%) */
+function renderScenarioCards_(blocks, scenario) {
+  if (!scenario) return;
+
+  const raw = String(scenario).trim();
+  const cardRegex = /```[\s\S]*?```/g;
+  const matches = raw.match(cardRegex);
+
+  if (matches && matches.length > 0) {
+    // 2개 이상의 독립 카드인 경우 각각 개별 section 블록으로 등록
+    matches.forEach(function(card) {
+      blocks.push({
+        type: 'section',
+        text: { type: 'mrkdwn', text: card.trim() }
+      });
+    });
+  } else {
+    // 단일 카드 또는 일반 텍스트인 경우
+    addSafeSectionChunks_(blocks, raw);
+  }
 }
 
 /** Slack Section 블록 3,000자 초과 방지 안전 분할기 */
