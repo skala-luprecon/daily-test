@@ -280,6 +280,9 @@ function generateSkctQuizUnified_(date) {
     '4. "verbal_reasoning" (언어추리): Syllogism (삼단논법/전제결론 제시형), strict truth-teller/liar puzzle (진실게임), or 4-5 entity multi-attribute grid placement under <조건>. Ensure exactly one airtight logical solution.',
     '5. "sequence_reasoning" (수열추리): Non-trivial numerical sequence deduction (e.g. geometric difference series, alternating compound operations, quadratic recurrence). Present clearly as "a, b, c, d, e, (?)" and provide the exact mathematical formula in explanation.',
     '',
+    'CRITICAL OPTION CONCISENESS RULE:',
+    '- All 4 options (A, B, C, D) MUST be concisely phrased under 40 Korean characters. Never write overly verbose options.',
+    '',
     'OUTPUT SCHEMA (Valid JSON only, no markdown commentary):',
     '{',
     '  "questions": [',
@@ -313,7 +316,7 @@ function generateSkctQuizUnified_(date) {
     if (!Array.isArray(q.options) || q.options.length !== 4) {
       throw new Error(q.id + ' 선택지 개수 오류');
     }
-    q.options = q.options.map(function(opt) { return String(opt).slice(0, 65).trim(); });
+    q.options = q.options.map(sanitizeOptionText_);
     q.answerIndex = Number(q.answerIndex) || 0;
   });
 
@@ -377,6 +380,11 @@ function generateToeicQuizUnified_(date) {
     '2. PART 6: Exactly 1 Business Document with blanks [1], [2], [3], [4] and exactly 4 questions (Questions 6 to 9, where Q8 is Sentence Insertion).',
     '3. ' + dayCfg.instruction,
     '',
+    'CRITICAL OPTION CONCISENESS RULES (MANDATORY):',
+    '- Every option (A, B, C, D) across all questions MUST be strictly concise and under 60 characters in English.',
+    '- Use natural, compact ETS phrasing (e.g. "Hotel costs are paid upfront" instead of "Employees must pay for their hotel accommodation upfront and request reimbursement").',
+    '- Never write long run-on sentences in options so they fit Slack radio buttons without clipping.',
+    '',
     'CRITICAL PASSAGE FORMATTING RULES:',
     '- In Part 6, the passage must contain blanks [1], [2], [3], [4].',
     '- In Part 7, provide "documents": [ {"documentType": "Document 1: ...", "text": "..."} ... ] (1 document for single, 2 for double, 3 for triple).',
@@ -407,7 +415,7 @@ function generateToeicQuizUnified_(date) {
       q.number = qNum++;
       q.part = 'Part 5 · Incomplete Sentences';
       q.scenario = '';
-      q.options = q.options.map(function(o) { return String(o).slice(0, 65).trim(); });
+      q.options = q.options.map(sanitizeOptionText_);
       unifiedQuestions.push(q);
     });
   }
@@ -422,7 +430,7 @@ function generateToeicQuizUnified_(date) {
       q.blankNumber = q.blankNumber || (idx + 1);
       q.scenario = p6Scenario;
       q.question = (q.blankNumber === 3 ? '[3]번 빈칸 (알맞은 문장 선택)' : '[' + q.blankNumber + ']번 빈칸 선택');
-      q.options = q.options.map(function(o) { return String(o).slice(0, 65).trim(); });
+      q.options = q.options.map(sanitizeOptionText_);
       unifiedQuestions.push(q);
     });
   }
@@ -430,7 +438,9 @@ function generateToeicQuizUnified_(date) {
   // Part 7 처리 (단일: 3문항 / 복합: 5문항)
   if (data.part7 && Array.isArray(data.part7.questions) && Array.isArray(data.part7.documents)) {
     const docCards = data.part7.documents.map(function(doc, dIdx) {
-      return '```\n[' + (doc.documentType || ('Document ' + (dIdx + 1))) + ']\n\n' + doc.text + '\n```';
+      const docType = doc.documentType || ('Document ' + (dIdx + 1));
+      const cleanText = String(doc.text || '').replace(/```/g, '').trim();
+      return '```\n[' + docType + ']\n\n' + cleanText + '\n```';
     }).join('\n\n');
 
     data.part7.questions.forEach(function(q) {
@@ -438,7 +448,7 @@ function generateToeicQuizUnified_(date) {
       q.number = qNum++;
       q.part = data.part7.setName || dayCfg.setName;
       q.scenario = docCards;
-      q.options = q.options.map(function(o) { return String(o).slice(0, 65).trim(); });
+      q.options = q.options.map(sanitizeOptionText_);
       unifiedQuestions.push(q);
     });
   }
@@ -850,6 +860,16 @@ function renderScenarioCards_(blocks, scenario) {
     // 단일 카드 또는 일반 텍스트인 경우
     addSafeSectionChunks_(blocks, raw);
   }
+}
+
+/** Slack radio_buttons 75자 제한 준수 및 단어 경계 안전 자르기 */
+function sanitizeOptionText_(opt) {
+  let s = String(opt || '').trim();
+  if (s.length <= 70) return s;
+  let cut = s.slice(0, 67);
+  const lastSpace = cut.lastIndexOf(' ');
+  if (lastSpace > 45) cut = cut.slice(0, lastSpace);
+  return cut.trim() + '...';
 }
 
 /** Slack Section 블록 3,000자 초과 방지 안전 분할기 */
