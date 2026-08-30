@@ -52,10 +52,10 @@ const APP_CONFIG = Object.freeze({
   }
 });
 
-// SKCT 최신 5대 영역 라벨 및 메타
+// SKCT 4대 핵심 인지역량 (자료해석 도표 영역은 임시 보류/주석 처리)
 const SKCT_AREAS = Object.freeze({
   verbal_comprehension: { label: '언어이해', count: 2 },
-  data_interpretation:  { label: '자료해석', count: 2 },
+  // data_interpretation:  { label: '자료해석', count: 2 }, // [보류] 도표 렌더링 고도화 시 활성화
   creative_math:        { label: '창의수리', count: 2 },
   verbal_reasoning:     { label: '언어추리', count: 2 },
   sequence_reasoning:   { label: '수열추리', count: 2 }
@@ -270,15 +270,15 @@ function generateSkctQuizUnified_(date) {
     'You are a senior test development specialist for the official Korean SKCT (SK Comprehensive Test) online cognitive aptitude test.',
     'Date: ' + date,
     'Target Difficulty: Intermediate to Advanced (SKCT 85th-95th percentile).',
-    'Create exactly 10 original, challenging SKCT practice questions covering the 5 core cognitive domains (2 questions per domain).',
+    'Create exactly 8 original, challenging SKCT practice questions covering the 4 core cognitive domains (2 questions per domain).',
     'Language: All user-visible scenarios, questions, options, and explanations MUST be in refined, professional Korean.',
     '',
     'DOMAIN SPECIFICATIONS (Exactly 2 questions each):',
     '1. "verbal_comprehension" (언어이해): Deep corporate/tech/economic editorial reading. Include subtle traps in options via paraphrasing, conditional qualifiers, and fact-checking.',
-    '2. "data_interpretation" (자료해석): MUST format all structured numerical tables inside ``` monospace code fences using neat Unicode box-drawing characters (┌, ─, ┬, ┐, │, ├, ┼, ┤, └, ┴, ┘) with perfectly aligned columns. Test weighted averages, %p vs %, compound growth, and cross-column arithmetic. CRITICAL: Re-verify all mathematical calculations across all 4 options so that exactly one option is defensibly correct.',
-    '3. "creative_math" (창의수리): Speed/distance/time with two moving bodies or varying speeds, multi-stage mixture/concentration (농도), cost-margin-discount algebra, complex work rates, or combination/probability.',
-    '4. "verbal_reasoning" (언어추리): Syllogism (삼단논법/전제결론 제시형), strict truth-teller/liar puzzle (진실게임), or 4-5 entity multi-attribute grid placement under <조건>. Ensure exactly one airtight logical solution.',
-    '5. "sequence_reasoning" (수열추리): Non-trivial numerical sequence deduction (e.g. geometric difference series, alternating compound operations, quadratic recurrence). Present clearly as "a, b, c, d, e, (?)" and provide the exact mathematical formula in explanation.',
+    '// 2. "data_interpretation" (자료해석): [임시 보류/주석 처리]',
+    '2. "creative_math" (창의수리): Speed/distance/time with two moving bodies or varying speeds, multi-stage mixture/concentration (농도), cost-margin-discount algebra, complex work rates, or combination/probability.',
+    '3. "verbal_reasoning" (언어추리): Syllogism (삼단논법/전제결론 제시형), strict truth-teller/liar puzzle (진실게임), or 4-5 entity multi-attribute grid placement under <조건>. Ensure exactly one airtight logical solution.',
+    '4. "sequence_reasoning" (수열추리): Non-trivial numerical sequence deduction (e.g. geometric difference series, alternating compound operations, quadratic recurrence). Present clearly as "a, b, c, d, e, (?)" and provide the exact mathematical formula in explanation.',
     '',
     'CRITICAL OPTION CONCISENESS RULE:',
     '- All 4 options (A, B, C, D) MUST be concisely phrased under 40 Korean characters. Never write overly verbose options.',
@@ -287,9 +287,9 @@ function generateSkctQuizUnified_(date) {
     '{',
     '  "questions": [',
     '    {',
-    '      "domain": "verbal_comprehension" | "data_interpretation" | "creative_math" | "verbal_reasoning" | "sequence_reasoning",',
+    '      "domain": "verbal_comprehension" | "creative_math" | "verbal_reasoning" | "sequence_reasoning",',
     '      "difficulty": "medium" | "hard",',
-    '      "scenario": "string (Passage, constraints under <조건>, or clean monospace Unicode box table inside ```...```)",',
+    '      "scenario": "string (Passage, constraints under <조건>)",',
     '      "question": "string (Standard Korean phrasing like: 다음 글을 읽고 알 수 있는 것은?, 다음 조건을 만족할 때 항상 참인 것은?)",',
     '      "options": ["A", "B", "C", "D"],',
     '      "answerIndex": 0,',
@@ -302,7 +302,7 @@ function generateSkctQuizUnified_(date) {
 
   const res = callGeminiRobust_(prompt, 0.45);
   const questions = res.data.questions;
-  if (!Array.isArray(questions) || questions.length !== 10) {
+  if (!Array.isArray(questions) || questions.length !== 8) {
     throw new Error('SKCT 문항 수 불일치: ' + (questions ? questions.length : 0));
   }
 
@@ -322,7 +322,7 @@ function generateSkctQuizUnified_(date) {
 
   return {
     type: 'SKCT',
-    title: '🧠 SKCT 인지역량 5대 영역 Daily Test',
+    title: 'SKCT 인지역량 실전 평가',
     testId: 'SKCT_' + date.replace(/-/g, ''),
     date: date,
     model: res.model,
@@ -342,7 +342,7 @@ function getPart7DayConfig_() {
   if (day === 1 || day === 2) {
     return {
       mode: 'single',
-      dayLabel: '월·화 단일 지문 데이',
+      dayLabel: '단일 지문 집중',
       part7Info: 'Part 7 단일 3Q',
       setName: 'Part 7 · Single Passage (단일 지문)',
       instruction: 'PART 7 SINGLE PASSAGE: Generate exactly 1 comprehensive business document (Article/Notice/Memo, 200-240 words) with exactly 3 challenging questions (Q1: Purpose/Topic, Q2: NOT/TRUE Fact-check, Q3: Contextual Synonym or Inference).'
@@ -350,7 +350,7 @@ function getPart7DayConfig_() {
   } else if (day === 3 || day === 4) {
     return {
       mode: 'double',
-      dayLabel: '수·목 이중 지문 데이',
+      dayLabel: '이중 연계 지문 집중',
       part7Info: 'Part 7 이중 5Q',
       setName: 'Part 7 · Double Passage (이중 연계 지문)',
       instruction: 'PART 7 DOUBLE PASSAGE: Generate exactly 2 heavily linked documents (e.g. Document 1: Job Notice/Webpage + Document 2: Inquiry Email/Application) with exactly 5 challenging questions (Q1: Detail on Doc 1, Q2: Detail on Doc 2, Q3: NOT/TRUE question, Q4: CROSS-REFERENCING INFERENCE between Doc 1 & Doc 2, Q5: Synonym or 2nd Cross-referencing question).'
@@ -358,7 +358,7 @@ function getPart7DayConfig_() {
   } else {
     return {
       mode: 'triple',
-      dayLabel: '금·주말 삼중 지문 킬러 데이 🔥',
+      dayLabel: '삼중 복합 연계 지문',
       part7Info: 'Part 7 삼중 5Q',
       setName: 'Part 7 · Triple Passage (삼중 연계 지문)',
       instruction: 'PART 7 TRIPLE PASSAGE: Generate exactly 3 heavily linked documents (e.g. Doc 1: Conference Schedule + Doc 2: Relocation Notice + Doc 3: Attendee Inquiry Email) with exactly 5 challenging questions (Q1: Detail on Doc 1, Q2: Detail on Doc 2, Q3: NOT/TRUE question, Q4: CROSS-REFERENCING between Doc 1 & 2, Q5: MULTI-DOCUMENT INFERENCE linking all 3 documents).'
@@ -455,7 +455,7 @@ function generateToeicQuizUnified_(date) {
 
   return {
     type: 'TOEIC',
-    title: '📚 TOEIC RC 850+ Killer (' + dayCfg.dayLabel + ')',
+    title: 'TOEIC RC 실전 평가 (' + dayCfg.dayLabel + ')',
     part7Info: dayCfg.part7Info,
     testId: 'TOEIC_' + date.replace(/-/g, ''),
     date: date,
@@ -481,12 +481,12 @@ function postLauncherToSlack_(type, quiz) {
     headerTitle = '📌 SKCT 인지역량 Daily Test (' + quiz.date + ')';
     detailLines = [
       '• *언어이해*: 2문항',
-      '• *자료해석*: 2문항',
+      // '• *자료해석*: 2문항', // [보류]
       '• *창의수리*: 2문항',
       '• *언어추리*: 2문항',
       '• *수열추리*: 2문항'
     ];
-    summaryText = '*총 10문항* · 권장 시간: 15분';
+    summaryText = '*총 8문항* · 권장 시간: 12분';
   } else {
     headerTitle = '📌 TOEIC RC Daily Test (' + quiz.date + ')';
 
@@ -542,10 +542,14 @@ function postLauncherToSlack_(type, quiz) {
 
 function openQuizModal_(triggerId, type) {
   const quiz = loadQuizData_(type);
+  const modalHeaderTitle = type === 'SKCT' ? 'SKCT 인지역량 평가' : 'TOEIC RC 실전 평가';
   const blocks = [
     {
       type: 'section',
-      text: { type: 'mrkdwn', text: '*' + quiz.date + ' ' + quiz.title + '*\n모든 문제의 답안을 선택한 후 하단의 [답안 제출] 버튼을 눌러주세요.' }
+      text: {
+        type: 'mrkdwn',
+        text: '*' + quiz.date + ' ' + quiz.title + '*\n모든 문항의 답안을 선택하신 후 하단의 [답안 제출] 버튼을 눌러주세요.'
+      }
     }
   ];
 
@@ -601,7 +605,7 @@ function openQuizModal_(triggerId, type) {
       type: 'modal',
       callback_id: type === 'SKCT' ? 'quiz_submit_skct' : 'quiz_submit_toeic',
       private_metadata: JSON.stringify({ testId: quiz.testId, type: type }),
-      title: { type: 'plain_text', text: type + ' Daily Quiz' },
+      title: { type: 'plain_text', text: modalHeaderTitle },
       submit: { type: 'plain_text', text: '답안 제출' },
       close: { type: 'plain_text', text: '취소' },
       blocks: blocks.slice(0, APP_CONFIG.MAX_MODAL_BLOCKS)
