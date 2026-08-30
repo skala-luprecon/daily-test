@@ -460,32 +460,54 @@ function generateToeicQuizUnified_(date) {
 
 function postLauncherToSlack_(type, quiz) {
   const webhookUrl = getEnv_('SLACK_WEBHOOK_URL');
-  const countText = type === 'SKCT'
-    ? '총 10문항 (5대 영역 각 2문항) · 권장 15분'
-    : '총 ' + quiz.questions.length + '문항 (Part 5: 5Q · Part 6: 4Q · ' + (quiz.part7Info || 'Part 7') + ') · 권장 ' + (quiz.questions.length > 12 ? '15' : '12') + '분';
   const actionId = type === 'SKCT' ? 'open_skct_modal' : 'open_toeic_modal';
-  const btnText = type === 'SKCT' ? 'Daily SKCT 풀기 🧠' : 'Daily TOEIC 풀기 📚';
+  const btnText = type === 'SKCT' ? '테스트 시작 (SKCT) →' : '테스트 시작 (TOEIC) →';
+
+  let headerTitle = '';
+  let detailLines = [];
+  let summaryText = '';
+
+  if (type === 'SKCT') {
+    headerTitle = '📌 SKCT 인지역량 Daily Test (' + quiz.date + ')';
+    detailLines = [
+      '• *언어이해*: 2문항',
+      '• *자료해석*: 2문항',
+      '• *창의수리*: 2문항',
+      '• *언어추리*: 2문항',
+      '• *수열추리*: 2문항'
+    ];
+    summaryText = '*총 10문항* · 권장 시간: 15분';
+  } else {
+    headerTitle = '📌 TOEIC RC Daily Test (' + quiz.date + ')';
+
+    let part7Label = '복합 연계 독해 (5문항)';
+    if (quiz.part7Info && quiz.part7Info.indexOf('단일') !== -1) {
+      part7Label = '단일 지문 독해 (3문항)';
+    } else if (quiz.part7Info && quiz.part7Info.indexOf('이중') !== -1) {
+      part7Label = '이중 연계 독해 (5문항)';
+    } else if (quiz.part7Info && quiz.part7Info.indexOf('삼중') !== -1) {
+      part7Label = '삼중 연계 독해 (5문항)';
+    }
+
+    detailLines = [
+      '• *Part 5* (단문 공란 채우기): 5문항',
+      '• *Part 6* (장문 공란 채우기): 4문항',
+      '• *Part 7* (' + part7Label + ')'
+    ];
+    summaryText = '*총 ' + quiz.questions.length + '문항* · 권장 시간: ' + (quiz.questions.length > 12 ? '15분' : '12분');
+  }
 
   const blocks = [
     {
       type: 'header',
-      text: { type: 'plain_text', text: quiz.title, emoji: true }
+      text: { type: 'plain_text', text: headerTitle, emoji: true }
     },
-    {
-      type: 'context',
-      elements: [{ type: 'mrkdwn', text: '*' + quiz.date + '* · ' + countText }]
-    },
-    { type: 'divider' },
     {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: '제출 즉시 *실시간 채점, 오답 분석, 상세 해설*을 확인할 수 있습니다.\n_모달창에서 편안하게 문제를 풀어보세요!_'
+        text: detailLines.join('\n') + '\n\n' + summaryText
       }
-    },
-    {
-      type: 'context',
-      elements: [{ type: 'mrkdwn', text: '🤖 Engine: `' + quiz.model + '`' }]
     },
     {
       type: 'actions',
