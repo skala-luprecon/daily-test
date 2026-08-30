@@ -30,7 +30,7 @@ const APP_CONFIG = Object.freeze({
   
   // Gemini 모델 계층
   PRIMARY_MODEL: 'gemini-3.6-flash',
-  FALLBACK_MODEL: 'gemini-3.5-flash-lite',
+  FALLBACK_MODEL: 'gemini-3.5-flash',
   
   // API 제어
   MAX_ATTEMPTS: 2,
