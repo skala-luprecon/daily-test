@@ -1,6 +1,6 @@
 # 📚 Daily Test Slack Bot (TOEIC RC & SKCT 인지역량)
 
-Google Apps Script와 **Google Gemini API** (`gemini-3.6-flash` / `gemini-3.5-flash`)를 기반으로 매일 아침 Slack 채널에 **TOEIC RC 850+ 실전 문제** 및 **SKCT 인지역량 실전 문제**를 자동 출제하고, Slack Modal을 통해 실시간 채점, 오답 분석, 상세 해설을 제공하는 통합 테스트 봇입니다.
+Google Apps Script와 **Google Gemini API** (`gemini-3.6-flash`)를 기반으로 매일 아침 Slack 채널에 **TOEIC RC 850+ 실전 문제** 및 **SKCT 인지역량 실전 문제**를 자동 출제하고, Slack Modal을 통해 실시간 채점, 오답 분석, 상세 해설을 제공하는 통합 테스트 봇입니다.
 
 ---
 
@@ -12,9 +12,9 @@ Google Apps Script와 **Google Gemini API** (`gemini-3.6-flash` / `gemini-3.5-fl
 * ⏰ **정기 자동 출제 (Time-driven Triggers)**
   * **매일 오전 07:00 (KST)**: TOEIC RC 실전 평가 (12~14문항)
   * **매일 오전 08:00 (KST)**: SKCT 인지역량 실전 평가 (8문항)
-* 🧠 **고성능 AI 모델 계층 (Intelligent Fallback)**
-  * 메인 모델: `gemini-3.6-flash` (Deep Reasoning, thinkingLevel: high)
-  * 장애/할당량 대비 보조 모델: `gemini-3.5-flash` 자동 전환
+* 🧠 **고성능 AI 모델 계층 (High-Performance Reasoning)**
+  * 메인/재시도 모델: `gemini-3.6-flash` (Deep Reasoning, thinkingLevel: high)
+  * 일관된 고난도 킬러 문항 퀄리티 유지
 * 📱 **세련된 비즈니스 톤 UI & 인터랙티브 모달**
   * 불필요한 AI 설명 문구를 제거한 깔끔한 불릿 리스트형 채널 공지
   * 슬랙 Block Kit 75자 선택지 규격 준수 (단어 잘림 없는 깔끔한 보기)
@@ -138,7 +138,7 @@ const APP_CONFIG = Object.freeze({
   
   // Gemini 모델 계층
   PRIMARY_MODEL: 'gemini-3.6-flash',
-  FALLBACK_MODEL: 'gemini-3.5-flash',
+  FALLBACK_MODEL: 'gemini-3.6-flash',
   
   // API 제어
   MAX_ATTEMPTS: 2,

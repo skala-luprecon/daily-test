@@ -13,7 +13,7 @@
  *    - SKCT: 4대 핵심 인지역량(언어이해, 창의수리, 언어추리, 수열추리) 8문항 실전 세트.
  * 
  * 3. [엔터프라이즈급 인프라 & 안정성]
- *    - Gemini API: Primary(gemini-3.6-flash) -> Fallback(gemini-3.5-flash) 자동 전환.
+ *    - Gemini API: Primary(gemini-3.6-flash) -> Fallback Retry(gemini-3.6-flash) 고성능 단일화.
  *    - Storage: Google Apps Script Properties 9KB 용량 제한 우회 청크 분할 저장.
  *    - Slack: Block Kit 75자 규격 준수, 지문 다중 카드 독립 렌더링, 군더더기 없는 비즈니스 톤 UI.
  * ============================================================================
@@ -27,7 +27,7 @@ const APP_CONFIG = Object.freeze({
   
   // Gemini 모델 계층
   PRIMARY_MODEL: 'gemini-3.6-flash',
-  FALLBACK_MODEL: 'gemini-3.5-flash',
+  FALLBACK_MODEL: 'gemini-3.6-flash',
   
   // API 제어
   MAX_ATTEMPTS: 2,
