@@ -46,9 +46,20 @@ Google Apps Script와 **Google Gemini API** (`gemini-3.6-flash`)를 기반으로
 ## 📂 파일 구조
 
 ```text
-├── Code.gs         # 전체 통합 봇 엔진 (출제, 파싱, 슬랙 모달, 스토리지)
-├── bot_icon.jpg    # 슬랙 앱 프로필 아이콘
-└── README.md       # 프로젝트 문서 및 설치 가이드
+daily-test/
+├── apps-script/                 # 🤖 구글 앱스 스크립트 백엔드
+│   └── Code.gs                  # 전체 통합 봇 엔진 (출제, 파싱, 슬랙 모달, 스토리지)
+├── data/                        # 📦 매일 자동 축적되는 문제 데이터 (JSON)
+│   ├── manifest.json            # 출제 일자 인덱스 레지스트리
+│   ├── toeic/                   # 토익 일자별 문제 JSON
+│   │   └── 2026-08-31_TOEIC.json
+│   └── skct/                    # SKCT 일자별 문제 JSON
+│       └── 2026-08-31_SKCT.json
+├── index.html                   # 🌐 CBT 시험 웹페이지 (GitHub Pages)
+├── style.css                    # 🎨 모던 반응형 스타일시트
+├── app.js                       # ⚡ CBT 인터랙티브 로직 (타이머, OMR, 채점)
+├── .gitignore                   # Git 제외 설정
+└── README.md                    # 프로젝트 문서 및 설치 가이드
 ```
 
 ---
@@ -80,7 +91,7 @@ Google Apps Script와 **Google Gemini API** (`gemini-3.6-flash`)를 기반으로
 ### 3단계: Google Apps Script 프로젝트 설정
 
 1. [Google Apps Script](https://script.google.com/)에 접속하여 **새 프로젝트**를 생성합니다.
-2. 에디터의 기본 파일을 열고, 이 저장소의 [`Code.gs`](./Code.gs) 전체 내용을 복사하여 붙여넣은 뒤 저장(Ctrl+S)합니다.
+2. 에디터의 기본 파일을 열고, 이 저장소의 [`apps-script/Code.gs`](./apps-script/Code.gs) 전체 내용을 복사하여 붙여넣은 뒤 저장(Ctrl+S)합니다.
 3. 좌측 메뉴 **프로젝트 설정 (톱니바퀴 ⚙️)** > **스크립트 속성 (Script Properties)** 섹션에서 **[속성 추가]**를 눌러 아래 3개 값을 등록합니다:
 
 | 속성 (Property) | 값 (Value) | 설명 |
