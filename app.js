@@ -140,30 +140,63 @@ function renderQuiz() {
   container.innerHTML = '';
 
   let lastPart = '';
+  let lastScenario = '';
+  let currentPassageGroupId = 0;
 
   quiz.questions.forEach((q) => {
-    const card = document.createElement('div');
-    card.className = 'question-card';
-    card.id = 'card-' + q.id;
-
-    // Part header if changed
-    let partHeaderHtml = '';
+    // 1. Part Header Banner (Part가 바뀔 때만 1회 출력)
     if (q.part && q.part !== lastPart) {
-      partHeaderHtml = '<div class="card-part-header">📖 ' + escapeHtml(q.part) + '</div>';
+      const partBanner = document.createElement('div');
+      partBanner.className = 'part-header-banner';
+      partBanner.innerHTML = '<span class="part-icon">📖</span> <span class="part-text">' + escapeHtml(q.part) + '</span>';
+      container.appendChild(partBanner);
       lastPart = q.part;
     }
 
-    // Scenario box
-    let scenarioHtml = '';
-    if (q.scenario) {
-      const cleanScenario = String(q.scenario).replace(/^```[a-z]*\n?/i, '').replace(/```$/, '').trim();
-      scenarioHtml = 
-        '<div class="scenario-box">' +
-          '<pre>' + escapeHtml(cleanScenario) + '</pre>' +
+    // 2. Dedicated Passage Card (지문이 있고 이전 문제의 지문과 다를 때만 1회 출력)
+    if (q.scenario && q.scenario !== lastScenario) {
+      currentPassageGroupId++;
+      const passageCard = document.createElement('div');
+      passageCard.className = 'passage-container-card';
+      passageCard.id = 'passage-group-' + currentPassageGroupId;
+
+      // Extract individual document cards if multiple ``` are present
+      const rawScenario = String(q.scenario).trim();
+      const cardRegex = /```[\s\S]*?```/g;
+      const matches = rawScenario.match(cardRegex);
+
+      let innerDocsHtml = '';
+      if (matches && matches.length > 0) {
+        matches.forEach((cardStr) => {
+          const cleanDoc = cardStr.replace(/^```[a-z]*\n?/i, '').replace(/```$/, '').trim();
+          innerDocsHtml += '<div class="scenario-doc-card"><pre>' + escapeHtml(cleanDoc) + '</pre></div>';
+        });
+      } else {
+        const cleanDoc = rawScenario.replace(/^```[a-z]*\n?/i, '').replace(/```$/, '').trim();
+        innerDocsHtml += '<div class="scenario-doc-card"><pre>' + escapeHtml(cleanDoc) + '</pre></div>';
+      }
+
+      passageCard.innerHTML = 
+        '<div class="passage-card-header">' +
+          '<span class="passage-badge">📄 [지문 / Passage]</span>' +
+          '<span class="passage-hint">※ 아래 지문을 읽고 이어지는 문제에 답하시오.</span>' +
+        '</div>' +
+        '<div class="passage-docs-wrapper">' +
+          innerDocsHtml +
         '</div>';
+
+      container.appendChild(passageCard);
+      lastScenario = q.scenario;
     }
 
-    // Options
+    // 3. Question Card (지문 중복 없이 문항 번호, 질문, 4지선다 보기만 깔끔하게 렌더링)
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'card-' + q.id;
+    if (q.scenario) {
+      card.setAttribute('data-passage-group', 'passage-group-' + currentPassageGroupId);
+    }
+
     const optionsHtml = q.options.map((opt, optIdx) => {
       const letter = ['A', 'B', 'C', 'D'][optIdx];
       const isSelected = STATE.userAnswers[q.id] === optIdx;
@@ -176,8 +209,6 @@ function renderQuiz() {
     }).join('');
 
     card.innerHTML = 
-      partHeaderHtml +
-      scenarioHtml +
       '<div class="question-title-row">' +
         '<span class="question-num-badge">' + q.number + '번</span>' +
         '<h3 class="question-text">' + escapeHtml(q.question) + '</h3>' +
@@ -353,17 +384,32 @@ function setFilterMode(mode) {
 
   if (!STATE.quizData) return;
 
+  const wrongPassageGroups = new Set();
+
   STATE.quizData.questions.forEach((q) => {
     const card = document.getElementById('card-' + q.id);
     if (!card) return;
 
     const userAns = STATE.userAnswers[q.id];
     const isCorrect = userAns === q.answerIndex;
+    const passageGroup = card.getAttribute('data-passage-group');
 
     if (mode === 'wrong' && isCorrect) {
       card.style.display = 'none';
     } else {
       card.style.display = 'block';
+      if (!isCorrect && passageGroup) {
+        wrongPassageGroups.add(passageGroup);
+      }
+    }
+  });
+
+  // Control visibility of passage containers
+  document.querySelectorAll('.passage-container-card').forEach((pCard) => {
+    if (mode === 'wrong') {
+      pCard.style.display = wrongPassageGroups.has(pCard.id) ? 'block' : 'none';
+    } else {
+      pCard.style.display = 'block';
     }
   });
 }
