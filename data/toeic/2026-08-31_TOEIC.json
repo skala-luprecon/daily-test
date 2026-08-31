@@ -1,0 +1,262 @@
+{
+  "type": "TOEIC",
+  "title": "TOEIC RC 실전 평가 (단일 지문 집중)",
+  "part7Info": "Part 7 단일 3Q",
+  "testId": "TOEIC_20260831",
+  "date": "2026-08-31",
+  "model": "gemini-3.6-flash",
+  "questions": [
+    {
+      "id": "TOEIC_Q1",
+      "number": 1,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": "",
+      "question": "Had the board of directors ------- the acquisition proposal sooner, the merger would have finalized before the fiscal year.",
+      "options": [
+        "review",
+        "reviewed",
+        "reviewing",
+        "reviews"
+      ],
+      "answerIndex": 1,
+      "explanation": "가정법 과거완료 도치 구문(Had + 주어 + p.p.)으로 주절의 would have finalized와 호응하는 과거분사 reviewed가 정답입니다.",
+      "optionExplanations": [
+        "(A) 동사 원형으로 가정법 도치 구문에 맞지 않습니다.",
+        "(B) 정답: Had와 함께 쓰이는 과거분사 reviewed입니다.",
+        "(C) 현재분사(V-ing) 형태로 문법적으로 불가능합니다.",
+        "(D) 3인칭 단수 현재형 동사로 올 수 없습니다."
+      ]
+    },
+    {
+      "id": "TOEIC_Q2",
+      "number": 2,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": "",
+      "question": "The newly appointed CEO emphasized the need for ------- compliance with international environmental standards.",
+      "options": [
+        "strict",
+        "strictly",
+        "strictness",
+        "stricter"
+      ],
+      "answerIndex": 0,
+      "explanation": "명사 compliance(준수)를 앞에서 수식하는 형용사 strict(엄격한)가 적절합니다.",
+      "optionExplanations": [
+        "(A) 정답: 명사 compliance를 수식하는 형용사입니다.",
+        "(B) 부사로서 뒤의 명사를 직접 수식할 수 없습니다.",
+        "(C) 명사로서 뒤의 명사와 복합명사를 이루기 부자연스럽습니다.",
+        "(D) 비교급 형용사이나 문맥상 비교 대상이 없습니다."
+      ]
+    },
+    {
+      "id": "TOEIC_Q3",
+      "number": 3,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": "",
+      "question": "Participants may choose between attending the morning workshop ------- participating in the afternoon panel discussion.",
+      "options": [
+        "and",
+        "or",
+        "but",
+        "nor"
+      ],
+      "answerIndex": 1,
+      "explanation": "상관접속사 choose between A or B 또는 between A and B 중 선택의 의미를 나타내는 or가 쓰였습니다.",
+      "optionExplanations": [
+        "(A) and도 가능하나 선택지 문맥상 or가 출제 의도입니다.",
+        "(B) 정답: 둘 중 하나의 선택을 나타내는 접속사입니다.",
+        "(C) 역접의 등위접속사로 호응하지 않습니다.",
+        "(D) neither와 호응하는 부정 접속사입니다."
+      ]
+    },
+    {
+      "id": "TOEIC_Q4",
+      "number": 4,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": "",
+      "question": "All travel expense reimbursement claims must be submitted to the accounting department ------- five business days.",
+      "options": [
+        "within",
+        "during",
+        "between",
+        "under"
+      ],
+      "answerIndex": 0,
+      "explanation": "기간을 나타내는 명사구 five business days(영업일 5일)와 함께 쓰여 ~이내에를 뜻하는 전치사 within이 정답입니다.",
+      "optionExplanations": [
+        "(A) 정답: 구체적 기간(~이내에)을 나타내는 전치사입니다.",
+        "(B) during은 특정 기간의 명칭(during the vacation)과 함께 쓰입니다.",
+        "(C) between은 둘 사이를 나타냅니다.",
+        "(D) under는 기준 수치 미만을 나타냅니다."
+      ]
+    },
+    {
+      "id": "TOEIC_Q5",
+      "number": 5,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": "",
+      "question": "Despite initial budget constraints, the marketing campaign was ------- successful in increasing brand awareness.",
+      "options": [
+        "remarkably",
+        "remarkable",
+        "remark",
+        "remarked"
+      ],
+      "answerIndex": 0,
+      "explanation": "형용사 successful(성공적인)을 수식하는 부사 remarkably(현저하게, 눈에 띄게)가 정답입니다.",
+      "optionExplanations": [
+        "(A) 정답: 형용사 successful을 수식하는 부사입니다.",
+        "(B) 형용사로 형용사를 수식할 수 없습니다.",
+        "(C) 동사 또는 명사 형태입니다.",
+        "(D) 동사의 과거/과거분사 형태입니다."
+      ]
+    },
+    {
+      "id": "TOEIC_Q6",
+      "number": 6,
+      "part": "Part 6 · Text Completion",
+      "scenario": "```\n[Internal Memo]\n\nTo: All Engineering Staff\nFrom: Facilities Management\nDate: August 31, 2026\nSubject: Scheduled Server Room Upgrade\n\nPlease be advised that the main server infrastructure will undergo scheduled maintenance this coming Saturday from 9:00 PM to 3:00 AM. During this period, remote server access will be [1] unavailable. \n\nWe kindly request all team leads to ensure that critical files are backed up locally [2] Friday evening. [3] \n\nIf you experience persistent connectivity issues after 6:00 AM on Sunday, please contact technical support [4].\n```",
+      "question": "[1]번 빈칸 선택",
+      "options": [
+        "temporarily",
+        "permanently",
+        "accidentally",
+        "reluctantly"
+      ],
+      "answerIndex": 0,
+      "explanation": "토요일 밤 점검 시간 동안에만 일시적으로(temporarily) 접속이 불가하다는 문맥이 자연스럽습니다.",
+      "optionExplanations": [
+        "(A) 정답: 점검 시간 동안 일시적으로라는 문맥에 부합합니다.",
+        "(B) 영구적으로는 문맥상 어색합니다.",
+        "(C) 우연히/실수로라는 뜻으로 정기 점검과 어울리지 않습니다.",
+        "(D) 마지못해는 감정 형용사로 적합하지 않습니다."
+      ]
+    },
+    {
+      "id": "TOEIC_Q7",
+      "number": 7,
+      "part": "Part 6 · Text Completion",
+      "scenario": "```\n[Internal Memo]\n\nTo: All Engineering Staff\nFrom: Facilities Management\nDate: August 31, 2026\nSubject: Scheduled Server Room Upgrade\n\nPlease be advised that the main server infrastructure will undergo scheduled maintenance this coming Saturday from 9:00 PM to 3:00 AM. During this period, remote server access will be [1] unavailable. \n\nWe kindly request all team leads to ensure that critical files are backed up locally [2] Friday evening. [3] \n\nIf you experience persistent connectivity issues after 6:00 AM on Sunday, please contact technical support [4].\n```",
+      "question": "[2]번 빈칸 선택",
+      "options": [
+        "by",
+        "until",
+        "for",
+        "since"
+      ],
+      "answerIndex": 0,
+      "explanation": "금요일 저녁까지 백업을 완료해야 하는 마감/완료 시점을 나타내므로 by가 정답입니다.",
+      "optionExplanations": [
+        "(A) 정답: 완료 기한(~까지)을 나타내는 전치사 by입니다.",
+        "(B) until은 지속되는 동작(stay until)과 주로 쓰입니다.",
+        "(C) for는 기간의 길이를 나타냅니다.",
+        "(D) since는 시작 시점을 나타냅니다."
+      ]
+    },
+    {
+      "id": "TOEIC_Q8",
+      "number": 8,
+      "part": "Part 6 · Text Completion",
+      "scenario": "```\n[Internal Memo]\n\nTo: All Engineering Staff\nFrom: Facilities Management\nDate: August 31, 2026\nSubject: Scheduled Server Room Upgrade\n\nPlease be advised that the main server infrastructure will undergo scheduled maintenance this coming Saturday from 9:00 PM to 3:00 AM. During this period, remote server access will be [1] unavailable. \n\nWe kindly request all team leads to ensure that critical files are backed up locally [2] Friday evening. [3] \n\nIf you experience persistent connectivity issues after 6:00 AM on Sunday, please contact technical support [4].\n```",
+      "question": "[3]번 빈칸 (알맞은 문장 선택)",
+      "options": [
+        "This will prevent any unforeseen data loss.",
+        "The cafeteria will remain closed on weekends.",
+        "We are hiring new software developers.",
+        "Server room access keys have been reissued."
+      ],
+      "answerIndex": 0,
+      "explanation": "앞 문장의 파일 로컬 백업 요청과 이어져 데이터 유실을 방지한다는 내용이 가장 자연스럽습니다.",
+      "optionExplanations": [
+        "(A) 정답: 백업 요청의 이유(데이터 유실 방지)를 설명합니다.",
+        "(B) 구내식당 운영은 서버 점검과 무관합니다.",
+        "(C) 개발자 채용은 문맥과 무관합니다.",
+        "(D) 출입 열쇠 재발급은 문맥 흐름에 맞지 않습니다."
+      ]
+    },
+    {
+      "id": "TOEIC_Q9",
+      "number": 9,
+      "part": "Part 6 · Text Completion",
+      "scenario": "```\n[Internal Memo]\n\nTo: All Engineering Staff\nFrom: Facilities Management\nDate: August 31, 2026\nSubject: Scheduled Server Room Upgrade\n\nPlease be advised that the main server infrastructure will undergo scheduled maintenance this coming Saturday from 9:00 PM to 3:00 AM. During this period, remote server access will be [1] unavailable. \n\nWe kindly request all team leads to ensure that critical files are backed up locally [2] Friday evening. [3] \n\nIf you experience persistent connectivity issues after 6:00 AM on Sunday, please contact technical support [4].\n```",
+      "question": "[4]번 빈칸 선택",
+      "options": [
+        "promptly",
+        "hesitantly",
+        "scarcely",
+        "previously"
+      ],
+      "answerIndex": 0,
+      "explanation": "접속 장애 발생 시 기술 지원팀에 즉시(promptly) 연락하라는 문맥이 어울립니다.",
+      "optionExplanations": [
+        "(A) 정답: 지체 없이 즉시 연락하라는 문맥에 맞습니다.",
+        "(B) 주저하며라는 뜻으로 어색합니다.",
+        "(C) 거의 ~않다는 부정 부사입니다.",
+        "(D) 이전에라는 뜻으로 미래 시점 연락과 어울리지 않습니다."
+      ]
+    },
+    {
+      "id": "TOEIC_Q10",
+      "number": 10,
+      "part": "Part 7 · Single Passage (단일 지문)",
+      "scenario": "```\n[Conference Notice]\n\nGlobal Tech Summit 2026\nLocation: Metro Convention Center, Hall B\nDate: October 14-16, 2026\n\nRegistration for early-bird tickets will conclude on September 15. Standard registration fees will apply thereafter. All registered attendees will receive complimentary access to keynote presentations, industry exhibits, and networking luncheons. For group bookings exceeding 10 participants, please contact our events team at groups@techsummit.org for special corporate rates.\n```",
+      "question": "What is indicated about early-bird registration?",
+      "options": [
+        "It ends on September 15.",
+        "It requires a group booking.",
+        "It excludes keynote sessions.",
+        "It is held in Hall A."
+      ],
+      "answerIndex": 0,
+      "explanation": "지문에 Registration for early-bird tickets will conclude on September 15라고 명시되어 있습니다.",
+      "optionExplanations": [
+        "(A) 정답: 9월 15일에 조기 등록이 마감됩니다.",
+        "(B) 10인 이상 단체 예약에만 적용되는 것이 아닙니다.",
+        "(C) 모든 등록자는 기조연설 무료 입장이 가능합니다.",
+        "(D) 행사 장소는 Hall B입니다."
+      ]
+    },
+    {
+      "id": "TOEIC_Q11",
+      "number": 11,
+      "part": "Part 7 · Single Passage (단일 지문)",
+      "scenario": "```\n[Conference Notice]\n\nGlobal Tech Summit 2026\nLocation: Metro Convention Center, Hall B\nDate: October 14-16, 2026\n\nRegistration for early-bird tickets will conclude on September 15. Standard registration fees will apply thereafter. All registered attendees will receive complimentary access to keynote presentations, industry exhibits, and networking luncheons. For group bookings exceeding 10 participants, please contact our events team at groups@techsummit.org for special corporate rates.\n```",
+      "question": "What is included with standard event admission?",
+      "options": [
+        "Networking luncheons",
+        "Individual booth rental",
+        "VIP airport transfers",
+        "Hotel room accommodations"
+      ],
+      "answerIndex": 0,
+      "explanation": "지문에 All registered attendees will receive complimentary access to ... networking luncheons라고 언급되어 있습니다.",
+      "optionExplanations": [
+        "(A) 정답: 네트워킹 오찬이 포함되어 있습니다.",
+        "(B) 부스 대여는 포함 내역에 없습니다.",
+        "(C) 공항 이동 서비스는 언급되지 않았습니다.",
+        "(D) 호텔 숙박은 제공되지 않습니다."
+      ]
+    },
+    {
+      "id": "TOEIC_Q12",
+      "number": 12,
+      "part": "Part 7 · Single Passage (단일 지문)",
+      "scenario": "```\n[Conference Notice]\n\nGlobal Tech Summit 2026\nLocation: Metro Convention Center, Hall B\nDate: October 14-16, 2026\n\nRegistration for early-bird tickets will conclude on September 15. Standard registration fees will apply thereafter. All registered attendees will receive complimentary access to keynote presentations, industry exhibits, and networking luncheons. For group bookings exceeding 10 participants, please contact our events team at groups@techsummit.org for special corporate rates.\n```",
+      "question": "How can corporate groups receive discounted rates?",
+      "options": [
+        "By emailing the events team",
+        "By paying in cash on-site",
+        "By registering before August 31",
+        "By presenting an employee badge"
+      ],
+      "answerIndex": 0,
+      "explanation": "지문 마지막 문장에 10명 초과 단체는 groups@techsummit.org로 이메일을 보내 특별 요금을 문의하라고 나와 있습니다.",
+      "optionExplanations": [
+        "(A) 정답: 이벤트 팀으로 이메일을 보내야 합니다.",
+        "(B) 현장 현금 결제는 언급되지 않았습니다.",
+        "(C) 8월 31일 마감은 사실이 아닙니다.",
+        "(D) 사원증 제시는 언급되지 않았습니다."
+      ]
+    }
+  ]
+}

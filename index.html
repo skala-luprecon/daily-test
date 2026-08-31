@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Test CBT Arena - TOEIC & SKCT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- TOP HEADER -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="brand-badge">PRO</span>
+        <span class="brand-title">Daily Test <span>CBT</span></span>
+      </div>
+
+      <nav class="subject-nav">
+        <button id="tab-toeic" class="nav-tab active" data-subject="toeic">
+          <span class="tab-icon">📘</span> TOEIC RC
+        </button>
+        <button id="tab-skct" class="nav-tab" data-subject="skct">
+          <span class="tab-icon">🧠</span> SKCT 인지역량
+        </button>
+      </nav>
+
+      <div class="header-controls">
+        <div class="date-selector-wrapper">
+          <span class="calendar-icon">📅</span>
+          <select id="date-select" class="date-select"></select>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SUB HEADER: INFO & TIMER -->
+  <section class="test-banner">
+    <div class="banner-container">
+      <div class="test-meta">
+        <h1 id="test-title" class="test-title">TOEIC RC 실전 평가</h1>
+        <div class="test-tags">
+          <span id="test-date-badge" class="badge">2026-08-31</span>
+          <span id="test-count-badge" class="badge badge-sub">총 12문항</span>
+          <span id="test-model-badge" class="badge badge-accent">gemini-3.6-flash</span>
+        </div>
+      </div>
+
+      <div class="timer-card">
+        <div class="timer-label">남은 시간</div>
+        <div id="timer-display" class="timer-digits">15:00</div>
+        <div class="timer-actions">
+          <button id="btn-timer-toggle" class="btn-timer-action" title="일시정지/재개">⏸️</button>
+          <button id="btn-timer-reset" class="btn-timer-action" title="타이머 리셋">🔄</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN APP CONTAINER -->
+  <main class="main-container">
+    <!-- LEFT: QUESTION STREAM -->
+    <div class="question-stream-wrapper">
+      <!-- PROGRESS BAR -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span>마킹 진행률</span>
+          <span id="progress-text">0 / 12 완료 (0%)</span>
+        </div>
+        <div class="progress-track">
+          <div id="progress-fill" class="progress-fill" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <!-- SCORE RESULT HERO (Hidden by default) -->
+      <div id="score-hero" class="score-hero hidden">
+        <div class="score-card">
+          <div class="score-header">
+            <h2>🎉 채점 완료!</h2>
+            <div id="score-grade-badge" class="grade-badge">상위 5% 마스터 🏆</div>
+          </div>
+          <div class="score-stats-grid">
+            <div class="stat-box">
+              <span class="stat-label">총점</span>
+              <span id="stat-score" class="stat-value text-primary">12 / 12</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">정답률</span>
+              <span id="stat-accuracy" class="stat-value text-success">100%</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">소요 시간</span>
+              <span id="stat-time" class="stat-value">08분 20초</span>
+            </div>
+          </div>
+          <div class="score-actions">
+            <button id="btn-filter-all" class="btn-filter active">전체 문항 해설</button>
+            <button id="btn-filter-wrong" class="btn-filter">틀린 문제만 보기 (오답노트) ❌</button>
+            <button id="btn-retake" class="btn-retake">다시 풀기 🔄</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTIONS CONTAINER -->
+      <div id="questions-list" class="questions-list">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- BOTTOM SUBMIT BUTTON -->
+      <div class="stream-footer">
+        <button id="btn-submit-bottom" class="btn-primary-submit">
+          <span>📝 답안 제출 및 채점하기</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- RIGHT: STICKY OMR NAVIGATION -->
+    <aside class="omr-sidebar">
+      <div class="omr-card">
+        <div class="omr-header">
+          <h3>📋 OMR 답안지</h3>
+          <span id="omr-count-status">0 / 12</span>
+        </div>
+        <div id="omr-grid" class="omr-grid">
+          <!-- Rendered by JS -->
+        </div>
+        <div class="omr-legend">
+          <span class="legend-item"><span class="dot dot-unanswered"></span> 미표기</span>
+          <span class="legend-item"><span class="dot dot-answered"></span> 표기완료</span>
+        </div>
+        <button id="btn-submit-sidebar" class="btn-primary-submit btn-block">
+          <span>답안 제출 →</span>
+        </button>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="app-footer">
+    <p>Powered by Google Gemini 3.6 Flash & Google Apps Script · Daily Test CBT Engine</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
