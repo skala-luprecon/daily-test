@@ -307,7 +307,14 @@ function generateSkctQuizUnified_(date) {
   questions.forEach(function(q, idx) {
     q.id = 'SKCT_Q' + (idx + 1);
     q.number = idx + 1;
-    q.scenario = String(q.scenario || '').trim();
+    let sc = String(q.scenario || '').trim();
+    if (sc) {
+      // 슬랙 모달에서 회색 박스 카드로 렌더링되도록 백틱 코드블록 규격화
+      sc = sc.replace(/^```[a-z]*\n?/i, '').replace(/```$/, '').trim();
+      q.scenario = '```\n' + sc + '\n```';
+    } else {
+      q.scenario = '';
+    }
     q.question = String(q.question || '').trim();
     
     if (!Array.isArray(q.options) || q.options.length !== 4) {
@@ -858,8 +865,15 @@ function renderScenarioCards_(blocks, scenario) {
       });
     });
   } else {
-    // 단일 카드 또는 일반 텍스트인 경우
-    addSafeSectionChunks_(blocks, raw);
+    // 단일 카드 또는 일반 텍스트인 경우 반드시 코드블록(```) 카드 박스로 감싸서 슬랙 블록에 등록
+    let cardText = raw;
+    if (!cardText.startsWith('```')) {
+      cardText = '```\n' + cardText + '\n```';
+    }
+    blocks.push({
+      type: 'section',
+      text: { type: 'mrkdwn', text: cardText }
+    });
   }
 }
 
