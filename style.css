@@ -840,9 +840,12 @@ body {
 }
 
 .scenario-doc-card pre {
-  font-family: var(--font-mono);
-  font-size: 0.88rem;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
   white-space: pre-wrap;
   word-break: break-word;
   color: #0f172a;
+  text-align: justify;
+  text-justify: inter-word;
+  line-height: 1.8;
 }
