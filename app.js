@@ -92,6 +92,19 @@ async function switchSubject(subject) {
 }
 
 async function loadQuiz(subject, date) {
+  if (!date) {
+    document.getElementById('questions-list').innerHTML = 
+      '<div class="question-card" style="text-align: center; padding: 4rem 2rem;">' +
+        '<span style="font-size: 2.5rem; display: block; margin-bottom: 0.8rem;">📅</span>' +
+        '<h3 style="font-size: 1.2rem; font-weight: 700; color: #1e293b;">아직 등록된 문제가 없습니다.</h3>' +
+        '<p style="color: #64748b; margin-top: 0.5rem; font-size: 0.9rem;">매일 아침 7시(토익) / 8시(SKCT)에 새로운 문제가 자동으로 출제 및 아카이빙됩니다.</p>' +
+      '</div>';
+    document.getElementById('btn-submit-bottom').style.display = 'none';
+    document.getElementById('btn-submit-sidebar').style.display = 'none';
+    document.getElementById('omr-grid').innerHTML = '';
+    return;
+  }
+
   const filePath = './data/' + subject + '/' + date + '_' + subject.toUpperCase() + '.json';
   
   try {
@@ -104,10 +117,13 @@ async function loadQuiz(subject, date) {
   } catch (err) {
     console.error('Quiz load error:', err);
     document.getElementById('questions-list').innerHTML = 
-      '<div class="question-card" style="text-align: center; padding: 3rem;">' +
-        '<h3>⚠️ 데이터를 불러올 수 없습니다.</h3>' +
-        '<p style="color: #64748b; margin-top: 0.5rem;">경로: ' + filePath + '</p>' +
+      '<div class="question-card" style="text-align: center; padding: 4rem 2rem;">' +
+        '<span style="font-size: 2.5rem; display: block; margin-bottom: 0.8rem;">📅</span>' +
+        '<h3 style="font-size: 1.2rem; font-weight: 700; color: #1e293b;">출제된 문제를 준비 중입니다.</h3>' +
+        '<p style="color: #64748b; margin-top: 0.5rem; font-size: 0.9rem;">' + date + ' 일자의 데이터가 아직 아카이빙되지 않았습니다.</p>' +
       '</div>';
+    document.getElementById('btn-submit-bottom').style.display = 'none';
+    document.getElementById('btn-submit-sidebar').style.display = 'none';
   }
 }
 
