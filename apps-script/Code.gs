@@ -24,6 +24,7 @@
 // ============================================================================
 const APP_CONFIG = Object.freeze({
   TIME_ZONE: 'Asia/Seoul',
+  GITHUB_REPO: 'skala-luprecon/daily-test',
   
   // Gemini 모델 계층
   PRIMARY_MODEL: 'gemini-3.6-flash',
@@ -45,7 +46,8 @@ const APP_CONFIG = Object.freeze({
     TOEIC_QUIZ: 'QUIZ_TOEIC_CURRENT',
     SKCT_QUIZ: 'QUIZ_SKCT_CURRENT',
     SECRET: 'SLACK_INTERACTION_SECRET',
-    LAST_API_CALL: 'LAST_GEMINI_API_CALL'
+    LAST_API_CALL: 'LAST_GEMINI_API_CALL',
+    GITHUB_TOKEN: 'GITHUB_TOKEN'
   }
 });
 
@@ -780,6 +782,17 @@ function updateScoreModal_(payload) {
 function saveQuizData_(type, quiz) {
   const key = type === 'SKCT' ? APP_CONFIG.KEYS.SKCT_QUIZ : APP_CONFIG.KEYS.TOEIC_QUIZ;
   saveChunked_(key, JSON.stringify(quiz));
+
+  // GitHub 저장소에 일자별 JSON 자동 커밋 & 푸시
+  try {
+    const subFolder = type === 'SKCT' ? 'skct/' : 'toeic/';
+    const fileName = quiz.date + '_' + type + '.json';
+    const filePath = 'data/' + subFolder + fileName;
+    commitFileToGitHub_(filePath, JSON.stringify(quiz, null, 2), 'feat: archive ' + quiz.date + ' ' + type + ' quiz data');
+    updateManifestOnGitHub_(quiz.date);
+  } catch (err) {
+    Logger.log('⚠️ GitHub 자동 아카이빙 오류 (무시됨): ' + (err.message || err));
+  }
 }
 
 function loadQuizData_(type) {
@@ -947,4 +960,100 @@ function getEnv_(key) {
   const val = PropertiesService.getScriptProperties().getProperty(key);
   if (!val) throw new Error('환경변수 [' + key + ']가 Script Properties에 설정되지 않았습니다.');
   return val;
+}
+
+/** GitHub REST API를 통해 파일 자동 커밋 & 푸시 */
+function commitFileToGitHub_(filePath, fileContentStr, commitMessage) {
+  const token = PropertiesService.getScriptProperties().getProperty(APP_CONFIG.KEYS.GITHUB_TOKEN);
+  if (!token) {
+    Logger.log('ℹ️ GITHUB_TOKEN이 설정되지 않아 GitHub 백업을 건너뜁니다.');
+    return;
+  }
+
+  const url = 'https://api.github.com/repos/' + APP_CONFIG.GITHUB_REPO + '/contents/' + filePath;
+
+  // 1) 기존 파일의 SHA 조회 (업데이트 시 필수)
+  let sha = null;
+  try {
+    const getRes = UrlFetchApp.fetch(url, {
+      method: 'get',
+      headers: {
+        Authorization: 'Bearer ' + token,
+        Accept: 'application/vnd.github.v3+json',
+        'User-Agent': 'DailyTest-AppsScript'
+      },
+      muteHttpExceptions: true
+    });
+    if (getRes.getResponseCode() === 200) {
+      const existingData = JSON.parse(getRes.getContentText());
+      sha = existingData.sha;
+    }
+  } catch (e) {
+    // 신규 생성 시 무시
+  }
+
+  // 2) PUT 요청으로 파일 커밋 & 푸시
+  const payload = {
+    message: commitMessage,
+    content: Utilities.base64Encode(Utilities.newBlob(fileContentStr, 'application/json').getBytes()),
+    branch: 'main'
+  };
+  if (sha) payload.sha = sha;
+
+  const putRes = UrlFetchApp.fetch(url, {
+    method: 'put',
+    contentType: 'application/json',
+    headers: {
+      Authorization: 'Bearer ' + token,
+      Accept: 'application/vnd.github.v3+json',
+      'User-Agent': 'DailyTest-AppsScript'
+    },
+    payload: JSON.stringify(payload),
+    muteHttpExceptions: true
+  });
+
+  const statusCode = putRes.getResponseCode();
+  if (statusCode === 200 || statusCode === 201) {
+    Logger.log('✅ GitHub 커밋 성공: ' + filePath);
+  } else {
+    Logger.log('⚠️ GitHub 커밋 실패 (' + statusCode + '): ' + putRes.getContentText());
+  }
+}
+
+/** data/manifest.json에 새로운 출제 일자 자동 등록 */
+function updateManifestOnGitHub_(newDate) {
+  const token = PropertiesService.getScriptProperties().getProperty(APP_CONFIG.KEYS.GITHUB_TOKEN);
+  if (!token) return;
+
+  const url = 'https://api.github.com/repos/' + APP_CONFIG.GITHUB_REPO + '/contents/data/manifest.json';
+  let sha = null;
+  let manifest = { dates: [newDate], latest: newDate };
+
+  try {
+    const getRes = UrlFetchApp.fetch(url, {
+      method: 'get',
+      headers: {
+        Authorization: 'Bearer ' + token,
+        Accept: 'application/vnd.github.v3+json',
+        'User-Agent': 'DailyTest-AppsScript'
+      },
+      muteHttpExceptions: true
+    });
+    if (getRes.getResponseCode() === 200) {
+      const data = JSON.parse(getRes.getContentText());
+      sha = data.sha;
+      const decoded = Utilities.newBlob(Utilities.base64Decode(data.content)).getDataAsString();
+      manifest = JSON.parse(decoded);
+      if (!Array.isArray(manifest.dates)) manifest.dates = [];
+      if (manifest.dates.indexOf(newDate) === -1) {
+        manifest.dates.push(newDate);
+        manifest.dates.sort();
+      }
+      manifest.latest = newDate;
+    }
+  } catch (e) {
+    Logger.log('Manifest 조회 에러: ' + e);
+  }
+
+  commitFileToGitHub_('data/manifest.json', JSON.stringify(manifest, null, 2), 'chore: update manifest index for ' + newDate);
 }

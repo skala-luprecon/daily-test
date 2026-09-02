@@ -99,6 +99,7 @@ daily-test/
 | `GEMINI_API_KEY` | `AIzaSy...` | 2단계에서 발급받은 Gemini API 키 |
 | `SLACK_BOT_TOKEN` | `xoxb-...` | 1단계에서 발급받은 Slack Bot OAuth Token |
 | `SLACK_WEBHOOK_URL` | `https://hooks.slack.com/...` | 1단계에서 생성한 Slack Incoming Webhook URL |
+| `GITHUB_TOKEN` | `ghp_...` | GitHub PAT (문제 JSON 자동 커밋/아카이빙용) |
 
 ---
 
