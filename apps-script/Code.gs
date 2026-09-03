@@ -13,8 +13,8 @@
  *    - SKCT: 4대 핵심 인지역량(언어이해, 창의수리, 언어추리, 수열추리) 8문항 실전 세트.
  * 
  * 3. [엔터프라이즈급 인프라 & 안정성]
- *    - Gemini API: Primary(gemini-3.6-flash) -> Fallback Retry(gemini-3.6-flash) 고성능 단일화.
- *    - Storage: Google Apps Script Properties 9KB 용량 제한 우회 청크 분할 저장.
+ *    - Gemini API: Primary(gemini-3.8-flash, 최대 3회 1분간격 재시도) -> Fallback(gemini-3.6-flash) 고성능 계층화.
+ *    - Storage: Google Apps Script Properties 9KB 제한 우회 청크 스토리지 & Slack View 무상태화.
  *    - Slack: Block Kit 75자 규격 준수, 지문 다중 카드 독립 렌더링, 군더더기 없는 비즈니스 톤 UI.
  * ============================================================================
  */
@@ -27,17 +27,17 @@ const APP_CONFIG = Object.freeze({
   GITHUB_REPO: 'skala-luprecon/daily-test',
   
   // Gemini 모델 계층
-  PRIMARY_MODEL: 'gemini-3.6-flash',
+  PRIMARY_MODEL: 'gemini-3.8-flash',
   FALLBACK_MODEL: 'gemini-3.6-flash',
   
-  // API 제어
-  MAX_ATTEMPTS: 2,
+  // API 제어 및 503 재시도 정책
+  MAX_RETRIES: 3,                   // Primary 모델 최대 3회 시도
+  RETRY_DELAY_MS: 60 * 1000,        // 503 일시 장애 대응: 재시도 간 1분(60초) 대기
   MAX_OUTPUT_TOKENS: 30000,
   MIN_API_INTERVAL_MS: 15000,
-  RETRY_BASE_DELAY_MS: 10000,
   
   // 제약 조건
-  MAX_PROPERTY_BYTES: 8000,
+  CHUNK_SIZE: 7500,
   MAX_MODAL_BLOCKS: 90,
   MAX_SECTION_CHARS: 2800,
   
@@ -51,10 +51,9 @@ const APP_CONFIG = Object.freeze({
   }
 });
 
-// SKCT 4대 핵심 인지역량 (자료해석 도표 영역은 임시 보류/주석 처리)
+// SKCT 4대 핵심 인지역량
 const SKCT_AREAS = Object.freeze({
   verbal_comprehension: { label: '언어이해', count: 2 },
-  // data_interpretation:  { label: '자료해석', count: 2 }, // [보류] 도표 렌더링 고도화 시 활성화
   creative_math:        { label: '창의수리', count: 2 },
   verbal_reasoning:     { label: '언어추리', count: 2 },
   sequence_reasoning:   { label: '수열추리', count: 2 }
@@ -153,7 +152,7 @@ function installAllDailyTriggers() {
 }
 
 function triggerDailyToeic() {
-  runWithLock_('TOEIC_LOCK', function() {
+  runWithLock_(function() {
     const date = Utilities.formatDate(new Date(), APP_CONFIG.TIME_ZONE, 'yyyy-MM-dd');
     const quiz = generateToeicQuizUnified_(date);
     saveQuizData_('TOEIC', quiz);
@@ -162,7 +161,7 @@ function triggerDailyToeic() {
 }
 
 function triggerDailySkct() {
-  runWithLock_('SKCT_LOCK', function() {
+  runWithLock_(function() {
     const date = Utilities.formatDate(new Date(), APP_CONFIG.TIME_ZONE, 'yyyy-MM-dd');
     const quiz = generateSkctQuizUnified_(date);
     saveQuizData_('SKCT', quiz);
@@ -179,55 +178,78 @@ function testSkctRun() { triggerDailySkct(); }
 // ============================================================================
 
 function callGeminiRobust_(prompt, customTemp) {
-  const models = [APP_CONFIG.PRIMARY_MODEL, APP_CONFIG.FALLBACK_MODEL];
   const apiKey = getEnv_('GEMINI_API_KEY');
+  const maxRetries = APP_CONFIG.MAX_RETRIES || 3;
+  const retryDelayMs = APP_CONFIG.RETRY_DELAY_MS || 60000;
   let lastErr = null;
 
-  for (let i = 0; i < models.length; i++) {
-    const model = models[i];
+  // 1. Primary Model (gemini-3.8-flash) 최대 3회 시도 (1분 간격)
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      throttleGeminiCalls_();
-
-      const url = 'https://generativelanguage.googleapis.com/v1beta/models/' +
-        encodeURIComponent(model) + ':generateContent?key=' + encodeURIComponent(apiKey);
-
-      const payload = {
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: {
-          temperature: customTemp || 0.5,
-          topP: 0.95,
-          maxOutputTokens: APP_CONFIG.MAX_OUTPUT_TOKENS,
-          responseMimeType: 'application/json',
-          thinkingConfig: {
-            thinkingLevel: 'high'
-          }
-        }
-      };
-
-      const response = UrlFetchApp.fetch(url, {
-        method: 'post',
-        contentType: 'application/json',
-        payload: JSON.stringify(payload),
-        muteHttpExceptions: true
-      });
-
-      const statusCode = response.getResponseCode();
-      const rawText = response.getContentText();
-
-      if (statusCode < 200 || statusCode >= 300) {
-        throw new Error('Gemini API HTTP ' + statusCode + ': ' + rawText.slice(0, 400));
-      }
-
-      const parsedJson = parseAndRepairJson_(rawText);
-      return { data: parsedJson, model: model };
+      Logger.log('🚀 [' + APP_CONFIG.PRIMARY_MODEL + '] 호출 시도 (' + attempt + '/' + maxRetries + ')...');
+      const result = executeGeminiRequest_(APP_CONFIG.PRIMARY_MODEL, prompt, customTemp, apiKey);
+      Logger.log('✅ [' + APP_CONFIG.PRIMARY_MODEL + '] 호출 성공 (시도 ' + attempt + '회차)');
+      return { data: result, model: APP_CONFIG.PRIMARY_MODEL };
     } catch (err) {
       lastErr = err;
-      Logger.log('⚠️ Model [' + model + '] 실패: ' + err.message);
-      Utilities.sleep(2000);
+      Logger.log('⚠️ [' + APP_CONFIG.PRIMARY_MODEL + '] 시도 ' + attempt + '/' + maxRetries + ' 실패: ' + err.message);
+      if (attempt < maxRetries) {
+        Logger.log('⏳ 503/일시 오류 대응: ' + Math.round(retryDelayMs / 1000) + '초(1분) 동안 대기 후 재시도합니다...');
+        Utilities.sleep(retryDelayMs);
+      }
+    }
+  }
+
+  // 2. Primary Model 3회 실패 시 Fallback Model (gemini-3.6-flash) 긴급 구동
+  if (APP_CONFIG.FALLBACK_MODEL && APP_CONFIG.FALLBACK_MODEL !== APP_CONFIG.PRIMARY_MODEL) {
+    try {
+      Logger.log('🔄 [' + APP_CONFIG.PRIMARY_MODEL + '] 3회 재시도 모두 실패 ➡️ [' + APP_CONFIG.FALLBACK_MODEL + '] Fallback 호출 실행');
+      const result = executeGeminiRequest_(APP_CONFIG.FALLBACK_MODEL, prompt, customTemp, apiKey);
+      Logger.log('✅ [' + APP_CONFIG.FALLBACK_MODEL + '] Fallback 호출 성공');
+      return { data: result, model: APP_CONFIG.FALLBACK_MODEL };
+    } catch (fallbackErr) {
+      Logger.log('❌ Fallback [' + APP_CONFIG.FALLBACK_MODEL + '] 호출 실패: ' + fallbackErr.message);
+      lastErr = fallbackErr;
     }
   }
 
   throw new Error('모든 Gemini 모델 호출 실패: ' + (lastErr ? lastErr.message : 'Unknown'));
+}
+
+function executeGeminiRequest_(model, prompt, customTemp, apiKey) {
+  throttleGeminiCalls_();
+
+  const url = 'https://generativelanguage.googleapis.com/v1beta/models/' +
+    encodeURIComponent(model) + ':generateContent?key=' + encodeURIComponent(apiKey);
+
+  const payload = {
+    contents: [{ parts: [{ text: prompt }] }],
+    generationConfig: {
+      temperature: customTemp || 0.5,
+      topP: 0.95,
+      maxOutputTokens: APP_CONFIG.MAX_OUTPUT_TOKENS,
+      responseMimeType: 'application/json',
+      thinkingConfig: {
+        thinkingLevel: 'high'
+      }
+    }
+  };
+
+  const response = UrlFetchApp.fetch(url, {
+    method: 'post',
+    contentType: 'application/json',
+    payload: JSON.stringify(payload),
+    muteHttpExceptions: true
+  });
+
+  const statusCode = response.getResponseCode();
+  const rawText = response.getContentText();
+
+  if (statusCode < 200 || statusCode >= 300) {
+    throw new Error('Gemini API HTTP ' + statusCode + ': ' + rawText.slice(0, 400));
+  }
+
+  return parseAndRepairJson_(rawText);
 }
 
 /** JSON 파싱 및 AI 특유의 마크다운 펜스/트림 자동 수리 */
@@ -274,7 +296,6 @@ function generateSkctQuizUnified_(date) {
     '',
     'DOMAIN SPECIFICATIONS (Exactly 2 questions each):',
     '1. "verbal_comprehension" (언어이해): Deep corporate/tech/economic editorial reading. Include subtle traps in options via paraphrasing, conditional qualifiers, and fact-checking.',
-    '// 2. "data_interpretation" (자료해석): [임시 보류/주석 처리]',
     '2. "creative_math" (창의수리): Speed/distance/time with two moving bodies or varying speeds, multi-stage mixture/concentration (농도), cost-margin-discount algebra, complex work rates, or combination/probability.',
     '3. "verbal_reasoning" (언어추리): Syllogism (삼단논법/전제결론 제시형), strict truth-teller/liar puzzle (진실게임), or 4-5 entity multi-attribute grid placement under <조건>. Ensure exactly one airtight logical solution.',
     '4. "sequence_reasoning" (수열추리): Non-trivial numerical sequence deduction (e.g. geometric difference series, alternating compound operations, quadratic recurrence). Present clearly as "a, b, c, d, e, (?)" and provide the exact mathematical formula in explanation.',
@@ -350,6 +371,7 @@ function getPart7DayConfig_() {
       mode: 'single',
       dayLabel: '단일 지문 집중',
       part7Info: 'Part 7 단일 3Q',
+      part7Label: '단일 지문 독해 (3문항)',
       setName: 'Part 7 · Single Passage (단일 지문)',
       instruction: 'PART 7 SINGLE PASSAGE: Generate exactly 1 comprehensive business document (Article/Notice/Memo, 200-240 words) with exactly 3 challenging questions (Q1: Purpose/Topic, Q2: NOT/TRUE Fact-check, Q3: Contextual Synonym or Inference).'
     };
@@ -358,6 +380,7 @@ function getPart7DayConfig_() {
       mode: 'double',
       dayLabel: '이중 연계 지문 집중',
       part7Info: 'Part 7 이중 5Q',
+      part7Label: '이중 연계 독해 (5문항)',
       setName: 'Part 7 · Double Passage (이중 연계 지문)',
       instruction: 'PART 7 DOUBLE PASSAGE: Generate exactly 2 heavily linked documents (e.g. Document 1: Job Notice/Webpage + Document 2: Inquiry Email/Application) with exactly 5 challenging questions (Q1: Detail on Doc 1, Q2: Detail on Doc 2, Q3: NOT/TRUE question, Q4: CROSS-REFERENCING INFERENCE between Doc 1 & Doc 2, Q5: Synonym or 2nd Cross-referencing question).'
     };
@@ -366,6 +389,7 @@ function getPart7DayConfig_() {
       mode: 'triple',
       dayLabel: '삼중 복합 연계 지문',
       part7Info: 'Part 7 삼중 5Q',
+      part7Label: '삼중 연계 독해 (5문항)',
       setName: 'Part 7 · Triple Passage (삼중 연계 지문)',
       instruction: 'PART 7 TRIPLE PASSAGE: Generate exactly 3 heavily linked documents (e.g. Doc 1: Conference Schedule + Doc 2: Relocation Notice + Doc 3: Attendee Inquiry Email) with exactly 5 challenging questions (Q1: Detail on Doc 1, Q2: Detail on Doc 2, Q3: NOT/TRUE question, Q4: CROSS-REFERENCING between Doc 1 & 2, Q5: MULTI-DOCUMENT INFERENCE linking all 3 documents).'
     };
@@ -463,6 +487,7 @@ function generateToeicQuizUnified_(date) {
     type: 'TOEIC',
     title: 'TOEIC RC 실전 평가 (' + dayCfg.dayLabel + ')',
     part7Info: dayCfg.part7Info,
+    part7Label: dayCfg.part7Label,
     testId: 'TOEIC_' + date.replace(/-/g, ''),
     date: date,
     model: res.model,
@@ -487,7 +512,6 @@ function postLauncherToSlack_(type, quiz) {
     headerTitle = '📌 SKCT 인지역량 Daily Test (' + quiz.date + ')';
     detailLines = [
       '• *언어이해*: 2문항',
-      // '• *자료해석*: 2문항', // [보류]
       '• *창의수리*: 2문항',
       '• *언어추리*: 2문항',
       '• *수열추리*: 2문항'
@@ -495,20 +519,10 @@ function postLauncherToSlack_(type, quiz) {
     summaryText = '*총 8문항* · 권장 시간: 12분';
   } else {
     headerTitle = '📌 TOEIC RC Daily Test (' + quiz.date + ')';
-
-    let part7Label = '복합 연계 독해 (5문항)';
-    if (quiz.part7Info && quiz.part7Info.indexOf('단일') !== -1) {
-      part7Label = '단일 지문 독해 (3문항)';
-    } else if (quiz.part7Info && quiz.part7Info.indexOf('이중') !== -1) {
-      part7Label = '이중 연계 독해 (5문항)';
-    } else if (quiz.part7Info && quiz.part7Info.indexOf('삼중') !== -1) {
-      part7Label = '삼중 연계 독해 (5문항)';
-    }
-
     detailLines = [
       '• *Part 5* (단문 공란 채우기): 5문항',
       '• *Part 6* (장문 공란 채우기): 4문항',
-      '• *Part 7* (' + part7Label + ')'
+      '• *Part 7* (' + (quiz.part7Label || '복합 연계 독해 (5문항)') + ')'
     ];
     summaryText = '*총 ' + quiz.questions.length + '문항* · 권장 시간: ' + (quiz.questions.length > 12 ? '15분' : '12분');
   }
@@ -642,8 +656,6 @@ function handleUnifiedSubmission_(payload) {
     totalCount: quiz.questions.length
   };
 
-  saveUserSubmission_(submission);
-
   return ContentService.createTextOutput(JSON.stringify({
     response_action: 'update',
     view: buildScoreModalView_(quiz, submission)
@@ -656,7 +668,14 @@ function buildScoreModalView_(quiz, sub) {
   return {
     type: 'modal',
     callback_id: 'score_view',
-    private_metadata: JSON.stringify({ testId: quiz.testId, type: sub.type, userId: sub.userId }),
+    private_metadata: JSON.stringify({
+      testId: quiz.testId,
+      type: sub.type,
+      userId: sub.userId,
+      userAnswers: sub.userAnswers,
+      correctCount: sub.correctCount,
+      totalCount: sub.totalCount
+    }),
     title: { type: 'plain_text', text: '채점 결과' },
     close: { type: 'plain_text', text: '닫기' },
     blocks: [
@@ -694,9 +713,8 @@ function buildScoreModalView_(quiz, sub) {
 }
 
 function updateExplanationModal_(payload, wrongOnly) {
-  const meta = JSON.parse(payload.view.private_metadata);
-  const quiz = loadQuizData_(meta.type);
-  const sub = loadUserSubmission_(meta.type, payload.user.id);
+  const sub = JSON.parse(payload.view.private_metadata);
+  const quiz = loadQuizData_(sub.type);
   const blocks = [
     {
       type: 'actions',
@@ -764,9 +782,8 @@ function updateExplanationModal_(payload, wrongOnly) {
 }
 
 function updateScoreModal_(payload) {
-  const meta = JSON.parse(payload.view.private_metadata);
-  const quiz = loadQuizData_(meta.type);
-  const sub = loadUserSubmission_(meta.type, payload.user.id);
+  const sub = JSON.parse(payload.view.private_metadata);
+  const quiz = loadQuizData_(sub.type);
 
   callSlackWebApi_('views.update', {
     view_id: payload.view.id,
@@ -802,22 +819,10 @@ function loadQuizData_(type) {
   return JSON.parse(raw);
 }
 
-function saveUserSubmission_(sub) {
-  const key = 'SUB_' + sub.type + '_' + sub.userId;
-  saveChunked_(key, JSON.stringify(sub));
-}
-
-function loadUserSubmission_(type, userId) {
-  const key = 'SUB_' + type + '_' + userId;
-  const raw = loadChunked_(key);
-  if (!raw) throw new Error('제출 기록을 찾을 수 없습니다.');
-  return JSON.parse(raw);
-}
-
 /** Google Apps Script Properties 9KB 용량 제한 우회 분할 저장기 */
 function saveChunked_(baseKey, strValue) {
   const props = PropertiesService.getScriptProperties();
-  const CHUNK_SIZE = 7500;
+  const CHUNK_SIZE = APP_CONFIG.CHUNK_SIZE;
   const totalChunks = Math.ceil(strValue.length / CHUNK_SIZE);
 
   // 기존 청크 정리
@@ -903,7 +908,7 @@ function sanitizeOptionText_(opt) {
 /** Slack Section 블록 3,000자 초과 방지 안전 분할기 */
 function addSafeSectionChunks_(blocks, text) {
   if (!text) return;
-  const MAX_CHUNK = 2800;
+  const MAX_CHUNK = APP_CONFIG.MAX_SECTION_CHARS;
   if (text.length <= MAX_CHUNK) {
     blocks.push({ type: 'section', text: { type: 'mrkdwn', text: text } });
     return;
@@ -950,7 +955,7 @@ function createInteractionSecret() {
   Logger.log('🔑 Request URL에 추가할 값: ?secret=' + secret);
 }
 
-function runWithLock_(lockName, fn) {
+function runWithLock_(fn) {
   const lock = LockService.getScriptLock();
   if (!lock.tryLock(10000)) return;
   try { fn(); } finally { lock.releaseLock(); }
@@ -995,7 +1000,7 @@ function commitFileToGitHub_(filePath, fileContentStr, commitMessage) {
   // 2) PUT 요청으로 파일 커밋 & 푸시
   const payload = {
     message: commitMessage,
-    content: Utilities.base64Encode(Utilities.newBlob(fileContentStr, 'application/json').getBytes()),
+    content: Utilities.base64Encode(fileContentStr, Utilities.Charset.UTF_8),
     branch: 'main'
   };
   if (sha) payload.sha = sha;
@@ -1028,6 +1033,7 @@ function updateManifestOnGitHub_(newDate) {
   const url = 'https://api.github.com/repos/' + APP_CONFIG.GITHUB_REPO + '/contents/data/manifest.json';
   let sha = null;
   let manifest = { dates: [newDate], latest: newDate };
+  let needsCommit = false;
 
   try {
     const getRes = UrlFetchApp.fetch(url, {
@@ -1048,12 +1054,23 @@ function updateManifestOnGitHub_(newDate) {
       if (manifest.dates.indexOf(newDate) === -1) {
         manifest.dates.push(newDate);
         manifest.dates.sort();
+        needsCommit = true;
       }
-      manifest.latest = newDate;
+      if (manifest.latest !== newDate) {
+        manifest.latest = newDate;
+        needsCommit = true;
+      }
+    } else {
+      needsCommit = true;
     }
   } catch (e) {
     Logger.log('Manifest 조회 에러: ' + e);
+    needsCommit = true;
   }
 
-  commitFileToGitHub_('data/manifest.json', JSON.stringify(manifest, null, 2), 'chore: update manifest index for ' + newDate);
+  if (needsCommit) {
+    commitFileToGitHub_('data/manifest.json', JSON.stringify(manifest, null, 2), 'chore: update manifest index for ' + newDate);
+  } else {
+    Logger.log('ℹ️ Manifest에 이미 ' + newDate + '가 최신으로 등록되어 있어 커밋을 건너뜁니다.');
+  }
 }

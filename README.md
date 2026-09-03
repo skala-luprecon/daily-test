@@ -1,6 +1,6 @@
 # 📚 Daily Test Slack Bot (TOEIC RC & SKCT 인지역량)
 
-Google Apps Script와 **Google Gemini API** (`gemini-3.6-flash`)를 기반으로 매일 아침 Slack 채널에 **TOEIC RC 850+ 실전 문제** 및 **SKCT 인지역량 실전 문제**를 자동 출제하고, Slack Modal을 통해 실시간 채점, 오답 분석, 상세 해설을 제공하는 통합 테스트 봇입니다.
+Google Apps Script와 **Google Gemini API** (`gemini-3.8-flash`)를 기반으로 매일 아침 Slack 채널에 **TOEIC RC 850+ 실전 문제** 및 **SKCT 인지역량 실전 문제**를 자동 출제하고, Slack Modal을 통해 실시간 채점, 오답 분석, 상세 해설을 제공하는 통합 테스트 봇입니다.
 
 ---
 
@@ -12,13 +12,15 @@ Google Apps Script와 **Google Gemini API** (`gemini-3.6-flash`)를 기반으로
 * ⏰ **정기 자동 출제 (Time-driven Triggers)**
   * **매일 오전 07:00 (KST)**: TOEIC RC 실전 평가 (12~14문항)
   * **매일 오전 08:00 (KST)**: SKCT 인지역량 실전 평가 (8문항)
-* 🧠 **고성능 AI 모델 계층 (High-Performance Reasoning)**
-  * 메인/재시도 모델: `gemini-3.6-flash` (Deep Reasoning, thinkingLevel: high)
-  * 일관된 고난도 킬러 문항 퀄리티 유지
-* 📱 **세련된 비즈니스 톤 UI & 인터랙티브 모달**
-  * 불필요한 AI 설명 문구를 제거한 깔끔한 불릿 리스트형 채널 공지
-  * 슬랙 Block Kit 75자 선택지 규격 준수 (단어 잘림 없는 깔끔한 보기)
+* 🧠 **고성능 AI 모델 계층 & 503 방어 재시도 (High-Performance Reasoning)**
+  * 메인 모델: `gemini-3.8-flash` (Deep Reasoning, thinkingLevel: high)
+  * **스마트 재시도**: 503 일시 오류 시 **최대 3회, 각 시도마다 1분(60초) 대기** 후 재시도
+  * Fallback 모델: 3회 재시도 실패 시 `gemini-3.6-flash`로 자동 롤백
+  * 일관된 고난도 킬러 문항 퀄리티 및 장애 복원력 유지
+* 📱 **세련된 비즈니스 톤 UI & 무상태형 인터랙티브 모달**
+  * Slack Block Kit 75자 선택지 규격 준수 (단어 잘림 없는 깔끔한 보기)
   * 다중 지문(Part 6, Part 7 단일/이중/삼중) 독립 카드 박스 렌더링
+  * `private_metadata` 기반 무상태(Stateless) 모달로 ScriptProperties 500KB 한도 고갈 위험 0%
 * 🛡️ **엔터프라이즈급 스토리지 & 안정성**
   * **청크 분할 스토리지(`saveChunked_`)**: Google Apps Script의 9KB 스토리지 용량 한계를 극복하여 대용량 삼중 지문/해설도 100% 무손실 저장
 
@@ -147,16 +149,22 @@ daily-test/
 ```javascript
 const APP_CONFIG = Object.freeze({
   TIME_ZONE: 'Asia/Seoul',
+  GITHUB_REPO: 'skala-luprecon/daily-test',
   
   // Gemini 모델 계층
-  PRIMARY_MODEL: 'gemini-3.6-flash',
+  PRIMARY_MODEL: 'gemini-3.8-flash',
   FALLBACK_MODEL: 'gemini-3.6-flash',
   
-  // API 제어
-  MAX_ATTEMPTS: 2,
+  // API 제어 및 503 재시도 정책
+  MAX_RETRIES: 3,                   // Primary 모델 최대 3회 시도
+  RETRY_DELAY_MS: 60 * 1000,        // 503 일시 장애 대응: 재시도 간 1분(60초) 대기
   MAX_OUTPUT_TOKENS: 30000,
   MIN_API_INTERVAL_MS: 15000,
-  RETRY_BASE_DELAY_MS: 10000,
+  
+  // 제약 조건
+  CHUNK_SIZE: 7500,
+  MAX_MODAL_BLOCKS: 90,
+  MAX_SECTION_CHARS: 2800,
   ...
 });
 ```
