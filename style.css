@@ -483,8 +483,12 @@ code {
 
 /* Single Column: Part 5 & direct math problems without passage */
 .cbt-single-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
   max-width: 860px;
-  margin: 0 auto 2rem auto;
+  width: 100%;
+  margin: 0 auto 2.25rem auto;
   scroll-margin-top: 5.5rem;
 }
 
@@ -580,15 +584,21 @@ code {
 }
 
 /* ==========================================================================
-   PART HEADER BANNER
+   QUESTIONS LIST & PART HEADER BANNER
    ========================================================================== */
+.questions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
 .part-header-banner {
   background: var(--bg-surface);
   border: 1px solid var(--border-paper);
   border-left: 4px solid var(--text-ink);
   border-radius: var(--radius-sm);
   padding: 0.75rem 1.1rem;
-  margin: 1.75rem 0 1.25rem 0;
+  margin: 0.5rem 0 0.5rem 0;
   display: flex;
   align-items: center;
   gap: 0.65rem;
@@ -609,7 +619,7 @@ code {
 .questions-subgroup {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 .question-card {
