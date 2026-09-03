@@ -168,14 +168,9 @@ function applyTheme(theme) {
   localStorage.setItem('daily_test_theme', theme);
 
   if (DOM.btnThemeToggle) {
-    const icon = DOM.btnThemeToggle.querySelector('.theme-icon');
     const label = DOM.btnThemeToggle.querySelector('.theme-label');
-    if (theme === 'dark') {
-      if (icon) icon.textContent = '☀️';
-      if (label) label.textContent = 'LIGHT';
-    } else {
-      if (icon) icon.textContent = '🌙';
-      if (label) label.textContent = 'DARK';
+    if (label) {
+      label.textContent = theme === 'dark' ? 'LIGHT' : 'DARK';
     }
   }
 }
@@ -256,7 +251,6 @@ async function loadQuiz(subject, date) {
 function renderEmptyState(title, subtitle) {
   DOM.questionsList.innerHTML = 
     '<div class="question-card" style="text-align: center; padding: 4rem 2rem;">' +
-      '<span style="font-size: 2.5rem; display: block; margin-bottom: 0.8rem;">📅</span>' +
       '<h3 style="font-family: var(--font-ui); font-size: 1.15rem; font-weight: 700; color: var(--text-ink);">' + escapeHtml(title) + '</h3>' +
       '<p style="color: var(--text-muted); margin-top: 0.5rem; font-size: 0.88rem;">' + escapeHtml(subtitle) + '</p>' +
     '</div>';
@@ -324,7 +318,7 @@ function renderQuiz() {
     if (sec.part && sec.part !== lastRenderedPart) {
       const partBanner = document.createElement('div');
       partBanner.className = 'part-header-banner';
-      partBanner.innerHTML = '<span class="part-icon">📖</span> <span class="part-text">' + escapeHtml(sec.part) + '</span>';
+      partBanner.innerHTML = '<span class="part-text">' + escapeHtml(sec.part) + '</span>';
       DOM.questionsList.appendChild(partBanner);
       lastRenderedPart = sec.part;
     }
@@ -351,7 +345,7 @@ function renderQuiz() {
       leftPane.innerHTML = 
         '<div class="passage-sticky-card">' +
           '<div class="passage-card-header">' +
-            '<span class="passage-badge">📄 DOCUMENT / PASSAGE</span>' +
+            '<span class="passage-badge">DOCUMENT / PASSAGE</span>' +
             '<span class="passage-hint">※ 지문을 읽고 우측 문제에 답하시오.</span>' +
           '</div>' +
           '<div class="passage-docs-wrapper">' +
@@ -508,10 +502,10 @@ function handleSubmit() {
   DOM.statAccuracy.textContent = pct + '%';
   DOM.statTime.textContent = minutes + '분 ' + seconds + '초';
 
-  let grade = '수고하셨습니다! 👍';
-  if (pct === 100) grade = '만점! 상위 1% 킬러 정복 🏆';
-  else if (pct >= 85) grade = '우수! 상위 10% 실력자 🔥';
-  else if (pct >= 70) grade = '안정권! 합격 안정 점수 🎯';
+  let grade = '수고하셨습니다.';
+  if (pct === 100) grade = '만점! 상위 1% 킬러 정복';
+  else if (pct >= 85) grade = '우수! 상위 10% 실력자';
+  else if (pct >= 70) grade = '안정권! 합격 안정 점수';
   DOM.scoreGradeBadge.textContent = grade;
 
   DOM.scoreHero.classList.remove('hidden');
@@ -533,15 +527,15 @@ function renderQuestionExplanation(q, userAns, isCorrect) {
   slot.innerHTML = 
     '<div class="explanation-card">' +
       '<div class="result-tag ' + (isCorrect ? 'result-correct' : 'result-wrong') + '">' +
-        (isCorrect ? '✅ 정답입니다!' : '❌ 오답 (내 선택: (' + (labels[userAns] || '미선택') + ') / 정답: (' + labels[q.answerIndex] + '))') +
+        (isCorrect ? '[정답] 올바른 선택입니다.' : '[오답] (내 선택: (' + (labels[userAns] || '미선택') + ') / 정답: (' + labels[q.answerIndex] + '))') +
       '</div>' +
       '<div class="expl-box">' +
-        '<strong>💡 [핵심 해설]</strong><br>' +
+        '<strong>[핵심 해설]</strong><br>' +
         escapeHtml(q.explanation || '해설이 제공되지 않습니다.') +
       '</div>' +
       (optExplsHtml ? 
         '<div class="expl-box expl-box-options">' +
-          '<strong>🔍 [선택지별 분석]</strong>' +
+          '<strong>[선택지별 분석]</strong>' +
           '<div class="option-expl-list">' +
             optExplsHtml +
           '</div>' +
@@ -609,7 +603,7 @@ function startTimer() {
     updateTimerDisplay();
     if (STATE.timerSeconds <= 0) {
       clearInterval(STATE.timerInterval);
-      alert('⏱️ 제한 시간이 종료되었습니다. 답안을 제출합니다.');
+      alert('제한 시간이 종료되었습니다. 답안을 제출합니다.');
       handleSubmit();
     }
   }, 1000);
@@ -624,7 +618,7 @@ function updateTimerDisplay() {
 
 function toggleTimer() {
   STATE.isTimerRunning = !STATE.isTimerRunning;
-  DOM.btnTimerToggle.textContent = STATE.isTimerRunning ? '⏸️' : '▶️';
+  DOM.btnTimerToggle.textContent = STATE.isTimerRunning ? 'PAUSE' : 'RESUME';
 }
 
 function resetTimer() {

@@ -3,7 +3,7 @@
  * [Next-Gen Unified Slack Quiz Bot Architecture] - Code.gs
  * ============================================================================
  * 
- * 💡 아키텍처 설계 철학 및 핵심 기능:
+ * 아키텍처 설계 철학 및 핵심 기능:
  * 
  * 1. [자가 치유형 방어적 파싱 (Self-Healing & Defensive Parsing)]
  *    - JSON 수리 및 사소한 마커/포맷 자동 정제(Auto-Sanitizing)로 불필요한 재시도 0% 달성.
@@ -113,7 +113,7 @@ function doPost(e) {
 }
 
 function doGet() {
-  return ContentService.createTextOutput('Unified Daily Test Bot Engine is Running Healthy. 🚀');
+  return ContentService.createTextOutput('Unified Daily Test Bot Engine is Running Healthy.');
 }
 
 // ============================================================================
@@ -148,7 +148,7 @@ function installAllDailyTriggers() {
     .inTimezone(APP_CONFIG.TIME_ZONE)
     .create();
 
-  Logger.log('✅ Daily 트리거 설치 완료 (07:00 TOEIC RC, 08:00 SKCT 5대 영역)');
+  Logger.log('[트리거] Daily 트리거 설치 완료 (07:00 TOEIC RC, 08:00 SKCT 5대 영역)');
 }
 
 function triggerDailyToeic() {
@@ -186,15 +186,15 @@ function callGeminiRobust_(prompt, customTemp) {
   // 1. Primary Model (gemini-3.8-flash) 최대 3회 시도 (1분 간격)
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      Logger.log('🚀 [' + APP_CONFIG.PRIMARY_MODEL + '] 호출 시도 (' + attempt + '/' + maxRetries + ')...');
+      Logger.log('[' + APP_CONFIG.PRIMARY_MODEL + '] 호출 시도 (' + attempt + '/' + maxRetries + ')...');
       const result = executeGeminiRequest_(APP_CONFIG.PRIMARY_MODEL, prompt, customTemp, apiKey);
-      Logger.log('✅ [' + APP_CONFIG.PRIMARY_MODEL + '] 호출 성공 (시도 ' + attempt + '회차)');
+      Logger.log('[' + APP_CONFIG.PRIMARY_MODEL + '] 호출 성공 (시도 ' + attempt + '회차)');
       return { data: result, model: APP_CONFIG.PRIMARY_MODEL };
     } catch (err) {
       lastErr = err;
-      Logger.log('⚠️ [' + APP_CONFIG.PRIMARY_MODEL + '] 시도 ' + attempt + '/' + maxRetries + ' 실패: ' + err.message);
+      Logger.log('[경고] [' + APP_CONFIG.PRIMARY_MODEL + '] 시도 ' + attempt + '/' + maxRetries + ' 실패: ' + err.message);
       if (attempt < maxRetries) {
-        Logger.log('⏳ 503/일시 오류 대응: ' + Math.round(retryDelayMs / 1000) + '초(1분) 동안 대기 후 재시도합니다...');
+        Logger.log('[대기] 503/일시 오류 대응: ' + Math.round(retryDelayMs / 1000) + '초(1분) 동안 대기 후 재시도합니다...');
         Utilities.sleep(retryDelayMs);
       }
     }
@@ -203,12 +203,12 @@ function callGeminiRobust_(prompt, customTemp) {
   // 2. Primary Model 3회 실패 시 Fallback Model (gemini-3.7-flash) 긴급 구동
   if (APP_CONFIG.FALLBACK_MODEL && APP_CONFIG.FALLBACK_MODEL !== APP_CONFIG.PRIMARY_MODEL) {
     try {
-      Logger.log('🔄 [' + APP_CONFIG.PRIMARY_MODEL + '] 3회 재시도 모두 실패 ➡️ [' + APP_CONFIG.FALLBACK_MODEL + '] Fallback 호출 실행');
+      Logger.log('[재시도 실패] [' + APP_CONFIG.PRIMARY_MODEL + '] 3회 재시도 모두 실패 -> [' + APP_CONFIG.FALLBACK_MODEL + '] Fallback 호출 실행');
       const result = executeGeminiRequest_(APP_CONFIG.FALLBACK_MODEL, prompt, customTemp, apiKey);
-      Logger.log('✅ [' + APP_CONFIG.FALLBACK_MODEL + '] Fallback 호출 성공');
+      Logger.log('[성공] [' + APP_CONFIG.FALLBACK_MODEL + '] Fallback 호출 성공');
       return { data: result, model: APP_CONFIG.FALLBACK_MODEL };
     } catch (fallbackErr) {
-      Logger.log('❌ Fallback [' + APP_CONFIG.FALLBACK_MODEL + '] 호출 실패: ' + fallbackErr.message);
+      Logger.log('[오류] Fallback [' + APP_CONFIG.FALLBACK_MODEL + '] 호출 실패: ' + fallbackErr.message);
       lastErr = fallbackErr;
     }
   }
@@ -359,9 +359,9 @@ function generateSkctQuizUnified_(date) {
 
 /**
  * 요일별 Part 7 지문 규격 및 문항 수 결정:
- * - 월/화 (1, 2): 단일 지문 1개 (3문항) ➡️ 데일리 총 12문항
- * - 수/목 (3, 4): 이중 지문 1세트 (5문항) ➡️ 데일리 총 14문항
- * - 금/주말 (5, 6, 0): 삼중 지문 1세트 (5문항) ➡️ 데일리 총 14문항
+ * - 월/화 (1, 2): 단일 지문 1개 (3문항) -> 데일리 총 12문항
+ * - 수/목 (3, 4): 이중 지문 1세트 (5문항) -> 데일리 총 14문항
+ * - 금/주말 (5, 6, 0): 삼중 지문 1세트 (5문항) -> 데일리 총 14문항
  */
 function getPart7DayConfig_() {
   const day = new Date().getDay(); // 0:일, 1:월, 2:화, 3:수, 4:목, 5:금, 6:토
@@ -509,7 +509,7 @@ function postLauncherToSlack_(type, quiz) {
   let summaryText = '';
 
   if (type === 'SKCT') {
-    headerTitle = '📌 SKCT 인지역량 Daily Test (' + quiz.date + ')';
+    headerTitle = 'SKCT 인지역량 Daily Test (' + quiz.date + ')';
     detailLines = [
       '• *언어이해*: 2문항',
       '• *창의수리*: 2문항',
@@ -518,7 +518,7 @@ function postLauncherToSlack_(type, quiz) {
     ];
     summaryText = '*총 8문항* · 권장 시간: 12분';
   } else {
-    headerTitle = '📌 TOEIC RC Daily Test (' + quiz.date + ')';
+    headerTitle = 'TOEIC RC Daily Test (' + quiz.date + ')';
     detailLines = [
       '• *Part 5* (단문 공란 채우기): 5문항',
       '• *Part 6* (장문 공란 채우기): 4문항',
@@ -577,10 +577,10 @@ function openQuizModal_(triggerId, type) {
   let lastRenderedPart = '';
 
   quiz.questions.forEach(function(q) {
-    // 1) 파트가 바뀔 때만 파트 헤더 1회 출력 (예: 📖 Part 5 · Incomplete Sentences)
+    // 1) 파트가 바뀔 때만 파트 헤더 1회 출력 (예: Part 5 · Incomplete Sentences)
     if (q.part && q.part !== lastRenderedPart) {
       blocks.push({ type: 'divider' });
-      blocks.push({ type: 'header', text: { type: 'plain_text', text: '📖 ' + q.part, emoji: true } });
+      blocks.push({ type: 'header', text: { type: 'plain_text', text: q.part, emoji: false } });
       lastRenderedPart = q.part;
     } else {
       blocks.push({ type: 'divider' });
@@ -681,7 +681,7 @@ function buildScoreModalView_(quiz, sub) {
     blocks: [
       {
         type: 'header',
-        text: { type: 'plain_text', text: '🎉 채점 완료! (' + sub.correctCount + '/' + sub.totalCount + ' 정답)', emoji: true }
+        text: { type: 'plain_text', text: '채점 완료 (' + sub.correctCount + '/' + sub.totalCount + ' 정답)', emoji: false }
       },
       {
         type: 'section',
@@ -697,13 +697,13 @@ function buildScoreModalView_(quiz, sub) {
             type: 'button',
             style: 'primary',
             action_id: 'show_explanations_all',
-            text: { type: 'plain_text', text: '전체 해설 보기 📖' },
+            text: { type: 'plain_text', text: '전체 해설 보기' },
             value: sub.type
           },
           {
             type: 'button',
             action_id: 'show_explanations_wrong',
-            text: { type: 'plain_text', text: '틀린 문제만 보기 ❌' },
+            text: { type: 'plain_text', text: '틀린 문제만 보기' },
             value: sub.type
           }
         ]
@@ -727,7 +727,7 @@ function updateExplanationModal_(payload, wrongOnly) {
   });
 
   if (targetQs.length === 0) {
-    blocks.push({ type: 'section', text: { type: 'mrkdwn', text: '🎉 *틀린 문제가 없습니다! 완벽합니다.*' } });
+    blocks.push({ type: 'section', text: { type: 'mrkdwn', text: '*틀린 문제가 없습니다. 완벽합니다.*' } });
   }
 
   let lastRenderedScenario = '';
@@ -736,7 +736,7 @@ function updateExplanationModal_(payload, wrongOnly) {
   targetQs.forEach(function(q) {
     if (q.part && q.part !== lastRenderedPart) {
       blocks.push({ type: 'divider' });
-      blocks.push({ type: 'header', text: { type: 'plain_text', text: '📖 ' + q.part, emoji: true } });
+      blocks.push({ type: 'header', text: { type: 'plain_text', text: q.part, emoji: false } });
       lastRenderedPart = q.part;
     } else {
       blocks.push({ type: 'divider' });
@@ -752,7 +752,7 @@ function updateExplanationModal_(payload, wrongOnly) {
     const isCorrect = userAns === q.answerIndex;
     const labels = ['A', 'B', 'C', 'D'];
 
-    let explText = '*' + q.number + '번 · ' + (isCorrect ? '✅ 정답' : '❌ 오답') + '*\n';
+    let explText = '*' + q.number + '번 · ' + (isCorrect ? '[정답]' : '[오답]') + '*\n';
     explText += '*' + q.question + '*\n';
     explText += '내 선택: *(' + (labels[userAns] || '미선택') + ')* | 정답: *(' + labels[q.answerIndex] + ') ' + q.options[q.answerIndex] + '*\n\n';
     explText += '*[핵심 해설]*\n' + (q.explanation || '해설 없음') + '\n\n';
@@ -808,7 +808,7 @@ function saveQuizData_(type, quiz) {
     commitFileToGitHub_(filePath, JSON.stringify(quiz, null, 2), 'feat: archive ' + quiz.date + ' ' + type + ' quiz data');
     updateManifestOnGitHub_(quiz.date);
   } catch (err) {
-    Logger.log('⚠️ GitHub 자동 아카이빙 오류 (무시됨): ' + (err.message || err));
+    Logger.log('[경고] GitHub 자동 아카이빙 오류 (무시됨): ' + (err.message || err));
   }
 }
 
@@ -952,7 +952,7 @@ function verifySlackSecurity_(e) {
 function createInteractionSecret() {
   const secret = Utilities.getUuid().replace(/-/g, '');
   PropertiesService.getScriptProperties().setProperty(APP_CONFIG.KEYS.SECRET, secret);
-  Logger.log('🔑 Request URL에 추가할 값: ?secret=' + secret);
+  Logger.log('Request URL에 추가할 값: ?secret=' + secret);
 }
 
 function runWithLock_(fn) {
@@ -971,7 +971,7 @@ function getEnv_(key) {
 function commitFileToGitHub_(filePath, fileContentStr, commitMessage) {
   const token = PropertiesService.getScriptProperties().getProperty(APP_CONFIG.KEYS.GITHUB_TOKEN);
   if (!token) {
-    Logger.log('ℹ️ GITHUB_TOKEN이 설정되지 않아 GitHub 백업을 건너뜁니다.');
+    Logger.log('[정보] GITHUB_TOKEN이 설정되지 않아 GitHub 백업을 건너뜁니다.');
     return;
   }
 
@@ -1019,9 +1019,9 @@ function commitFileToGitHub_(filePath, fileContentStr, commitMessage) {
 
   const statusCode = putRes.getResponseCode();
   if (statusCode === 200 || statusCode === 201) {
-    Logger.log('✅ GitHub 커밋 성공: ' + filePath);
+    Logger.log('[성공] GitHub 커밋 성공: ' + filePath);
   } else {
-    Logger.log('⚠️ GitHub 커밋 실패 (' + statusCode + '): ' + putRes.getContentText());
+    Logger.log('[경고] GitHub 커밋 실패 (' + statusCode + '): ' + putRes.getContentText());
   }
 }
 
@@ -1071,6 +1071,6 @@ function updateManifestOnGitHub_(newDate) {
   if (needsCommit) {
     commitFileToGitHub_('data/manifest.json', JSON.stringify(manifest, null, 2), 'chore: update manifest index for ' + newDate);
   } else {
-    Logger.log('ℹ️ Manifest에 이미 ' + newDate + '가 최신으로 등록되어 있어 커밋을 건너뜁니다.');
+    Logger.log('[정보] Manifest에 이미 ' + newDate + '가 최신으로 등록되어 있어 커밋을 건너뜁니다.');
   }
 }
