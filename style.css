@@ -115,6 +115,17 @@ html[data-theme="dark"] {
 /* ==========================================================================
    BASE RESETS & GLOBAL
    ========================================================================== */
+html {
+  scroll-behavior: smooth;
+}
+
+/* View Transitions API (Modern Smooth Cross-Fade) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.22s;
+  animation-timing-function: ease-in-out;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -127,7 +138,6 @@ body {
   color: var(--text-ink);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  transition: background-color var(--transition-normal), color var(--transition-normal);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -468,12 +478,14 @@ code {
   gap: 1.5rem;
   align-items: flex-start;
   margin-bottom: 2.25rem;
+  scroll-margin-top: 5.5rem;
 }
 
 /* Single Column: Part 5 & direct math problems without passage */
 .cbt-single-pane {
   max-width: 860px;
   margin: 0 auto 2rem auto;
+  scroll-margin-top: 5.5rem;
 }
 
 /* ==========================================================================
@@ -606,10 +618,21 @@ code {
   border-radius: var(--radius-md);
   padding: 1.35rem 1.5rem;
   box-shadow: var(--card-shadow);
-  transition: border-color var(--transition-fast);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  scroll-margin-top: 5.5rem;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 300px;
 }
 
 .question-card:hover {
+  border-color: var(--border-strong);
+}
+
+.question-card:focus-within {
+  border-color: var(--border-focus);
+}
+
+.question-card:has(.option-item.selected) {
   border-color: var(--border-strong);
 }
 
@@ -658,11 +681,17 @@ code {
   cursor: pointer;
   transition: all var(--transition-fast);
   user-select: none;
+  outline: none;
 }
 
 .option-item:hover {
   background-color: var(--bg-surface);
   border-color: var(--border-strong);
+}
+
+.option-item:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
 }
 
 /* Tactile Key Letter: [A], [B], [C], [D] */
@@ -1123,5 +1152,138 @@ code {
 
   .score-stats-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   NATIVE HTML5 DIALOGS (Top-Layer Animations & Modals)
+   ========================================================================== */
+dialog.cbt-modal-dialog {
+  border: 1px solid var(--border-paper);
+  background: var(--bg-surface);
+  color: var(--text-ink);
+  border-radius: var(--radius-md);
+  padding: 0;
+  max-width: 440px;
+  width: 90%;
+  box-shadow: var(--paper-shadow);
+  margin: auto;
+  opacity: 0;
+  transform: scale(0.96) translateY(6px);
+  transition-property: opacity, transform, display, overlay;
+  transition-duration: 0.22s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  transition-behavior: allow-discrete;
+}
+
+dialog.cbt-modal-dialog[open] {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+
+  @starting-style {
+    opacity: 0;
+    transform: scale(0.96) translateY(6px);
+  }
+}
+
+dialog.cbt-modal-dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px);
+  transition: display 0.22s allow-discrete, overlay 0.22s allow-discrete, background-color 0.22s ease, backdrop-filter 0.22s ease;
+}
+
+dialog.cbt-modal-dialog[open]::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+
+  @starting-style {
+    background-color: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+  }
+}
+
+.dialog-content {
+  padding: 1.5rem 1.6rem;
+}
+
+.dialog-header {
+  margin-bottom: 0.85rem;
+}
+
+.dialog-title {
+  font-family: var(--font-ui);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--text-ink);
+}
+
+.dialog-message {
+  font-family: var(--font-paper);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 1.4rem;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.btn-dialog-secondary {
+  font-family: var(--font-ui);
+  font-size: 0.84rem;
+  font-weight: 700;
+  padding: 0.55rem 1rem;
+  background: var(--bg-panel);
+  color: var(--text-ink);
+  border: 1px solid var(--border-paper);
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-dialog-secondary:hover {
+  background: var(--bg-document);
+  border-color: var(--border-strong);
+}
+
+.btn-dialog-primary {
+  font-family: var(--font-ui);
+  font-size: 0.84rem;
+  font-weight: 700;
+  padding: 0.55rem 1.15rem;
+  background: var(--primary);
+  color: var(--primary-text);
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-dialog-primary:hover {
+  background: var(--primary-hover);
+}
+
+/* ==========================================================================
+   ACCESSIBILITY: PREFERS-REDUCED-MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+
+  dialog.cbt-modal-dialog,
+  dialog.cbt-modal-dialog[open] {
+    transform: none;
+    transition-duration: 0.05s;
   }
 }

@@ -69,7 +69,7 @@
       <div class="meta-progress-box">
         <div class="progress-info">
           <span class="progress-title">PROGRESS</span>
-          <span id="progress-text" class="progress-digits">0 / 12 (0%)</span>
+          <span id="progress-text" class="progress-digits" aria-live="polite">0 / 12 (0%)</span>
         </div>
         <div class="progress-track">
           <div id="progress-fill" class="progress-fill" style="width: 0%;"></div>
@@ -84,7 +84,7 @@
       <!-- EXAM & PASSAGE WORKSPACE -->
       <div class="exam-workspace">
         <!-- SCORE RESULT HERO (Hidden by default) -->
-        <div id="score-hero" class="score-hero hidden">
+        <div id="score-hero" class="score-hero hidden" role="region" aria-live="polite" aria-label="시험 채점 결과">
           <div class="score-card">
             <div class="score-header">
               <h2>SCORE REPORT</h2>
@@ -160,6 +160,32 @@
   <footer class="app-footer">
     <p>Powered by Google Gemini 3.8 Flash & Google Apps Script · Daily Test CBT Engine</p>
   </footer>
+
+  <!-- NATIVE HTML5 DIALOGS (Top-Layer Modals) -->
+  <dialog id="dialog-confirm" class="cbt-modal-dialog">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3 id="dialog-confirm-title" class="dialog-title">SUBMIT TEST</h3>
+      </div>
+      <p id="dialog-confirm-message" class="dialog-message">아직 풀지 않은 문제가 있습니다. 그래도 제출하시겠습니까?</p>
+      <div class="dialog-actions">
+        <button id="btn-dialog-confirm-cancel" class="btn-dialog-secondary">계속 풀기</button>
+        <button id="btn-dialog-confirm-ok" class="btn-dialog-primary">답안 제출</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="dialog-alert" class="cbt-modal-dialog">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3 id="dialog-alert-title" class="dialog-title">TIME EXPIRED</h3>
+      </div>
+      <p id="dialog-alert-message" class="dialog-message">제한 시간이 종료되었습니다. 답안을 제출합니다.</p>
+      <div class="dialog-actions">
+        <button id="btn-dialog-alert-ok" class="btn-dialog-primary">확인</button>
+      </div>
+    </div>
+  </dialog>
 
   <script src="app.js"></script>
 </body>

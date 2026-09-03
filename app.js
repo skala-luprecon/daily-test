@@ -1,7 +1,7 @@
 /**
  * Daily Test CBT Arena - Application Logic (Vanilla JS)
  * Primary: Gemini 3.8 Flash (3 Retries, 1m backoff) / Fallback: Gemini 3.7 Flash
- * B-Layout (Split-Screen) + A-Palette (Warm Paper) + Obsidian Dark Mode
+ * Modern Web Standards: View Transitions, Native Dialogs, WAI-ARIA, Focus-Within
  */
 
 const STATE = {
@@ -64,7 +64,16 @@ function initDomReferences() {
     btnSubmitBottom: document.getElementById('btn-submit-bottom'),
     omrCountStatus: document.getElementById('omr-count-status'),
     omrGrid: document.getElementById('omr-grid'),
-    btnSubmitSidebar: document.getElementById('btn-submit-sidebar')
+    btnSubmitSidebar: document.getElementById('btn-submit-sidebar'),
+    dialogConfirm: document.getElementById('dialog-confirm'),
+    dialogConfirmTitle: document.getElementById('dialog-confirm-title'),
+    dialogConfirmMessage: document.getElementById('dialog-confirm-message'),
+    btnDialogConfirmCancel: document.getElementById('btn-dialog-confirm-cancel'),
+    btnDialogConfirmOk: document.getElementById('btn-dialog-confirm-ok'),
+    dialogAlert: document.getElementById('dialog-alert'),
+    dialogAlertTitle: document.getElementById('dialog-alert-title'),
+    dialogAlertMessage: document.getElementById('dialog-alert-message'),
+    btnDialogAlertOk: document.getElementById('btn-dialog-alert-ok')
   };
 }
 
@@ -97,7 +106,7 @@ function setupEventListeners() {
   DOM.btnFilterWrong.addEventListener('click', () => setFilterMode('wrong'));
   DOM.btnRetake.addEventListener('click', handleRetake);
 
-  // Event Delegation for Option Selection
+  // Event Delegation for Option Selection (Click)
   DOM.questionsList.addEventListener('click', (e) => {
     if (STATE.isSubmitted) return;
     const optionItem = e.target.closest('.option-item');
@@ -109,8 +118,37 @@ function setupEventListeners() {
     }
   });
 
-  // Focus tracking on click/hover for hotkeys
-  DOM.questionsList.addEventListener('mouseover', (e) => {
+  // WAI-ARIA Keyboard Navigation inside Options List (Space, Enter, Arrow Keys)
+  DOM.questionsList.addEventListener('keydown', (e) => {
+    if (STATE.isSubmitted) return;
+    const optionItem = e.target.closest('.option-item');
+    if (!optionItem) return;
+
+    const qid = optionItem.getAttribute('data-qid');
+    const optIdx = parseInt(optionItem.getAttribute('data-opt'), 10);
+    const optionsContainer = optionItem.closest('.options-list');
+    if (!optionsContainer) return;
+
+    const allOptions = Array.from(optionsContainer.querySelectorAll('.option-item'));
+
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      selectOption(qid, optIdx);
+    } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      const nextIdx = (optIdx + 1) % allOptions.length;
+      allOptions[nextIdx].focus();
+      selectOption(qid, nextIdx);
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const prevIdx = (optIdx - 1 + allOptions.length) % allOptions.length;
+      allOptions[prevIdx].focus();
+      selectOption(qid, prevIdx);
+    }
+  });
+
+  // Focus Tracking for Hotkeys (Modernized: replaced high-frequency mouseover with focusin)
+  DOM.questionsList.addEventListener('focusin', (e) => {
     const card = e.target.closest('.question-card');
     if (card) {
       const qid = card.id.replace('card-', '');
@@ -127,7 +165,10 @@ function setupEventListeners() {
     STATE.activeQuestionId = qid;
     const card = document.getElementById('card-' + qid);
     if (card) {
-      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Move focus to first option for keyboard accessibility
+      const firstOpt = card.querySelector('.option-item');
+      if (firstOpt) firstOpt.focus();
     }
   });
 
@@ -150,29 +191,121 @@ function setupEventListeners() {
 }
 
 // ============================================================================
-// THEME MANAGEMENT (Light / Dark)
+// THEME MANAGEMENT (Light / Dark with View Transitions API)
 // ============================================================================
 function initTheme() {
   const savedTheme = localStorage.getItem('daily_test_theme') || 'light';
-  applyTheme(savedTheme);
+  applyTheme(savedTheme, false);
 }
 
 function toggleTheme() {
   const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
   const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-  applyTheme(newTheme);
+  applyTheme(newTheme, true);
 }
 
-function applyTheme(theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('daily_test_theme', theme);
+function applyTheme(theme, animate = true) {
+  const update = () => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('daily_test_theme', theme);
 
-  if (DOM.btnThemeToggle) {
-    const label = DOM.btnThemeToggle.querySelector('.theme-label');
-    if (label) {
-      label.textContent = theme === 'dark' ? 'LIGHT' : 'DARK';
+    if (DOM.btnThemeToggle) {
+      const label = DOM.btnThemeToggle.querySelector('.theme-label');
+      if (label) {
+        label.textContent = theme === 'dark' ? 'LIGHT' : 'DARK';
+      }
     }
+  };
+
+  if (!animate || !document.startViewTransition) {
+    update();
+  } else {
+    document.startViewTransition(update);
   }
+}
+
+// ============================================================================
+// NATIVE HTML5 DIALOG HELPERS (Top-Layer Modals)
+// ============================================================================
+function showConfirmModal(title, message) {
+  return new Promise((resolve) => {
+    if (!DOM.dialogConfirm || typeof DOM.dialogConfirm.showModal !== 'function') {
+      resolve(window.confirm(message));
+      return;
+    }
+
+    DOM.dialogConfirmTitle.textContent = title || 'CONFIRM';
+    DOM.dialogConfirmMessage.textContent = message;
+
+    const handleCancel = () => {
+      cleanup();
+      DOM.dialogConfirm.close();
+      resolve(false);
+    };
+
+    const handleOk = () => {
+      cleanup();
+      DOM.dialogConfirm.close();
+      resolve(true);
+    };
+
+    const handleBackdrop = (e) => {
+      if (e.target === DOM.dialogConfirm) {
+        handleCancel();
+      }
+    };
+
+    const cleanup = () => {
+      DOM.btnDialogConfirmCancel.removeEventListener('click', handleCancel);
+      DOM.btnDialogConfirmOk.removeEventListener('click', handleOk);
+      DOM.dialogConfirm.removeEventListener('click', handleBackdrop);
+      DOM.dialogConfirm.removeEventListener('cancel', handleCancel);
+    };
+
+    DOM.btnDialogConfirmCancel.addEventListener('click', handleCancel);
+    DOM.btnDialogConfirmOk.addEventListener('click', handleOk);
+    DOM.dialogConfirm.addEventListener('click', handleBackdrop);
+    DOM.dialogConfirm.addEventListener('cancel', handleCancel);
+
+    DOM.dialogConfirm.showModal();
+  });
+}
+
+function showAlertModal(title, message) {
+  return new Promise((resolve) => {
+    if (!DOM.dialogAlert || typeof DOM.dialogAlert.showModal !== 'function') {
+      window.alert(message);
+      resolve();
+      return;
+    }
+
+    DOM.dialogAlertTitle.textContent = title || 'ALERT';
+    DOM.dialogAlertMessage.textContent = message;
+
+    const handleOk = () => {
+      cleanup();
+      DOM.dialogAlert.close();
+      resolve();
+    };
+
+    const handleBackdrop = (e) => {
+      if (e.target === DOM.dialogAlert) {
+        handleOk();
+      }
+    };
+
+    const cleanup = () => {
+      DOM.btnDialogAlertOk.removeEventListener('click', handleOk);
+      DOM.dialogAlert.removeEventListener('click', handleBackdrop);
+      DOM.dialogAlert.removeEventListener('cancel', handleOk);
+    };
+
+    DOM.btnDialogAlertOk.addEventListener('click', handleOk);
+    DOM.dialogAlert.addEventListener('click', handleBackdrop);
+    DOM.dialogAlert.addEventListener('cancel', handleOk);
+
+    DOM.dialogAlert.showModal();
+  });
 }
 
 // ============================================================================
@@ -217,13 +350,21 @@ async function switchSubject(subject) {
   if (STATE.subject === subject) return;
   STATE.subject = subject;
 
-  DOM.tabToeic.classList.toggle('active', subject === 'toeic');
-  DOM.tabSkct.classList.toggle('active', subject === 'skct');
+  const update = async () => {
+    DOM.tabToeic.classList.toggle('active', subject === 'toeic');
+    DOM.tabSkct.classList.toggle('active', subject === 'skct');
 
-  if (STATE.date) {
-    await loadQuiz(STATE.subject, STATE.date);
+    if (STATE.date) {
+      await loadQuiz(STATE.subject, STATE.date);
+    } else {
+      renderEmptyState('아직 등록된 문제가 없습니다.', '매일 아침 7시(토익) / 8시(SKCT)에 새로운 문제가 자동으로 출제 및 아카이빙됩니다.');
+    }
+  };
+
+  if (!document.startViewTransition) {
+    await update();
   } else {
-    renderEmptyState('아직 등록된 문제가 없습니다.', '매일 아침 7시(토익) / 8시(SKCT)에 새로운 문제가 자동으로 출제 및 아카이빙됩니다.');
+    document.startViewTransition(update);
   }
 }
 
@@ -272,7 +413,7 @@ function resetQuizState() {
 }
 
 // ============================================================================
-// RENDERING (B-Style Split-Screen for Passages & Authentic Paper Typography)
+// RENDERING (B-Style Split-Screen for Passages & WAI-ARIA Accessible Markup)
 // ============================================================================
 function renderQuiz() {
   const quiz = STATE.quizData;
@@ -393,7 +534,7 @@ function createQuestionCardElement(q, sectionId) {
     const letter = ['A', 'B', 'C', 'D'][optIdx];
     const isSelected = STATE.userAnswers[q.id] === optIdx;
     return (
-      '<div class="option-item ' + (isSelected ? 'selected' : '') + '" data-qid="' + q.id + '" data-opt="' + optIdx + '">' +
+      '<div class="option-item ' + (isSelected ? 'selected' : '') + '" role="radio" aria-checked="' + (isSelected ? 'true' : 'false') + '" tabindex="0" data-qid="' + q.id + '" data-opt="' + optIdx + '">' +
         '<span class="option-letter">' + letter + '</span>' +
         '<span class="option-text">' + escapeHtml(opt) + '</span>' +
       '</div>'
@@ -405,7 +546,7 @@ function createQuestionCardElement(q, sectionId) {
       '<span class="question-num-badge">' + q.number + '번</span>' +
       '<h3 class="question-text">' + escapeHtml(q.question) + '</h3>' +
     '</div>' +
-    '<div class="options-list" id="opts-' + q.id + '">' +
+    '<div class="options-list" id="opts-' + q.id + '" role="radiogroup" aria-label="' + q.number + '번 문항 선택지">' +
       optionsHtml +
     '</div>' +
     '<div class="explanation-slot" id="expl-' + q.id + '"></div>';
@@ -417,11 +558,13 @@ function selectOption(qid, optIdx) {
   STATE.userAnswers[qid] = optIdx;
   STATE.activeQuestionId = qid;
 
-  // Update UI in question card
+  // Update UI in question card & ARIA states
   const optsContainer = document.getElementById('opts-' + qid);
   if (optsContainer) {
     optsContainer.querySelectorAll('.option-item').forEach((item, idx) => {
-      item.classList.toggle('selected', idx === optIdx);
+      const selected = idx === optIdx;
+      item.classList.toggle('selected', selected);
+      item.setAttribute('aria-checked', selected ? 'true' : 'false');
     });
   }
 
@@ -461,9 +604,9 @@ function updateProgress() {
 }
 
 // ============================================================================
-// SUBMISSION & SCORING
+// SUBMISSION & SCORING (Asynchronous with Native Dialog)
 // ============================================================================
-function handleSubmit() {
+async function handleSubmit() {
   if (STATE.isSubmitted || !STATE.quizData) return;
 
   const total = STATE.quizData.questions.length;
@@ -471,8 +614,11 @@ function handleSubmit() {
 
   if (answered < total) {
     const unansweredCount = total - answered;
-    const confirm = window.confirm('아직 풀지 않은 문제가 ' + unansweredCount + '개 있습니다. 그래도 제출하시겠습니까?');
-    if (!confirm) return;
+    const confirmed = await showConfirmModal(
+      'SUBMIT TEST',
+      '아직 풀지 않은 문제가 ' + unansweredCount + '개 있습니다. 그래도 제출하시겠습니까?'
+    );
+    if (!confirmed) return;
   }
 
   STATE.isSubmitted = true;
@@ -588,7 +734,7 @@ function handleRetake() {
 }
 
 // ============================================================================
-// TIMER
+// TIMER (With Non-Blocking Native Dialog)
 // ============================================================================
 function startTimer() {
   clearInterval(STATE.timerInterval);
@@ -603,8 +749,9 @@ function startTimer() {
     updateTimerDisplay();
     if (STATE.timerSeconds <= 0) {
       clearInterval(STATE.timerInterval);
-      alert('제한 시간이 종료되었습니다. 답안을 제출합니다.');
-      handleSubmit();
+      showAlertModal('TIME EXPIRED', '제한 시간이 종료되었습니다. 답안을 제출합니다.').then(() => {
+        handleSubmit();
+      });
     }
   }, 1000);
 }
