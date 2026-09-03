@@ -9,16 +9,16 @@
     {
       "question": "The final compensation package offered to the executive will be ------- with her extensive background in international finance.",
       "options": [
-        "commensurate",
         "compatible",
+        "commensurate",
         "equivalent",
         "designated"
       ],
-      "answerIndex": 0,
+      "answerIndex": 1,
       "explanation": "'be commensurate with ~'는 '~에 상응하다, 맞추어지다'라는 뜻의 고난도 어휘 표현입니다. 자격이나 경력에 상응하는 보상 패키지를 의미하므로 'commensurate'가 정답입니다.",
       "optionExplanations": [
-        "commensurate: (~에) 상응하는, 비례하는 (정답)",
         "compatible: 양립할 수 있는, 호환되는",
+        "commensurate: (~에) 상응하는, 비례하는 (정답)",
         "equivalent: 동등한, 상당하는 (전치사 to와 주로 결합)",
         "designated: 지정된, 지명된"
       ],
@@ -30,18 +30,18 @@
     {
       "question": "Not only ------- the board members approve the revised budget proposal, but they also allocated additional funding for R&D.",
       "options": [
-        "did",
+        "are",
         "have",
         "will",
-        "are"
+        "did"
       ],
-      "answerIndex": 0,
+      "answerIndex": 3,
       "explanation": "부정어구(Not only)가 문두에 위치하여 '조동사 + 주어 + 동사원형' 형태의 도치가 일어납니다. 뒤절의 과거시제(allocated)와 호응하는 과거시제 조동사 'did'가 정답입니다.",
       "optionExplanations": [
-        "did: 과거 시제 도치 구문을 이끄는 조동사 (정답)",
+        "are: 진행형/수동태 도치에 쓰이나 뒤에 분사/형용사가 와야 함",
         "have: 현재완료 도치에 쓰이나 뒤에 과거분사(approved)가 와야 함",
         "will: 미래 시제 조동사",
-        "are: 진행형/수동태 도치에 쓰이나 뒤에 분사/형용사가 와야 함"
+        "did: 과거 시제 도치 구문을 이끄는 조동사 (정답)"
       ],
       "id": "TOEIC_Q2",
       "number": 2,
@@ -72,17 +72,17 @@
     {
       "question": "Creating an open workspace layout was intended to foster an environment ------- to team collaboration and innovation.",
       "options": [
-        "conducive",
-        "lucrative",
         "perpetual",
+        "lucrative",
+        "conducive",
         "persuasive"
       ],
-      "answerIndex": 0,
+      "answerIndex": 2,
       "explanation": "'conducive to ~'는 '~에 도움이 되는, ~을 조장하는'이라는 뜻의 형용사 구문입니다. 팀 협력과 혁신에 도움을 주는 환경을 조성한다는 문맥에 가장 부합합니다.",
       "optionExplanations": [
-        "conducive: (~에) 좋은, 도움이 되는 (정답)",
-        "lucrative: 수익성이 좋은",
         "perpetual: 영구적인, 끊임없는",
+        "lucrative: 수익성이 좋은",
+        "conducive: (~에) 좋은, 도움이 되는 (정답)",
         "persuasive: 설득력 있는"
       ],
       "id": "TOEIC_Q4",
@@ -93,16 +93,16 @@
     {
       "question": "Should any technical discrepancies arise during the system migration, engineers are to notify the team leader -------.",
       "options": [
-        "immediately",
         "immediate",
+        "immediately",
         "immediacy",
         "imminently"
       ],
-      "answerIndex": 0,
+      "answerIndex": 1,
       "explanation": "문장의 완전한 절 뒤에서 동사(notify)를 수식하는 부사 자리입니다. '즉시' 알리라는 의미의 부사 'immediately'가 정답입니다. 'imminently'는 '임박하여'라는 뜻으로 어색합니다.",
       "optionExplanations": [
-        "immediately: 즉시, 지체 없이 (정답)",
         "immediate: 즉각적인 (형용사)",
+        "immediately: 즉시, 지체 없이 (정답)",
         "immediacy: 즉시성, 직접성 (명사)",
         "imminently: 임박하여, 곧 (부사)"
       ],
@@ -137,18 +137,18 @@
       "blankNumber": 2,
       "question": "[2]번 빈칸 선택",
       "options": [
-        "Failure",
+        "Fail",
         "Failing",
         "Failed",
-        "Fail"
+        "Failure"
       ],
-      "answerIndex": 0,
+      "answerIndex": 3,
       "explanation": "to 부정사(to do so)의 수식을 받는 주어 명사 자리로, 'Failure to do so(그렇게 하지 못할 경우/불이행)'가 자연스럽습니다.",
       "optionExplanations": [
-        "Failure: 불이행, 실패 (명사 - 정답)",
+        "Fail: 실패하다 (동사)",
         "Failing: 결점 / ~하지 못하여 (현재분사/전치사)",
         "Failed: 실패한 (과거분사)",
-        "Fail: 실패하다 (동사)"
+        "Failure: 불이행, 실패 (명사 - 정답)"
       ],
       "id": "TOEIC_Q7",
       "number": 7,
@@ -181,17 +181,17 @@
       "blankNumber": 4,
       "question": "[4]번 빈칸 선택",
       "options": [
-        "Accordingly",
-        "On the contrary",
         "Nevertheless",
+        "On the contrary",
+        "Accordingly",
         "Instead"
       ],
-      "answerIndex": 0,
+      "answerIndex": 2,
       "explanation": "주말 현장 대응 조치에 이어 월요일 업무 재개라는 논리적 결과를 연결해 주는 인과관계 연결부사 'Accordingly(따라서)'가 정답입니다.",
       "optionExplanations": [
-        "Accordingly: 따라서, 그에 따라 (정답)",
-        "On the contrary: 그와는 반대로",
         "Nevertheless: 그럼에도 불구하고",
+        "On the contrary: 그와는 반대로",
+        "Accordingly: 따라서, 그에 따라 (정답)",
         "Instead: 대신에"
       ],
       "id": "TOEIC_Q9",
@@ -202,18 +202,18 @@
     {
       "question": "What is stated about the seminar series on the webpage?",
       "options": [
-        "Lunches are provided to all participants.",
+        "It is held at Nexus Logistics headquarters.",
         "Hotel rooms are included in the fee.",
         "Early-bird registration ends in October.",
-        "It is held at Nexus Logistics headquarters."
+        "Lunches are provided to all participants."
       ],
-      "answerIndex": 0,
-      "explanation": "첫 번째 지문(웹페이지)에서 'Catered networking luncheons are provided daily for all registered participants'라고 명시되어 있으므로 점심 식사가 제공된다는 (A)가 정답입니다.",
+      "answerIndex": 3,
+      "explanation": "첫 번째 지문(웹페이지)에서 'Catered networking luncheons are provided daily for all registered participants'라고 명시되어 있으므로 점심 식사가 제공된다는 (D)가 정답입니다.",
       "optionExplanations": [
-        "Lunches are provided to all participants.: 모든 참가자에게 점심 식사가 제공됨 (정답)",
+        "It is held at Nexus Logistics headquarters.: 개최지는 Grand Horizon Hotel임",
         "Hotel rooms are included in the fee.: 숙박은 등록비에 포함되지 않음",
         "Early-bird registration ends in October.: 조기 등록은 9월 15일에 종료됨",
-        "It is held at Nexus Logistics headquarters.: 개최지는 Grand Horizon Hotel임"
+        "Lunches are provided to all participants.: 모든 참가자에게 점심 식사가 제공됨 (정답)"
       ],
       "id": "TOEIC_Q10",
       "number": 10,
@@ -286,17 +286,17 @@
     {
       "question": "Who will most likely lead the seminar track attended by Marcus Rossi?",
       "options": [
-        "Dr. Aris Thorne",
-        "Ms. Clara Vance",
         "Mr. Robert Sterling",
+        "Ms. Clara Vance",
+        "Dr. Aris Thorne",
         "Elena Rostova"
       ],
-      "answerIndex": 0,
+      "answerIndex": 2,
       "explanation": "이중 연계 확인: 이메일에서 마커스 로시(Marcus Rossi)는 자신이 'Strategic Financial Management' 세미나에 참가할 것이라고 언급했습니다. 웹페이지의 세미나 트랙 목록에 따르면 Track A(Strategic Financial Management)의 강사는 Dr. Aris Thorne입니다.",
       "optionExplanations": [
-        "Dr. Aris Thorne: Track A (Strategic Financial Management) 강사 (정답)",
-        "Ms. Clara Vance: Track B (Digital Transformation in Logistics) 강사",
         "Mr. Robert Sterling: Track C (Crisis Communications & PR) 강사",
+        "Ms. Clara Vance: Track B (Digital Transformation in Logistics) 강사",
+        "Dr. Aris Thorne: Track A (Strategic Financial Management) 강사 (정답)",
         "Elena Rostova: Nexus Logistics 소속 참가 이사 중 한 명"
       ],
       "id": "TOEIC_Q14",

@@ -303,6 +303,12 @@ function generateSkctQuizUnified_(date) {
     'CRITICAL OPTION CONCISENESS RULE:',
     '- All 4 options (A, B, C, D) MUST be concisely phrased under 40 Korean characters. Never write overly verbose options.',
     '',
+    'CRITICAL MANDATORY RULE: RANDOMIZED & BALANCED ANSWER DISTRIBUTION',
+    '- The correct answer index ("answerIndex": 0, 1, 2, or 3 representing A, B, C, D) MUST be strictly and evenly distributed across the 8 questions.',
+    '- Exactly 2 questions for each choice: 2 A(0)s, 2 B(1)s, 2 C(2)s, 2 D(3)s.',
+    '- NEVER make consecutive questions have the same answer index (e.g. C, C, C is strictly forbidden).',
+    '- When writing options, randomize which position contains the correct answer.',
+    '',
     'OUTPUT SCHEMA (Valid JSON only, no markdown commentary):',
     '{',
     '  "questions": [',
@@ -311,8 +317,8 @@ function generateSkctQuizUnified_(date) {
     '      "difficulty": "medium" | "hard",',
     '      "scenario": "string (Passage, constraints under <조건>)",',
     '      "question": "string (Standard Korean phrasing like: 다음 글을 읽고 알 수 있는 것은?, 다음 조건을 만족할 때 항상 참인 것은?)",',
-    '      "options": ["A", "B", "C", "D"],',
-    '      "answerIndex": 0,',
+    '      "options": ["Option A", "Option B", "Option C", "Option D"],',
+    '      "answerIndex": 1,',
     '      "explanation": "string (Step-by-step mathematical or logical solution)",',
     '      "optionExplanations": ["Option A note", "Option B note", "Option C note", "Option D note"]',
     '    }',
@@ -321,7 +327,7 @@ function generateSkctQuizUnified_(date) {
   ].join('\n');
 
   const res = callGeminiRobust_(prompt, 0.45);
-  const questions = res.data.questions;
+  let questions = res.data.questions;
   if (!Array.isArray(questions) || questions.length !== 8) {
     throw new Error('SKCT 문항 수 불일치: ' + (questions ? questions.length : 0));
   }
@@ -346,6 +352,9 @@ function generateSkctQuizUnified_(date) {
     q.options = q.options.map(sanitizeOptionText_);
     q.answerIndex = Number(q.answerIndex) || 0;
   });
+
+  // 정답 편중 방어 및 균등 분포 보정
+  questions = enforceBalancedAnswers_(questions);
 
   return {
     type: 'SKCT',
@@ -418,16 +427,20 @@ function generateToeicQuizUnified_(date) {
     'CRITICAL PASSAGE FORMATTING RULES:',
     '- In Part 6, the passage must contain blanks [1], [2], [3], [4].',
     '- In Part 7, provide "documents": [ {"documentType": "Document 1: ...", "text": "..."} ... ] (1 document for single, 2 for double, 3 for triple).',
-    '- In the JSON "question" field for Part 6, write simply "Select the best option for the blank." (Do not put [1] in question).',
+    'CRITICAL MANDATORY RULE: RANDOMIZED & BALANCED ANSWER DISTRIBUTION',
+    '- The correct answer index ("answerIndex": 0, 1, 2, or 3 representing A, B, C, D) MUST be evenly and unpredictably distributed across all 14 questions.',
+    '- DO NOT put the correct answer at index 0 (A) for most questions! Each letter A(0), B(1), C(2), D(3) must appear approximately 3 to 4 times (roughly 25% each).',
+    '- Consecutive identical answers are forbidden: NEVER allow 3 consecutive questions to have the same answer index.',
+    '- Randomize the position of the correct answer among options [A, B, C, D] when writing each question.',
     '',
     'OUTPUT SCHEMA (Strictly valid JSON only):',
     '{',
-    '  "part5": { "questions": [ { "question": "...", "options": ["A","B","C","D"], "answerIndex": 0, "explanation": "Korean", "optionExplanations": ["A","B","C","D"] } ] },',
-    '  "part6": { "documentType": "Business Email", "passage": "English with [1],[2],[3],[4]", "passageTranslation": "Korean", "questions": [ { "blankNumber": 1, "question": "Select the best option for the blank.", "options": ["A","B","C","D"], "answerIndex": 0, "explanation": "Korean", "optionExplanations": ["A","B","C","D"] } ] },',
+    '  "part5": { "questions": [ { "question": "...", "options": ["Option A","Option B","Option C","Option D"], "answerIndex": 2, "explanation": "Korean", "optionExplanations": ["Option A note","Option B note","Option C note","Option D note"] } ] },',
+    '  "part6": { "documentType": "Business Email", "passage": "English with [1],[2],[3],[4]", "passageTranslation": "Korean", "questions": [ { "blankNumber": 1, "question": "Select the best option for the blank.", "options": ["Option A","Option B","Option C","Option D"], "answerIndex": 3, "explanation": "Korean", "optionExplanations": ["Option A note","Option B note","Option C note","Option D note"] } ] },',
     '  "part7": {',
     '    "setName": "' + dayCfg.setName + '",',
     '    "documents": [ { "documentType": "Document 1: ...", "text": "..." } ],',
-    '    "questions": [ { "question": "...", "options": ["A","B","C","D"], "answerIndex": 0, "explanation": "Korean", "optionExplanations": ["A","B","C","D"] } ]',
+    '    "questions": [ { "question": "...", "options": ["Option A","Option B","Option C","Option D"], "answerIndex": 1, "explanation": "Korean", "optionExplanations": ["Option A note","Option B note","Option C note","Option D note"] } ]',
     '  }',
     '}'
   ].join('\n');
@@ -435,7 +448,7 @@ function generateToeicQuizUnified_(date) {
   const res = callGeminiRobust_(prompt, 0.55);
   const data = res.data;
 
-  const unifiedQuestions = [];
+  let unifiedQuestions = [];
   let qNum = 1;
 
   // Part 5 처리 (5문항)
@@ -483,6 +496,9 @@ function generateToeicQuizUnified_(date) {
     });
   }
 
+  // 정답 편중 방어 및 균등 분포 보정 (A, B, C, D가 약 25%씩 골고루 배치되도록 자동 검증)
+  unifiedQuestions = enforceBalancedAnswers_(unifiedQuestions);
+
   return {
     type: 'TOEIC',
     title: 'TOEIC RC 실전 평가 (' + dayCfg.dayLabel + ')',
@@ -493,6 +509,92 @@ function generateToeicQuizUnified_(date) {
     model: res.model,
     questions: unifiedQuestions
   };
+}
+
+/**
+ * Ensures answerIndex is evenly distributed across 0, 1, 2, 3 and avoids repetitive duplicates.
+ * If the model output is skewed (e.g. > 35% same answer, or 3+ consecutive same answers),
+ * it programmatically rebalances by swapping options and optionExplanations in sync.
+ */
+function enforceBalancedAnswers_(questions) {
+  if (!Array.isArray(questions) || questions.length === 0) return questions;
+
+  const total = questions.length;
+  const labels = ['A', 'B', 'C', 'D'];
+  const counts = [0, 0, 0, 0];
+  let hasConsecutiveTriple = false;
+
+  questions.forEach(function(q, i) {
+    q.answerIndex = Number(q.answerIndex) || 0;
+    counts[q.answerIndex] = (counts[q.answerIndex] || 0) + 1;
+    if (i >= 2 && q.answerIndex === questions[i - 1].answerIndex && q.answerIndex === questions[i - 2].answerIndex) {
+      hasConsecutiveTriple = true;
+    }
+  });
+
+  const maxCount = Math.max.apply(null, counts);
+  const isSkewed = (maxCount / total > 0.35) || hasConsecutiveTriple;
+
+  if (!isSkewed) {
+    Logger.log('[정답 검증] 정답 분포 균형 양호 (A:' + counts[0] + ', B:' + counts[1] + ', C:' + counts[2] + ', D:' + counts[3] + ')');
+    return questions;
+  }
+
+  Logger.log('[정답 재분배] 정답 편중 감지 (A:' + counts[0] + ', B:' + counts[1] + ', C:' + counts[2] + ', D:' + counts[3] + '). 균형 재배치 실행...');
+
+  // Standard balanced distribution sequence
+  // 14 questions: A:3, B:4, C:4, D:3 (Total 14, no 3-in-a-row)
+  const pattern14 = [1, 3, 0, 2, 1, 0, 3, 1, 2, 3, 1, 2, 0, 2];
+  // 8 questions:  A:2, B:2, C:2, D:2 (Total 8, no 3-in-a-row)
+  const pattern8 = [0, 2, 1, 3, 2, 0, 3, 1];
+
+  let targetPattern = [];
+  if (total === 14) {
+    targetPattern = pattern14;
+  } else if (total === 8) {
+    targetPattern = pattern8;
+  } else {
+    for (let i = 0; i < total; i++) {
+      targetPattern.push(i % 4);
+    }
+  }
+
+  questions.forEach(function(q, qIdx) {
+    const currIdx = Number(q.answerIndex) || 0;
+    const targetIdx = targetPattern[qIdx % targetPattern.length];
+    if (currIdx === targetIdx) return;
+
+    const oldLetter = labels[currIdx];
+    const newLetter = labels[targetIdx];
+
+    // 1. Swap options
+    const tempOpt = q.options[currIdx];
+    q.options[currIdx] = q.options[targetIdx];
+    q.options[targetIdx] = tempOpt;
+
+    // 2. Swap optionExplanations
+    if (Array.isArray(q.optionExplanations) && q.optionExplanations.length === 4) {
+      const tempExp = q.optionExplanations[currIdx];
+      q.optionExplanations[currIdx] = q.optionExplanations[targetIdx];
+      q.optionExplanations[targetIdx] = tempExp;
+    }
+
+    // 3. Update explanation letter references
+    if (q.explanation) {
+      q.explanation = q.explanation.replace(new RegExp('\\(' + oldLetter + '\\)', 'g'), '(' + newLetter + ')');
+      q.explanation = q.explanation.replace(new RegExp('\\b' + oldLetter + '(?=[가-힣])', 'g'), newLetter);
+    }
+
+    q.answerIndex = targetIdx;
+  });
+
+  const newCounts = [0, 0, 0, 0];
+  questions.forEach(function(q) {
+    newCounts[q.answerIndex]++;
+  });
+  Logger.log('[정답 재분배 완료] 신규 분포: A:' + newCounts[0] + ', B:' + newCounts[1] + ', C:' + newCounts[2] + ', D:' + newCounts[3]);
+
+  return questions;
 }
 
 // ============================================================================
