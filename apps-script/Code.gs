@@ -13,7 +13,7 @@
  *    - SKCT: 4대 핵심 인지역량(언어이해, 창의수리, 언어추리, 수열추리) 8문항 실전 세트.
  * 
  * 3. [엔터프라이즈급 인프라 & 안정성]
- *    - Gemini API: Primary(gemini-3.8-flash, 최대 3회 1분간격 재시도) -> Fallback(gemini-3.6-flash) 고성능 계층화.
+ *    - Gemini API: Primary(gemini-3.8-flash, 최대 3회 1분간격 재시도) -> Fallback(gemini-3.7-flash) 고성능 계층화.
  *    - Storage: Google Apps Script Properties 9KB 제한 우회 청크 스토리지 & Slack View 무상태화.
  *    - Slack: Block Kit 75자 규격 준수, 지문 다중 카드 독립 렌더링, 군더더기 없는 비즈니스 톤 UI.
  * ============================================================================
@@ -28,7 +28,7 @@ const APP_CONFIG = Object.freeze({
   
   // Gemini 모델 계층
   PRIMARY_MODEL: 'gemini-3.8-flash',
-  FALLBACK_MODEL: 'gemini-3.6-flash',
+  FALLBACK_MODEL: 'gemini-3.7-flash',
   
   // API 제어 및 503 재시도 정책
   MAX_RETRIES: 3,                   // Primary 모델 최대 3회 시도
@@ -200,7 +200,7 @@ function callGeminiRobust_(prompt, customTemp) {
     }
   }
 
-  // 2. Primary Model 3회 실패 시 Fallback Model (gemini-3.6-flash) 긴급 구동
+  // 2. Primary Model 3회 실패 시 Fallback Model (gemini-3.7-flash) 긴급 구동
   if (APP_CONFIG.FALLBACK_MODEL && APP_CONFIG.FALLBACK_MODEL !== APP_CONFIG.PRIMARY_MODEL) {
     try {
       Logger.log('🔄 [' + APP_CONFIG.PRIMARY_MODEL + '] 3회 재시도 모두 실패 ➡️ [' + APP_CONFIG.FALLBACK_MODEL + '] Fallback 호출 실행');

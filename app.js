@@ -1,6 +1,6 @@
 /**
  * Daily Test CBT Arena - Application Logic (Vanilla JS)
- * Primary: Gemini 3.8 Flash (3 Retries, 1m backoff) / Fallback: Gemini 3.6 Flash
+ * Primary: Gemini 3.8 Flash (3 Retries, 1m backoff) / Fallback: Gemini 3.7 Flash
  * B-Layout (Split-Screen) + A-Palette (Warm Paper) + Obsidian Dark Mode
  */
 

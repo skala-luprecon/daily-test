@@ -15,7 +15,7 @@ Google Apps Script와 **Google Gemini API** (`gemini-3.8-flash`)를 기반으로
 * 🧠 **고성능 AI 모델 계층 & 503 방어 재시도 (High-Performance Reasoning)**
   * 메인 모델: `gemini-3.8-flash` (Deep Reasoning, thinkingLevel: high)
   * **스마트 재시도**: 503 일시 오류 시 **최대 3회, 각 시도마다 1분(60초) 대기** 후 재시도
-  * Fallback 모델: 3회 재시도 실패 시 `gemini-3.6-flash`로 자동 롤백
+  * Fallback 모델: 3회 재시도 실패 시 `gemini-3.7-flash`로 자동 롤백
   * 일관된 고난도 킬러 문항 퀄리티 및 장애 복원력 유지
 * 📱 **세련된 비즈니스 톤 UI & 무상태형 인터랙티브 모달**
   * Slack Block Kit 75자 선택지 규격 준수 (단어 잘림 없는 깔끔한 보기)
@@ -153,7 +153,7 @@ const APP_CONFIG = Object.freeze({
   
   // Gemini 모델 계층
   PRIMARY_MODEL: 'gemini-3.8-flash',
-  FALLBACK_MODEL: 'gemini-3.6-flash',
+  FALLBACK_MODEL: 'gemini-3.7-flash',
   
   // API 제어 및 503 재시도 정책
   MAX_RETRIES: 3,                   // Primary 모델 최대 3회 시도
