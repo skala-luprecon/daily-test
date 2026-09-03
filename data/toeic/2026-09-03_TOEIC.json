@@ -1,0 +1,308 @@
+{
+  "type": "TOEIC",
+  "title": "TOEIC RC 실전 평가 (이중 연계 지문 집중)",
+  "part7Info": "Part 7 이중 5Q",
+  "testId": "TOEIC_20260903",
+  "date": "2026-09-03",
+  "model": "gemini-3.6-flash",
+  "questions": [
+    {
+      "question": "The final compensation package offered to the executive will be ------- with her extensive background in international finance.",
+      "options": [
+        "commensurate",
+        "compatible",
+        "equivalent",
+        "designated"
+      ],
+      "answerIndex": 0,
+      "explanation": "'be commensurate with ~'는 '~에 상응하다, 맞추어지다'라는 뜻의 고난도 어휘 표현입니다. 자격이나 경력에 상응하는 보상 패키지를 의미하므로 'commensurate'가 정답입니다.",
+      "optionExplanations": [
+        "commensurate: (~에) 상응하는, 비례하는 (정답)",
+        "compatible: 양립할 수 있는, 호환되는",
+        "equivalent: 동등한, 상당하는 (전치사 to와 주로 결합)",
+        "designated: 지정된, 지명된"
+      ],
+      "id": "TOEIC_Q1",
+      "number": 1,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": ""
+    },
+    {
+      "question": "Not only ------- the board members approve the revised budget proposal, but they also allocated additional funding for R&D.",
+      "options": [
+        "did",
+        "have",
+        "will",
+        "are"
+      ],
+      "answerIndex": 0,
+      "explanation": "부정어구(Not only)가 문두에 위치하여 '조동사 + 주어 + 동사원형' 형태의 도치가 일어납니다. 뒤절의 과거시제(allocated)와 호응하는 과거시제 조동사 'did'가 정답입니다.",
+      "optionExplanations": [
+        "did: 과거 시제 도치 구문을 이끄는 조동사 (정답)",
+        "have: 현재완료 도치에 쓰이나 뒤에 과거분사(approved)가 와야 함",
+        "will: 미래 시제 조동사",
+        "are: 진행형/수동태 도치에 쓰이나 뒤에 분사/형용사가 와야 함"
+      ],
+      "id": "TOEIC_Q2",
+      "number": 2,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": ""
+    },
+    {
+      "question": "The audit committee recommended that the CFO ------- full access to all financial transactions prior to the quarterly review.",
+      "options": [
+        "be granted",
+        "granted",
+        "was granted",
+        "granting"
+      ],
+      "answerIndex": 0,
+      "explanation": "주절의 제안/권고 동사(recommended) 뒤의 that절에는 '(should) + 동사원형'이 위치합니다. CFO가 권한을 '부여받는' 수동의 의미이므로 'be granted'가 정답입니다.",
+      "optionExplanations": [
+        "be granted: 당위성을 나타내는 수동태 동사원형 (정답)",
+        "granted: 과거동사/과거분사 (당위성 원형 자리에 부적절)",
+        "was granted: 과거 수동태 (주요 명제절에서 원형이 와야 함)",
+        "granting: 현재분사/동명사"
+      ],
+      "id": "TOEIC_Q3",
+      "number": 3,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": ""
+    },
+    {
+      "question": "Creating an open workspace layout was intended to foster an environment ------- to team collaboration and innovation.",
+      "options": [
+        "conducive",
+        "lucrative",
+        "perpetual",
+        "persuasive"
+      ],
+      "answerIndex": 0,
+      "explanation": "'conducive to ~'는 '~에 도움이 되는, ~을 조장하는'이라는 뜻의 형용사 구문입니다. 팀 협력과 혁신에 도움을 주는 환경을 조성한다는 문맥에 가장 부합합니다.",
+      "optionExplanations": [
+        "conducive: (~에) 좋은, 도움이 되는 (정답)",
+        "lucrative: 수익성이 좋은",
+        "perpetual: 영구적인, 끊임없는",
+        "persuasive: 설득력 있는"
+      ],
+      "id": "TOEIC_Q4",
+      "number": 4,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": ""
+    },
+    {
+      "question": "Should any technical discrepancies arise during the system migration, engineers are to notify the team leader -------.",
+      "options": [
+        "immediately",
+        "immediate",
+        "immediacy",
+        "imminently"
+      ],
+      "answerIndex": 0,
+      "explanation": "문장의 완전한 절 뒤에서 동사(notify)를 수식하는 부사 자리입니다. '즉시' 알리라는 의미의 부사 'immediately'가 정답입니다. 'imminently'는 '임박하여'라는 뜻으로 어색합니다.",
+      "optionExplanations": [
+        "immediately: 즉시, 지체 없이 (정답)",
+        "immediate: 즉각적인 (형용사)",
+        "immediacy: 즉시성, 직접성 (명사)",
+        "imminently: 임박하여, 곧 (부사)"
+      ],
+      "id": "TOEIC_Q5",
+      "number": 5,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": ""
+    },
+    {
+      "blankNumber": 1,
+      "question": "[1]번 빈칸 선택",
+      "options": [
+        "temporarily",
+        "temporary",
+        "temporariness",
+        "temporal"
+      ],
+      "answerIndex": 0,
+      "explanation": "형용사 unavailable을 수식하는 부사 자리이므로 'temporarily(일시적으로)'가 정답입니다.",
+      "optionExplanations": [
+        "temporarily: 일시적으로 (부사 - 정답)",
+        "temporary: 일시적인 (형용사)",
+        "temporariness: 일시성 (명사)",
+        "temporal: 시간의, 세속의 (형용사)"
+      ],
+      "id": "TOEIC_Q6",
+      "number": 6,
+      "part": "Part 6 · Text Completion",
+      "scenario": "```\n[Internal Memorandum]\n\nTo: All Staff\nFrom: IT Operations Department\nDate: September 3, 2026\nSubject: Scheduled System Maintenance and Upgrade\n\nPlease be advised that our primary server network will undergo a major upgrade this coming Saturday between 11:00 PM and 4:00 AM. During this period, remote access to internal databases will be [1] unavailable.\n\nWe are implementing this upgrade to enhance system security and overall network performance. All employees are required to save their active files and log out of their workstations prior to leaving the office on Friday. [2] to do so may result in temporary data loss during the server reboot.\n\n[3] System administrators will be on site throughout the weekend to address any unforeseen technical issues. [4], normal IT support operations will resume on Monday at 7:00 AM. Thank you for your cooperation.\n```"
+    },
+    {
+      "blankNumber": 2,
+      "question": "[2]번 빈칸 선택",
+      "options": [
+        "Failure",
+        "Failing",
+        "Failed",
+        "Fail"
+      ],
+      "answerIndex": 0,
+      "explanation": "to 부정사(to do so)의 수식을 받는 주어 명사 자리로, 'Failure to do so(그렇게 하지 못할 경우/불이행)'가 자연스럽습니다.",
+      "optionExplanations": [
+        "Failure: 불이행, 실패 (명사 - 정답)",
+        "Failing: 결점 / ~하지 못하여 (현재분사/전치사)",
+        "Failed: 실패한 (과거분사)",
+        "Fail: 실패하다 (동사)"
+      ],
+      "id": "TOEIC_Q7",
+      "number": 7,
+      "part": "Part 6 · Text Completion",
+      "scenario": "```\n[Internal Memorandum]\n\nTo: All Staff\nFrom: IT Operations Department\nDate: September 3, 2026\nSubject: Scheduled System Maintenance and Upgrade\n\nPlease be advised that our primary server network will undergo a major upgrade this coming Saturday between 11:00 PM and 4:00 AM. During this period, remote access to internal databases will be [1] unavailable.\n\nWe are implementing this upgrade to enhance system security and overall network performance. All employees are required to save their active files and log out of their workstations prior to leaving the office on Friday. [2] to do so may result in temporary data loss during the server reboot.\n\n[3] System administrators will be on site throughout the weekend to address any unforeseen technical issues. [4], normal IT support operations will resume on Monday at 7:00 AM. Thank you for your cooperation.\n```"
+    },
+    {
+      "blankNumber": 3,
+      "question": "[3]번 빈칸 (알맞은 문장 선택)",
+      "options": [
+        "System logs will be audited next month.",
+        "Additional details are available on the intranet.",
+        "Please save all critical documents in advance.",
+        "IT support will be limited during the maintenance."
+      ],
+      "answerIndex": 1,
+      "explanation": "퇴근 전 조치 사항과 주말 관리자 상주 안내 사이에서 사내 공지사항의 안내 역할을 하는 'Additional details are available on the intranet.'이 들어가는 것이 가장 자연스럽습니다.",
+      "optionExplanations": [
+        "System logs will be audited next month.: 시스템 로그 감사 계획으로 문맥에 어울리지 않음",
+        "Additional details are available on the intranet.: 추가 정보는 사내망에서 확인 가능하다는 알림 (정답)",
+        "Please save all critical documents in advance.: 앞 문장의 저장 요청을 단순히 중복함",
+        "IT support will be limited during the maintenance.: 다음 문장에서 주말 현장 대응 인력이 상주함을 밝히므로 모순됨"
+      ],
+      "id": "TOEIC_Q8",
+      "number": 8,
+      "part": "Part 6 · Text Completion",
+      "scenario": "```\n[Internal Memorandum]\n\nTo: All Staff\nFrom: IT Operations Department\nDate: September 3, 2026\nSubject: Scheduled System Maintenance and Upgrade\n\nPlease be advised that our primary server network will undergo a major upgrade this coming Saturday between 11:00 PM and 4:00 AM. During this period, remote access to internal databases will be [1] unavailable.\n\nWe are implementing this upgrade to enhance system security and overall network performance. All employees are required to save their active files and log out of their workstations prior to leaving the office on Friday. [2] to do so may result in temporary data loss during the server reboot.\n\n[3] System administrators will be on site throughout the weekend to address any unforeseen technical issues. [4], normal IT support operations will resume on Monday at 7:00 AM. Thank you for your cooperation.\n```"
+    },
+    {
+      "blankNumber": 4,
+      "question": "[4]번 빈칸 선택",
+      "options": [
+        "Accordingly",
+        "On the contrary",
+        "Nevertheless",
+        "Instead"
+      ],
+      "answerIndex": 0,
+      "explanation": "주말 현장 대응 조치에 이어 월요일 업무 재개라는 논리적 결과를 연결해 주는 인과관계 연결부사 'Accordingly(따라서)'가 정답입니다.",
+      "optionExplanations": [
+        "Accordingly: 따라서, 그에 따라 (정답)",
+        "On the contrary: 그와는 반대로",
+        "Nevertheless: 그럼에도 불구하고",
+        "Instead: 대신에"
+      ],
+      "id": "TOEIC_Q9",
+      "number": 9,
+      "part": "Part 6 · Text Completion",
+      "scenario": "```\n[Internal Memorandum]\n\nTo: All Staff\nFrom: IT Operations Department\nDate: September 3, 2026\nSubject: Scheduled System Maintenance and Upgrade\n\nPlease be advised that our primary server network will undergo a major upgrade this coming Saturday between 11:00 PM and 4:00 AM. During this period, remote access to internal databases will be [1] unavailable.\n\nWe are implementing this upgrade to enhance system security and overall network performance. All employees are required to save their active files and log out of their workstations prior to leaving the office on Friday. [2] to do so may result in temporary data loss during the server reboot.\n\n[3] System administrators will be on site throughout the weekend to address any unforeseen technical issues. [4], normal IT support operations will resume on Monday at 7:00 AM. Thank you for your cooperation.\n```"
+    },
+    {
+      "question": "What is stated about the seminar series on the webpage?",
+      "options": [
+        "Lunches are provided to all participants.",
+        "Hotel rooms are included in the fee.",
+        "Early-bird registration ends in October.",
+        "It is held at Nexus Logistics headquarters."
+      ],
+      "answerIndex": 0,
+      "explanation": "첫 번째 지문(웹페이지)에서 'Catered networking luncheons are provided daily for all registered participants'라고 명시되어 있으므로 점심 식사가 제공된다는 (A)가 정답입니다.",
+      "optionExplanations": [
+        "Lunches are provided to all participants.: 모든 참가자에게 점심 식사가 제공됨 (정답)",
+        "Hotel rooms are included in the fee.: 숙박은 등록비에 포함되지 않음",
+        "Early-bird registration ends in October.: 조기 등록은 9월 15일에 종료됨",
+        "It is held at Nexus Logistics headquarters.: 개최지는 Grand Horizon Hotel임"
+      ],
+      "id": "TOEIC_Q10",
+      "number": 10,
+      "part": "Part 7 · Double Passage (이중 연계 지문)",
+      "scenario": "```\n[Document 1: Webpage]\n\nVanguard Leadership Institute: Executive Seminar Series\nDate: October 12–14, 2026\nLocation: Grand Horizon Hotel, Chicago\nRegistration Fee: $1,200 (Standard) / $950 (Early-bird before Sept 15)\n\nSeminar Tracks:\n- Track A: Strategic Financial Management (Instructor: Dr. Aris Thorne)\n- Track B: Digital Transformation in Logistics (Instructor: Ms. Clara Vance)\n- Track C: Crisis Communications & PR (Instructor: Mr. Robert Sterling)\n\nSpecial Offers & Policy:\n- Group Discount: Organizations enrolling 3 or more attendees qualify for an additional 10% discount off total registration fees.\n- Catered networking luncheons are provided daily for all registered participants.\n- Hotel accommodations are not included in the registration fee, but registered participants can receive a 15% discount on room rates at the Grand Horizon Hotel using the promo code VLI2026.\n```\n\n```\n[Document 2: Email]\n\nTo: registration@vanguardleadership.com\nFrom: m.rossi@nexusalogistics.com\nDate: September 10, 2026\nSubject: Group Registration - Nexus Logistics\n\nDear Registration Team,\n\nI am writing to register three senior managers from Nexus Logistics for the upcoming Executive Seminar Series in Chicago. Two of our directors, Elena Rostova and David Kim, would like to participate in the Digital Transformation track. I will personally be attending the Strategic Financial Management seminar.\n\nSince we are submitting our application today, we understand that we qualify for the early-bird pricing as well as the group discount. Could you please send an invoice for the final total amount due?\n\nAdditionally, we intend to reserve three standard rooms at the host hotel using the discount code provided on your webpage.\n\nBest regards,\nMarcus Rossi\nOperations Manager, Nexus Logistics\n```"
+    },
+    {
+      "question": "Why is Marcus Rossi sending the email?",
+      "options": [
+        "To request a speaker substitution",
+        "To enroll multiple attendees in a seminar",
+        "To cancel a previous hotel reservation",
+        "To inquire about job openings in Chicago"
+      ],
+      "answerIndex": 1,
+      "explanation": "두 번째 지문(이메일) 첫 문장에서 'I am writing to register three senior managers from Nexus Logistics...'라고 밝혔으므로 여러 명의 참석자를 등록하기 위해 연락했음을 알 수 있습니다.",
+      "optionExplanations": [
+        "To request a speaker substitution: 강사 교체 요청 (언급 없음)",
+        "To enroll multiple attendees in a seminar: 세미나에 여러 참가자를 등록하기 위해 (정답)",
+        "To cancel a previous hotel reservation: 이전 호텔 예약 취소 (오답)",
+        "To inquire about job openings in Chicago: 채용 공고 문의 (언급 없음)"
+      ],
+      "id": "TOEIC_Q11",
+      "number": 11,
+      "part": "Part 7 · Double Passage (이중 연계 지문)",
+      "scenario": "```\n[Document 1: Webpage]\n\nVanguard Leadership Institute: Executive Seminar Series\nDate: October 12–14, 2026\nLocation: Grand Horizon Hotel, Chicago\nRegistration Fee: $1,200 (Standard) / $950 (Early-bird before Sept 15)\n\nSeminar Tracks:\n- Track A: Strategic Financial Management (Instructor: Dr. Aris Thorne)\n- Track B: Digital Transformation in Logistics (Instructor: Ms. Clara Vance)\n- Track C: Crisis Communications & PR (Instructor: Mr. Robert Sterling)\n\nSpecial Offers & Policy:\n- Group Discount: Organizations enrolling 3 or more attendees qualify for an additional 10% discount off total registration fees.\n- Catered networking luncheons are provided daily for all registered participants.\n- Hotel accommodations are not included in the registration fee, but registered participants can receive a 15% discount on room rates at the Grand Horizon Hotel using the promo code VLI2026.\n```\n\n```\n[Document 2: Email]\n\nTo: registration@vanguardleadership.com\nFrom: m.rossi@nexusalogistics.com\nDate: September 10, 2026\nSubject: Group Registration - Nexus Logistics\n\nDear Registration Team,\n\nI am writing to register three senior managers from Nexus Logistics for the upcoming Executive Seminar Series in Chicago. Two of our directors, Elena Rostova and David Kim, would like to participate in the Digital Transformation track. I will personally be attending the Strategic Financial Management seminar.\n\nSince we are submitting our application today, we understand that we qualify for the early-bird pricing as well as the group discount. Could you please send an invoice for the final total amount due?\n\nAdditionally, we intend to reserve three standard rooms at the host hotel using the discount code provided on your webpage.\n\nBest regards,\nMarcus Rossi\nOperations Manager, Nexus Logistics\n```"
+    },
+    {
+      "question": "What is NOT mentioned as a benefit for seminar participants?",
+      "options": [
+        "Catered networking lunches",
+        "A discount on hotel accommodation",
+        "Free transportation from the airport",
+        "Reduced pricing for group bookings"
+      ],
+      "answerIndex": 2,
+      "explanation": "첫 번째 지문에서 점심 식사 제공, 호텔 숙박 할인(15%), 단체 할인(10%)은 언급되어 있으나, 공항 무료 수송 서비스는 언급되지 않았습니다.",
+      "optionExplanations": [
+        "Catered networking lunches: 네트워킹 점심 제공 (언급됨)",
+        "A discount on hotel accommodation: 호텔 숙박 할인 (언급됨)",
+        "Free transportation from the airport: 공항 무료 수송 (언급되지 않음 - 정답)",
+        "Reduced pricing for group bookings: 단체 예약 할인 (언급됨)"
+      ],
+      "id": "TOEIC_Q12",
+      "number": 12,
+      "part": "Part 7 · Double Passage (이중 연계 지문)",
+      "scenario": "```\n[Document 1: Webpage]\n\nVanguard Leadership Institute: Executive Seminar Series\nDate: October 12–14, 2026\nLocation: Grand Horizon Hotel, Chicago\nRegistration Fee: $1,200 (Standard) / $950 (Early-bird before Sept 15)\n\nSeminar Tracks:\n- Track A: Strategic Financial Management (Instructor: Dr. Aris Thorne)\n- Track B: Digital Transformation in Logistics (Instructor: Ms. Clara Vance)\n- Track C: Crisis Communications & PR (Instructor: Mr. Robert Sterling)\n\nSpecial Offers & Policy:\n- Group Discount: Organizations enrolling 3 or more attendees qualify for an additional 10% discount off total registration fees.\n- Catered networking luncheons are provided daily for all registered participants.\n- Hotel accommodations are not included in the registration fee, but registered participants can receive a 15% discount on room rates at the Grand Horizon Hotel using the promo code VLI2026.\n```\n\n```\n[Document 2: Email]\n\nTo: registration@vanguardleadership.com\nFrom: m.rossi@nexusalogistics.com\nDate: September 10, 2026\nSubject: Group Registration - Nexus Logistics\n\nDear Registration Team,\n\nI am writing to register three senior managers from Nexus Logistics for the upcoming Executive Seminar Series in Chicago. Two of our directors, Elena Rostova and David Kim, would like to participate in the Digital Transformation track. I will personally be attending the Strategic Financial Management seminar.\n\nSince we are submitting our application today, we understand that we qualify for the early-bird pricing as well as the group discount. Could you please send an invoice for the final total amount due?\n\nAdditionally, we intend to reserve three standard rooms at the host hotel using the discount code provided on your webpage.\n\nBest regards,\nMarcus Rossi\nOperations Manager, Nexus Logistics\n```"
+    },
+    {
+      "question": "What is the expected total registration cost for the Nexus Logistics group?",
+      "options": [
+        "$2,565",
+        "$2,850",
+        "$3,240",
+        "$3,600"
+      ],
+      "answerIndex": 0,
+      "explanation": "이중 연계 계산: 이메일 작성일은 9월 10일로 9월 15일 이전인 조기 등록 기한에 해당하여 1인당 $950입니다. 3명이 등록하므로 $950 x 3 = $2,850이며, 3인 이상 단체 할인 10%가 추가로 적용되어 $2,850 x 0.9 = $2,565가 최종 비용입니다.",
+      "optionExplanations": [
+        "$2,565: 조기 등록비 3인분($2,850)에 단체 할인 10%를 적용한 금액 (정답)",
+        "$2,850: 단체 할인이 적용되지 않은 3인 조기 등록비",
+        "$3,240: 표준 등록비 3인분($3,600)에 단체 할인 10%를 적용한 금액",
+        "$3,600: 단체 할인이 적용되지 않은 표준 등록비 3인분"
+      ],
+      "id": "TOEIC_Q13",
+      "number": 13,
+      "part": "Part 7 · Double Passage (이중 연계 지문)",
+      "scenario": "```\n[Document 1: Webpage]\n\nVanguard Leadership Institute: Executive Seminar Series\nDate: October 12–14, 2026\nLocation: Grand Horizon Hotel, Chicago\nRegistration Fee: $1,200 (Standard) / $950 (Early-bird before Sept 15)\n\nSeminar Tracks:\n- Track A: Strategic Financial Management (Instructor: Dr. Aris Thorne)\n- Track B: Digital Transformation in Logistics (Instructor: Ms. Clara Vance)\n- Track C: Crisis Communications & PR (Instructor: Mr. Robert Sterling)\n\nSpecial Offers & Policy:\n- Group Discount: Organizations enrolling 3 or more attendees qualify for an additional 10% discount off total registration fees.\n- Catered networking luncheons are provided daily for all registered participants.\n- Hotel accommodations are not included in the registration fee, but registered participants can receive a 15% discount on room rates at the Grand Horizon Hotel using the promo code VLI2026.\n```\n\n```\n[Document 2: Email]\n\nTo: registration@vanguardleadership.com\nFrom: m.rossi@nexusalogistics.com\nDate: September 10, 2026\nSubject: Group Registration - Nexus Logistics\n\nDear Registration Team,\n\nI am writing to register three senior managers from Nexus Logistics for the upcoming Executive Seminar Series in Chicago. Two of our directors, Elena Rostova and David Kim, would like to participate in the Digital Transformation track. I will personally be attending the Strategic Financial Management seminar.\n\nSince we are submitting our application today, we understand that we qualify for the early-bird pricing as well as the group discount. Could you please send an invoice for the final total amount due?\n\nAdditionally, we intend to reserve three standard rooms at the host hotel using the discount code provided on your webpage.\n\nBest regards,\nMarcus Rossi\nOperations Manager, Nexus Logistics\n```"
+    },
+    {
+      "question": "Who will most likely lead the seminar track attended by Marcus Rossi?",
+      "options": [
+        "Dr. Aris Thorne",
+        "Ms. Clara Vance",
+        "Mr. Robert Sterling",
+        "Elena Rostova"
+      ],
+      "answerIndex": 0,
+      "explanation": "이중 연계 확인: 이메일에서 마커스 로시(Marcus Rossi)는 자신이 'Strategic Financial Management' 세미나에 참가할 것이라고 언급했습니다. 웹페이지의 세미나 트랙 목록에 따르면 Track A(Strategic Financial Management)의 강사는 Dr. Aris Thorne입니다.",
+      "optionExplanations": [
+        "Dr. Aris Thorne: Track A (Strategic Financial Management) 강사 (정답)",
+        "Ms. Clara Vance: Track B (Digital Transformation in Logistics) 강사",
+        "Mr. Robert Sterling: Track C (Crisis Communications & PR) 강사",
+        "Elena Rostova: Nexus Logistics 소속 참가 이사 중 한 명"
+      ],
+      "id": "TOEIC_Q14",
+      "number": 14,
+      "part": "Part 7 · Double Passage (이중 연계 지문)",
+      "scenario": "```\n[Document 1: Webpage]\n\nVanguard Leadership Institute: Executive Seminar Series\nDate: October 12–14, 2026\nLocation: Grand Horizon Hotel, Chicago\nRegistration Fee: $1,200 (Standard) / $950 (Early-bird before Sept 15)\n\nSeminar Tracks:\n- Track A: Strategic Financial Management (Instructor: Dr. Aris Thorne)\n- Track B: Digital Transformation in Logistics (Instructor: Ms. Clara Vance)\n- Track C: Crisis Communications & PR (Instructor: Mr. Robert Sterling)\n\nSpecial Offers & Policy:\n- Group Discount: Organizations enrolling 3 or more attendees qualify for an additional 10% discount off total registration fees.\n- Catered networking luncheons are provided daily for all registered participants.\n- Hotel accommodations are not included in the registration fee, but registered participants can receive a 15% discount on room rates at the Grand Horizon Hotel using the promo code VLI2026.\n```\n\n```\n[Document 2: Email]\n\nTo: registration@vanguardleadership.com\nFrom: m.rossi@nexusalogistics.com\nDate: September 10, 2026\nSubject: Group Registration - Nexus Logistics\n\nDear Registration Team,\n\nI am writing to register three senior managers from Nexus Logistics for the upcoming Executive Seminar Series in Chicago. Two of our directors, Elena Rostova and David Kim, would like to participate in the Digital Transformation track. I will personally be attending the Strategic Financial Management seminar.\n\nSince we are submitting our application today, we understand that we qualify for the early-bird pricing as well as the group discount. Could you please send an invoice for the final total amount due?\n\nAdditionally, we intend to reserve three standard rooms at the host hotel using the discount code provided on your webpage.\n\nBest regards,\nMarcus Rossi\nOperations Manager, Nexus Logistics\n```"
+    }
+  ]
+}
