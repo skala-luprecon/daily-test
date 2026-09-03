@@ -300,8 +300,10 @@ function generateSkctQuizUnified_(date) {
     '3. "verbal_reasoning" (언어추리): Syllogism (삼단논법/전제결론 제시형), strict truth-teller/liar puzzle (진실게임), or 4-5 entity multi-attribute grid placement under <조건>. Ensure exactly one airtight logical solution.',
     '4. "sequence_reasoning" (수열추리): Non-trivial numerical sequence deduction (e.g. geometric difference series, alternating compound operations, quadratic recurrence). Present clearly as "a, b, c, d, e, (?)" and provide the exact mathematical formula in explanation.',
     '',
-    'CRITICAL OPTION CONCISENESS RULE:',
-    '- All 4 options (A, B, C, D) MUST be concisely phrased under 40 Korean characters. Never write overly verbose options.',
+    'CRITICAL OPTION CONCISENESS & FORMATTING RULES:',
+    '- All 4 options MUST be concisely phrased under 40 Korean characters.',
+    '- Write ONLY the pure choice text! NEVER include prefixes like "(A)", "A.", or "Option A" in the strings.',
+    '- The UI and Slack automatically generate the (A), (B), (C), (D) badges dynamically.',
     '',
     'CRITICAL MANDATORY RULE: RANDOMIZED & BALANCED ANSWER DISTRIBUTION',
     '- The correct answer index ("answerIndex": 0, 1, 2, or 3 representing A, B, C, D) MUST be strictly and evenly distributed across the 8 questions.',
@@ -317,10 +319,10 @@ function generateSkctQuizUnified_(date) {
     '      "difficulty": "medium" | "hard",',
     '      "scenario": "string (Passage, constraints under <조건>)",',
     '      "question": "string (Standard Korean phrasing like: 다음 글을 읽고 알 수 있는 것은?, 다음 조건을 만족할 때 항상 참인 것은?)",',
-    '      "options": ["Option A", "Option B", "Option C", "Option D"],',
+    '      "options": ["첫 번째 보기 내용", "두 번째 보기 내용", "세 번째 보기 내용", "네 번째 보기 내용"],',
     '      "answerIndex": 1,',
     '      "explanation": "string (Step-by-step mathematical or logical solution)",',
-    '      "optionExplanations": ["Option A note", "Option B note", "Option C note", "Option D note"]',
+    '      "optionExplanations": ["1번 보기 해설", "2번 보기 해설", "3번 보기 해설", "4번 보기 해설"]',
     '    }',
     '  ]',
     '}'
@@ -419,28 +421,30 @@ function generateToeicQuizUnified_(date) {
     '2. PART 6: Exactly 1 Business Document with blanks [1], [2], [3], [4] and exactly 4 questions (Questions 6 to 9, where Q8 is Sentence Insertion).',
     '3. ' + dayCfg.instruction,
     '',
-    'CRITICAL OPTION CONCISENESS RULES (MANDATORY):',
-    '- Every option (A, B, C, D) across all questions MUST be strictly concise and under 60 characters in English.',
-    '- Use natural, compact ETS phrasing (e.g. "Hotel costs are paid upfront" instead of "Employees must pay for their hotel accommodation upfront and request reimbursement").',
-    '- Never write long run-on sentences in options so they fit Slack radio buttons without clipping.',
+    'CRITICAL OPTION CONCISENESS & FORMATTING RULES (MANDATORY):',
+    '- Every option across all questions MUST be strictly concise and under 60 characters in English.',
+    '- Use natural, compact ETS phrasing (e.g. "Hotel costs are paid upfront").',
+    '- Write ONLY the pure choice text! NEVER include prefixes like "(A)", "A.", or "Option A" in the option strings (e.g. write "commensurate", NOT "(A) commensurate").',
+    '- The UI and Slack dynamically prepend (A), (B), (C), (D) badges to each option.',
     '',
     'CRITICAL PASSAGE FORMATTING RULES:',
     '- In Part 6, the passage must contain blanks [1], [2], [3], [4].',
     '- In Part 7, provide "documents": [ {"documentType": "Document 1: ...", "text": "..."} ... ] (1 document for single, 2 for double, 3 for triple).',
+    '',
     'CRITICAL MANDATORY RULE: RANDOMIZED & BALANCED ANSWER DISTRIBUTION',
     '- The correct answer index ("answerIndex": 0, 1, 2, or 3 representing A, B, C, D) MUST be evenly and unpredictably distributed across all 14 questions.',
     '- DO NOT put the correct answer at index 0 (A) for most questions! Each letter A(0), B(1), C(2), D(3) must appear approximately 3 to 4 times (roughly 25% each).',
     '- Consecutive identical answers are forbidden: NEVER allow 3 consecutive questions to have the same answer index.',
-    '- Randomize the position of the correct answer among options [A, B, C, D] when writing each question.',
+    '- Randomize the position of the correct answer among options when writing each question.',
     '',
     'OUTPUT SCHEMA (Strictly valid JSON only):',
     '{',
-    '  "part5": { "questions": [ { "question": "...", "options": ["Option A","Option B","Option C","Option D"], "answerIndex": 2, "explanation": "Korean", "optionExplanations": ["Option A note","Option B note","Option C note","Option D note"] } ] },',
-    '  "part6": { "documentType": "Business Email", "passage": "English with [1],[2],[3],[4]", "passageTranslation": "Korean", "questions": [ { "blankNumber": 1, "question": "Select the best option for the blank.", "options": ["Option A","Option B","Option C","Option D"], "answerIndex": 3, "explanation": "Korean", "optionExplanations": ["Option A note","Option B note","Option C note","Option D note"] } ] },',
+    '  "part5": { "questions": [ { "question": "...", "options": ["choice 1 text", "choice 2 text", "choice 3 text", "choice 4 text"], "answerIndex": 2, "explanation": "Korean", "optionExplanations": ["choice 1 note", "choice 2 note", "choice 3 note", "choice 4 note"] } ] },',
+    '  "part6": { "documentType": "Business Email", "passage": "English with [1],[2],[3],[4]", "passageTranslation": "Korean", "questions": [ { "blankNumber": 1, "question": "Select the best option for the blank.", "options": ["choice 1 text", "choice 2 text", "choice 3 text", "choice 4 text"], "answerIndex": 3, "explanation": "Korean", "optionExplanations": ["choice 1 note", "choice 2 note", "choice 3 note", "choice 4 note"] } ] },',
     '  "part7": {',
     '    "setName": "' + dayCfg.setName + '",',
     '    "documents": [ { "documentType": "Document 1: ...", "text": "..." } ],',
-    '    "questions": [ { "question": "...", "options": ["Option A","Option B","Option C","Option D"], "answerIndex": 1, "explanation": "Korean", "optionExplanations": ["Option A note","Option B note","Option C note","Option D note"] } ]',
+    '    "questions": [ { "question": "...", "options": ["choice 1 text", "choice 2 text", "choice 3 text", "choice 4 text"], "answerIndex": 1, "explanation": "Korean", "optionExplanations": ["choice 1 note", "choice 2 note", "choice 3 note", "choice 4 note"] } ]',
     '  }',
     '}'
   ].join('\n');
@@ -997,9 +1001,11 @@ function renderScenarioCards_(blocks, scenario) {
   }
 }
 
-/** Slack radio_buttons 75자 제한 준수 및 단어 경계 안전 자르기 */
+/** Slack radio_buttons 75자 제한 준수 및 선택지 접두어 정제 */
 function sanitizeOptionText_(opt) {
   let s = String(opt || '').trim();
+  // 모델이 실수로 포함한 불필요한 번호/알파벳 접두어 자동 제거 (예: "(A) ", "A. ", "A) ", "Option A: ", "① ")
+  s = s.replace(/^(?:\([A-Da-d1-4]\)|[A-Da-d1-4][\.\)]|Option\s+[A-Da-d]:?|[①-④])\s*/i, '');
   if (s.length <= 70) return s;
   let cut = s.slice(0, 67);
   const lastSpace = cut.lastIndexOf(' ');
