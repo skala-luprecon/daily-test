@@ -1,0 +1,267 @@
+{
+  "type": "TOEIC",
+  "title": "TOEIC RC 실전 평가 (단일 지문 집중)",
+  "part7Info": "Part 7 단일 3Q",
+  "part7Label": "단일 지문 독해 (3문항)",
+  "testId": "TOEIC_20260908",
+  "date": "2026-09-08",
+  "model": "gemini-3.7-flash",
+  "questions": [
+    {
+      "question": "The chief financial officer noted that the projected revenue surplus is largely _______ the unprecedented surge in overseas subscriptions.",
+      "options": [
+        "contrary to",
+        "adjacent to",
+        "attributable to",
+        "conditional upon"
+      ],
+      "answerIndex": 2,
+      "explanation": "문맥상 예상 수익 흑자가 해외 구독의 전례 없는 급증에 '기인한다(덕분이다)'는 인과관계를 나타내야 하므로, '~에 기인하는'의 뜻을 가진 형용사구 (C) attributable to가 정답입니다.",
+      "optionExplanations": [
+        "contrary to: ~와 반대로 (문맥상 어색함)",
+        "adjacent to: ~에 인접한 (위치 관계를 나타내므로 부적절)",
+        "attributable to: ~에 기인하는, ~ 덕분인 (정답)",
+        "conditional upon: ~을 조건으로 하는 (문맥상 어색함)"
+      ],
+      "id": "TOEIC_Q1",
+      "number": 1,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": ""
+    },
+    {
+      "question": "Only after conducting a rigorous audit of the supply chain _______ the executive board approve the multi-million-dollar acquisition.",
+      "options": [
+        "did",
+        "would have",
+        "was",
+        "having"
+      ],
+      "answerIndex": 0,
+      "explanation": "'Only + 부사구/부사절'이 문두에 올 경우 주어와 동사가 도치됩니다. 본동사 approve가 일반동사 원형이므로 과거 시제 도치를 이끄는 조동사 (A) did가 주어(the executive board) 앞에 와야 합니다.",
+      "optionExplanations": [
+        "did: 일반동사 과거형 도치를 완성하는 조동사 (정답)",
+        "would have: 과거분사가 뒤따라야 하므로 동사원형 approve와 결합 불가",
+        "was: 수동태나 진행형을 만들어야 하므로 동사원형과 결합 불가",
+        "having: 준동사이므로 정형동사 도치 구문을 완성할 수 없음"
+      ],
+      "id": "TOEIC_Q2",
+      "number": 2,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": ""
+    },
+    {
+      "question": "To maintain its competitive edge in biomedical research, NexaCorp will _______ recruit top-tier clinical investigators from leading universities.",
+      "options": [
+        "redundantly",
+        "casually",
+        "marginally",
+        "aggressively"
+      ],
+      "answerIndex": 3,
+      "explanation": "생명공학 연구 분야에서 경쟁력을 유지하기 위해 정상급 임상 연구원들을 '적극적으로/공격적으로' 채용한다는 의미가 자연스러우므로 동사 recruit를 수식하는 부사 (D) aggressively가 정답입니다.",
+      "optionExplanations": [
+        "redundantly: 불필요하게, 과도하게",
+        "casually: 무심코, 격식 없이",
+        "marginally: 미미하게, 근소하게",
+        "aggressively: 적극적으로, 공격적으로 (정답)"
+      ],
+      "id": "TOEIC_Q3",
+      "number": 3,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": ""
+    },
+    {
+      "question": "_______ the sudden fluctuation in raw material prices, the logistics team managed to deliver all orders within the stipulated timeframe.",
+      "options": [
+        "Even if",
+        "Notwithstanding",
+        "Given that",
+        "Inasmuch as"
+      ],
+      "answerIndex": 1,
+      "explanation": "빈칸 뒤에 명사구(the sudden fluctuation in raw material prices)가 오고, 전체 문장이 역접의 의미를 지니고 있으므로 명사구를 이끄는 양보 전치사 (B) Notwithstanding(~에도 불구하고)이 정답입니다.",
+      "optionExplanations": [
+        "Even if: 접속사로 뒤에 주어+동사 절이 필요함",
+        "Notwithstanding: ~에도 불구하고 (전치사 - 정답)",
+        "Given that: ~을 고려하면 (접속사)",
+        "Inasmuch as: ~하는 한, ~이므로 (접속사)"
+      ],
+      "id": "TOEIC_Q4",
+      "number": 4,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": ""
+    },
+    {
+      "question": "The contract stipulations specify that compensation will be _______ with each candidate’s years of managerial experience.",
+      "options": [
+        "unanimous",
+        "tentative",
+        "commensurate",
+        "prospective"
+      ],
+      "answerIndex": 2,
+      "explanation": "전치사 with와 결합하여 '각 후보자의 관리직 경력 연수에 비례하여/상응하여 보상이 제공된다'는 의미를 완성하는 형용사 (C) commensurate가 정답입니다. (be commensurate with: ~에 상응하다/비례하다)",
+      "optionExplanations": [
+        "unanimous: 만장일치의",
+        "tentative: 잠정적인, 임시의",
+        "commensurate: 상응하는, 비례하는 (정답)",
+        "prospective: 장래의, 유망한"
+      ],
+      "id": "TOEIC_Q5",
+      "number": 5,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": ""
+    },
+    {
+      "blankNumber": 1,
+      "question": "[1]번 빈칸 선택",
+      "options": [
+        "dispute",
+        "implement",
+        "forfeit",
+        "terminate"
+      ],
+      "answerIndex": 1,
+      "explanation": "문맥상 새로운 자동 검사 시스템을 공장에 공식적으로 '도입하다/실행하다'라는 의미가 와야 하므로 (B) implement가 정답입니다.",
+      "optionExplanations": [
+        "dispute: 반박하다, 논쟁하다",
+        "implement: 실행하다, 도입하다 (정답)",
+        "forfeit: 몰수당하다, 포기하다",
+        "terminate: 종료하다"
+      ],
+      "id": "TOEIC_Q6",
+      "number": 6,
+      "part": "Part 6 · Text Completion",
+      "scenario": "```\n[Internal Memorandum]\n\nMEMORANDUM\nTo: All Engineering and Production Staff\nFrom: Valerie Sterling, Director of Quality Assurance\nDate: September 8, 2026\nSubject: Transition to Automated Inspection Protocols\n\nOver the past two quarters, AeroTech Dynamics has been evaluating ways to optimize assembly line efficiency while minimizing hardware defects. Following an extensive internal assessment, we will formally [1] the Helios Automated Inspection System across all manufacturing facilities beginning next month.\n\nThis transition will require temporary adjustments to our standard workflow. During the initial rollout, technician shifts will be slightly modified to accommodate comprehensive training workshops. Please be assured that these sessions are designed to [2] seamless adaptation rather than add to your daily workload. [3] Senior specialists will also be on-site around the clock to offer immediate guidance.\n\nThe system upgrade represents a critical milestone in our strategic roadmap. We greatly appreciate your patience and [4] dedication as we strive to set a new benchmark for manufacturing excellence.\n```"
+    },
+    {
+      "blankNumber": 2,
+      "question": "[2]번 빈칸 선택",
+      "options": [
+        "facilitate",
+        "complicate",
+        "prevent",
+        "simulate"
+      ],
+      "answerIndex": 0,
+      "explanation": "교육 워크숍의 목적이 업무 부담을 주는 것이 아니라 직원들의 원활한 적응을 '돕고 용이하게 하는 것'이므로 (A) facilitate가 정답입니다.",
+      "optionExplanations": [
+        "facilitate: 용이하게 하다, 돕다 (정답)",
+        "complicate: 복잡하게 만들다",
+        "prevent: 예방하다, 막다",
+        "simulate: 모의실험하다"
+      ],
+      "id": "TOEIC_Q7",
+      "number": 7,
+      "part": "Part 6 · Text Completion",
+      "scenario": "```\n[Internal Memorandum]\n\nMEMORANDUM\nTo: All Engineering and Production Staff\nFrom: Valerie Sterling, Director of Quality Assurance\nDate: September 8, 2026\nSubject: Transition to Automated Inspection Protocols\n\nOver the past two quarters, AeroTech Dynamics has been evaluating ways to optimize assembly line efficiency while minimizing hardware defects. Following an extensive internal assessment, we will formally [1] the Helios Automated Inspection System across all manufacturing facilities beginning next month.\n\nThis transition will require temporary adjustments to our standard workflow. During the initial rollout, technician shifts will be slightly modified to accommodate comprehensive training workshops. Please be assured that these sessions are designed to [2] seamless adaptation rather than add to your daily workload. [3] Senior specialists will also be on-site around the clock to offer immediate guidance.\n\nThe system upgrade represents a critical milestone in our strategic roadmap. We greatly appreciate your patience and [4] dedication as we strive to set a new benchmark for manufacturing excellence.\n```"
+    },
+    {
+      "blankNumber": 3,
+      "question": "[3]번 빈칸 (알맞은 문장 선택)",
+      "options": [
+        "Factory output dropped significantly last quarter.",
+        "We have decided to cancel the equipment purchase.",
+        "New technicians must submit their resumes by Friday.",
+        "Additional technical support will be readily accessible."
+      ],
+      "answerIndex": 3,
+      "explanation": "빈칸 뒤 문장에서 '수석 전문가들이 24시간 현장에 상주하며 즉각적인 지도를 제공할 것'이라고 구체적인 지원 방안을 설명하고 있으므로, 기술 지원 접근성에 대해 언급한 (D)가 자연스럽게 연결됩니다.",
+      "optionExplanations": [
+        "Factory output dropped...: 생산량 급감은 교육 지원 문맥과 무관함",
+        "We have decided to cancel...: 장비 도입 계획을 취소한다는 것은 모순됨",
+        "New technicians must submit...: 이력서 제출 요구는 본문 전환 과정과 무관함",
+        "Additional technical support...: 현장 전문가 지원과 긴밀히 연결되는 자연스러운 문장 (정답)"
+      ],
+      "id": "TOEIC_Q8",
+      "number": 8,
+      "part": "Part 6 · Text Completion",
+      "scenario": "```\n[Internal Memorandum]\n\nMEMORANDUM\nTo: All Engineering and Production Staff\nFrom: Valerie Sterling, Director of Quality Assurance\nDate: September 8, 2026\nSubject: Transition to Automated Inspection Protocols\n\nOver the past two quarters, AeroTech Dynamics has been evaluating ways to optimize assembly line efficiency while minimizing hardware defects. Following an extensive internal assessment, we will formally [1] the Helios Automated Inspection System across all manufacturing facilities beginning next month.\n\nThis transition will require temporary adjustments to our standard workflow. During the initial rollout, technician shifts will be slightly modified to accommodate comprehensive training workshops. Please be assured that these sessions are designed to [2] seamless adaptation rather than add to your daily workload. [3] Senior specialists will also be on-site around the clock to offer immediate guidance.\n\nThe system upgrade represents a critical milestone in our strategic roadmap. We greatly appreciate your patience and [4] dedication as we strive to set a new benchmark for manufacturing excellence.\n```"
+    },
+    {
+      "blankNumber": 4,
+      "question": "[4]번 빈칸 선택",
+      "options": [
+        "hesitant",
+        "reluctant",
+        "unwavering",
+        "provisional"
+      ],
+      "answerIndex": 2,
+      "explanation": "직원들의 공로를 치하하며 감사를 표하는 문맥에서 dedication(헌신)을 수식하기에 가장 적절한 어휘는 '변함없는, 확고한'을 뜻하는 (C) unwavering입니다.",
+      "optionExplanations": [
+        "hesitant: 주저하는, 망설이는",
+        "reluctant: 꺼리는, 마지못해 하는",
+        "unwavering: 변함없는, 확고한 (정답)",
+        "provisional: 임시의, 일시적인"
+      ],
+      "id": "TOEIC_Q9",
+      "number": 9,
+      "part": "Part 6 · Text Completion",
+      "scenario": "```\n[Internal Memorandum]\n\nMEMORANDUM\nTo: All Engineering and Production Staff\nFrom: Valerie Sterling, Director of Quality Assurance\nDate: September 8, 2026\nSubject: Transition to Automated Inspection Protocols\n\nOver the past two quarters, AeroTech Dynamics has been evaluating ways to optimize assembly line efficiency while minimizing hardware defects. Following an extensive internal assessment, we will formally [1] the Helios Automated Inspection System across all manufacturing facilities beginning next month.\n\nThis transition will require temporary adjustments to our standard workflow. During the initial rollout, technician shifts will be slightly modified to accommodate comprehensive training workshops. Please be assured that these sessions are designed to [2] seamless adaptation rather than add to your daily workload. [3] Senior specialists will also be on-site around the clock to offer immediate guidance.\n\nThe system upgrade represents a critical milestone in our strategic roadmap. We greatly appreciate your patience and [4] dedication as we strive to set a new benchmark for manufacturing excellence.\n```"
+    },
+    {
+      "question": "What is the primary purpose of the press release?",
+      "options": [
+        "To announce a fleet modernization partnership",
+        "To advertise new driving employment opportunities",
+        "To report on severe financial losses in freight",
+        "To review consumer feedback on electric vehicles"
+      ],
+      "answerIndex": 0,
+      "explanation": "지문 전체는 Greendale Logistics가 GreenGrid Energy와의 파트너십을 통해 화물 트럭을 전기 및 반자율주행 차량으로 전환하는 차량 현대화 사업을 발표하고 있으므로 (A)가 정답입니다.",
+      "optionExplanations": [
+        "To announce a fleet modernization partnership: 차량 현대화 파트너십 발표 (정답)",
+        "To advertise new driving employment...: 신규 운전직 채용 광고가 아님",
+        "To report on severe financial losses...: 재정 손실 보고가 아님",
+        "To review consumer feedback...: 소비자 피드백 검토가 아님"
+      ],
+      "id": "TOEIC_Q10",
+      "number": 10,
+      "part": "Part 7 · Single Passage (단일 지문)",
+      "scenario": "```\n[Document 1: Press Release]\n\nPORTLAND (September 8) — Greendale Logistics, one of the Pacific Northwest's prominent freight carriers, announced today a multi-year partnership with GreenGrid Energy to convert its regional delivery fleet to fully electric, semi-autonomous trucks. The joint initiative, valued at approximately $45 million, aims to reduce the company's carbon footprint by 40 percent over the next four years while significantly cutting long-haul fuel expenses.\n\nUnder the terms of the agreement, GreenGrid Energy will install 60 high-capacity charging terminals at Greendale’s primary distribution hubs in Seattle, Portland, and Boise. In addition, GreenGrid will supply specialized battery-monitoring software that optimizes charging schedules during off-peak utility hours. This strategic integration is anticipated to shield the carrier from volatile energy prices.\n\nGreendale’s chief executive officer, Marcus Vance, emphasized that the deployment of semi-autonomous vehicles will not result in workforce reductions. Instead, current drivers will undergo comprehensive retraining to operate as fleet navigators and safety supervisors. The initial batch of 50 electric freight carriers is slated for delivery early next spring, with full operational deployment expected by the end of 2027. Preliminary road trials conducted earlier this summer demonstrated a 28 percent improvement in transit reliability under severe weather conditions.\n```"
+    },
+    {
+      "question": "What is stated about Greendale Logistics' current drivers?",
+      "options": [
+        "They will be relocated to the Boise hub.",
+        "They will receive training for new supervisory roles.",
+        "They must purchase their own navigation software.",
+        "They will face immediate layoffs next spring."
+      ],
+      "answerIndex": 1,
+      "explanation": "3단락에서 인력 감축(workforce reductions)은 없을 것이며, 기존 운전자들이 'fleet navigators and safety supervisors(차량 운항사 및 안전 감독관)'로 근무할 수 있도록 포괄적 재교육을 받을 것이라고 언급되어 있으므로 (B)가 정답입니다.",
+      "optionExplanations": [
+        "They will be relocated...: 보이시 허브로 이전된다는 내용은 없음",
+        "They will receive training...: 새로운 감독 역할에 대한 교육을 받는다는 내용과 일치 (정답)",
+        "They must purchase...: 자체 소프트웨어를 구매해야 한다는 언급 없음",
+        "They will face immediate layoffs...: 인력 감축은 없다고 명시되어 일치하지 않음"
+      ],
+      "id": "TOEIC_Q11",
+      "number": 11,
+      "part": "Part 7 · Single Passage (단일 지문)",
+      "scenario": "```\n[Document 1: Press Release]\n\nPORTLAND (September 8) — Greendale Logistics, one of the Pacific Northwest's prominent freight carriers, announced today a multi-year partnership with GreenGrid Energy to convert its regional delivery fleet to fully electric, semi-autonomous trucks. The joint initiative, valued at approximately $45 million, aims to reduce the company's carbon footprint by 40 percent over the next four years while significantly cutting long-haul fuel expenses.\n\nUnder the terms of the agreement, GreenGrid Energy will install 60 high-capacity charging terminals at Greendale’s primary distribution hubs in Seattle, Portland, and Boise. In addition, GreenGrid will supply specialized battery-monitoring software that optimizes charging schedules during off-peak utility hours. This strategic integration is anticipated to shield the carrier from volatile energy prices.\n\nGreendale’s chief executive officer, Marcus Vance, emphasized that the deployment of semi-autonomous vehicles will not result in workforce reductions. Instead, current drivers will undergo comprehensive retraining to operate as fleet navigators and safety supervisors. The initial batch of 50 electric freight carriers is slated for delivery early next spring, with full operational deployment expected by the end of 2027. Preliminary road trials conducted earlier this summer demonstrated a 28 percent improvement in transit reliability under severe weather conditions.\n```"
+    },
+    {
+      "question": "The word 'shield' in paragraph 2, line 4, is closest in meaning to",
+      "options": [
+        "conceal",
+        "enforce",
+        "isolate",
+        "protect"
+      ],
+      "answerIndex": 3,
+      "explanation": "문맥상 심야 시간대 충전 최적화 소프트웨어를 통해 변동성이 큰 에너지 가격으로부터 회사를 '보호하다/방어하다'라는 뜻으로 쓰였으므로, 'shield'와 가장 가까운 유의어는 (D) protect입니다.",
+      "optionExplanations": [
+        "conceal: 숨기다, 감추다",
+        "enforce: 집행하다, 강요하다",
+        "isolate: 격리하다, 고립시키다",
+        "protect: 보호하다, 지키다 (정답)"
+      ],
+      "id": "TOEIC_Q12",
+      "number": 12,
+      "part": "Part 7 · Single Passage (단일 지문)",
+      "scenario": "```\n[Document 1: Press Release]\n\nPORTLAND (September 8) — Greendale Logistics, one of the Pacific Northwest's prominent freight carriers, announced today a multi-year partnership with GreenGrid Energy to convert its regional delivery fleet to fully electric, semi-autonomous trucks. The joint initiative, valued at approximately $45 million, aims to reduce the company's carbon footprint by 40 percent over the next four years while significantly cutting long-haul fuel expenses.\n\nUnder the terms of the agreement, GreenGrid Energy will install 60 high-capacity charging terminals at Greendale’s primary distribution hubs in Seattle, Portland, and Boise. In addition, GreenGrid will supply specialized battery-monitoring software that optimizes charging schedules during off-peak utility hours. This strategic integration is anticipated to shield the carrier from volatile energy prices.\n\nGreendale’s chief executive officer, Marcus Vance, emphasized that the deployment of semi-autonomous vehicles will not result in workforce reductions. Instead, current drivers will undergo comprehensive retraining to operate as fleet navigators and safety supervisors. The initial batch of 50 electric freight carriers is slated for delivery early next spring, with full operational deployment expected by the end of 2027. Preliminary road trials conducted earlier this summer demonstrated a 28 percent improvement in transit reliability under severe weather conditions.\n```"
+    }
+  ]
+}
