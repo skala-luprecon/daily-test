@@ -1,0 +1,309 @@
+{
+  "type": "TOEIC",
+  "title": "TOEIC RC 실전 평가 (이중 연계 지문 집중)",
+  "part7Info": "Part 7 이중 5Q",
+  "part7Label": "이중 연계 독해 (5문항)",
+  "testId": "TOEIC_20260909",
+  "date": "2026-09-09",
+  "model": "gemini-3.7-flash",
+  "questions": [
+    {
+      "question": "The merger negotiations were temporarily suspended after the board demanded a thorough audit to verify that the target company's reported liabilities were ------- with actual debts.",
+      "options": [
+        "tentative",
+        "discretionary",
+        "commensurate",
+        "inadvertent"
+      ],
+      "answerIndex": 2,
+      "explanation": "'be commensurate with(~와 일치하다, 비례하다)'는 고급 비즈니스 어휘 구문입니다. 피인수 기업의 보고된 부채가 실제 채무와 일치하는지(commensurate) 검증하기 위한 감사라는 문맥에 가장 적합합니다.",
+      "optionExplanations": [
+        "tentative: 잠정적인, 확정되지 않은 (문맥상 어색함)",
+        "discretionary: 자유재량의, 임의의 (문맥에 맞지 않음)",
+        "commensurate: (~와) 상응하는, 일치하는 (be commensurate with 형태의 정답)",
+        "inadvertent: 고의가 아닌, 우연의 (문맥에 부적합)"
+      ],
+      "id": "TOEIC_Q1",
+      "number": 1,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": ""
+    },
+    {
+      "question": "------- had the chief financial officer finalized the quarterly projections than unexpected regulatory changes forced a complete revision of the forecast.",
+      "options": [
+        "No sooner",
+        "Hardly",
+        "Scarcely",
+        "Barely"
+      ],
+      "answerIndex": 0,
+      "explanation": "'No sooner had + S + p.p. ~ than ...'은 '~하자마자 ...하다'를 뜻하는 도치 구문입니다. 뒤에 접속사 'than'이 이어지므로 'No sooner'가 정답입니다. Hardly / Scarcely / Barely는 than 대신 when이나 before와 호응합니다.",
+      "optionExplanations": [
+        "No sooner: than과 짝을 이루어 도치 구문을 형성하므로 정답",
+        "Hardly: when/before와 호응하므로 오답",
+        "Scarcely: when/before와 호응하므로 오답",
+        "Barely: when/before와 호응하므로 오답"
+      ],
+      "id": "TOEIC_Q2",
+      "number": 2,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": ""
+    },
+    {
+      "question": "In light of rising freight charges, the procurement department decided to source raw materials domestically ------- relying on overseas suppliers.",
+      "options": [
+        "in lieu",
+        "regardless",
+        "in accordance with",
+        "rather than"
+      ],
+      "answerIndex": 3,
+      "explanation": "'rather than + -ing/명사'는 '~하기보다는 오히려'라는 의미로 두 가지 대안 중 하나를 선택할 때 쓰입니다. 'in lieu'는 전치사 of가 동반되어야 하며, 문맥상 해외 공급업체에 의존하기보다는 국내에서 조달하기로 했다는 의미이므로 'rather than'이 정답입니다.",
+      "optionExplanations": [
+        "in lieu: 'in lieu of' 형태로 쓰여야 하므로 전치사 of 누락",
+        "regardless: 'regardless of' 형태로 쓰여야 하므로 오답",
+        "in accordance with: ~에 따라서, 부합하여 (문맥상 부적절)",
+        "rather than: ~ 대신에, ~하기보다는 오히려 (병렬/대조 구조 완성)"
+      ],
+      "id": "TOEIC_Q3",
+      "number": 3,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": ""
+    },
+    {
+      "question": "The oversight committee strongly recommended that the senior auditor ------- an unannounced inspection of the manufacturing plant before granting certification.",
+      "options": [
+        "conducts",
+        "conduct",
+        "conducted",
+        "will conduct"
+      ],
+      "answerIndex": 1,
+      "explanation": "주절의 동사 'recommend'는 제안/권고를 나타내므로, that절의 동사는 '(should) + 동사원형' 형태가 와야 합니다. 주어가 3인칭 단수(the senior auditor)임에도 불구하고 동사원형인 'conduct'가 올바른 형태입니다.",
+      "optionExplanations": [
+        "conducts: 당위성 that절에 3인칭 단수 현재형은 올 수 없음",
+        "conduct: (should) 생략에 따른 동사원형으로 정답",
+        "conducted: 과거 시제 동사는 당위성 구문에 부적합",
+        "will conduct: 조동사 will은 사용 불가"
+      ],
+      "id": "TOEIC_Q4",
+      "number": 4,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": ""
+    },
+    {
+      "question": "Ms. Vance carried out the feasibility assessment with such exceptional ------- that she was promptly appointed to lead the international expansion initiative.",
+      "options": [
+        "complacency",
+        "resurgence",
+        "diligence",
+        "conformity"
+      ],
+      "answerIndex": 2,
+      "explanation": "'with exceptional diligence(남다른 근면함/성실함으로)'라는 표현이 자연스러우며, 그 결과 즉각 해외 확장 프로젝트 책임자로 임명되었다는 인과관계에 부합합니다.",
+      "optionExplanations": [
+        "complacency: 자기만족, 안주 (부정적 의미)",
+        "resurgence: 부활, 재기 (문맥상 어색함)",
+        "diligence: 근면, 성실 (문맥상 정답)",
+        "conformity: 순응, 일치 (문맥상 부적합)"
+      ],
+      "id": "TOEIC_Q5",
+      "number": 5,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": ""
+    },
+    {
+      "blankNumber": 1,
+      "question": "[1]번 빈칸 선택",
+      "options": [
+        "imperative",
+        "speculative",
+        "redundant",
+        "conditional"
+      ],
+      "answerIndex": 0,
+      "explanation": "'it is imperative that S + (should) V' 구문으로 '반드시 ~해야 한다, 필수적이다'라는 의미를 갖습니다. 관리자들의 필수 모듈 이수를 요구하는 사내 공지 문맥에 적합합니다.",
+      "optionExplanations": [
+        "imperative: 필수적인, 긴요한 (정답)",
+        "speculative: 추측에 근거한 (문맥상 부적합)",
+        "redundant: 불필요한, 중복되는 (문맥과 상반됨)",
+        "conditional: 조건부의 (의미 통하지 않음)"
+      ],
+      "id": "TOEIC_Q6",
+      "number": 6,
+      "part": "Part 6 · Text Completion",
+      "scenario": "```\n[Business Internal Memo]\n\nTo: All Operations Staff\nFrom: Danielle Park, Director of Systems Modernization\nDate: September 9, 2026\nSubject: Implementation of ApexTrack Logistics Platform\n\nAs we prepare for the transition to the automated inventory system next month, it is [1] that all shift supervisors complete the prerequisite certification modules. [2] updating product tracking protocols in real time, the new platform will automatically generate regulatory compliance reports.\n\nThe interactive walkthrough sessions will be held on Thursday afternoon in Conference Room C. [3] Any questions regarding scheduling conflicts should be directed to Human Resources immediately.\n\nManagement expects that this upgrade will significantly [4] our fulfillment turnaround times and eliminate recurring dispatch errors across our regional hubs.\n```"
+    },
+    {
+      "blankNumber": 2,
+      "question": "[2]번 빈칸 선택",
+      "options": [
+        "On behalf of",
+        "Even though",
+        "In contrast to",
+        "In addition to"
+      ],
+      "answerIndex": 3,
+      "explanation": "새 시스템의 두 가지 기능(실시간 재고 추적 + 규정 준수 보고서 자동 생성)을 덧붙여 설명하고 있으므로 추가/부가 부사구인 'In addition to(~에 더하여)'가 정답입니다.",
+      "optionExplanations": [
+        "On behalf of: ~을 대표하여 (문맥상 부적합)",
+        "Even though: 비록 ~일지라도 (양보 접속사, 전치사 자리에 부적합)",
+        "In contrast to: ~와 대조적으로 (대조 관계가 아님)",
+        "In addition to: ~에 더하여 (추가 기능을 소개하는 정답)"
+      ],
+      "id": "TOEIC_Q7",
+      "number": 7,
+      "part": "Part 6 · Text Completion",
+      "scenario": "```\n[Business Internal Memo]\n\nTo: All Operations Staff\nFrom: Danielle Park, Director of Systems Modernization\nDate: September 9, 2026\nSubject: Implementation of ApexTrack Logistics Platform\n\nAs we prepare for the transition to the automated inventory system next month, it is [1] that all shift supervisors complete the prerequisite certification modules. [2] updating product tracking protocols in real time, the new platform will automatically generate regulatory compliance reports.\n\nThe interactive walkthrough sessions will be held on Thursday afternoon in Conference Room C. [3] Any questions regarding scheduling conflicts should be directed to Human Resources immediately.\n\nManagement expects that this upgrade will significantly [4] our fulfillment turnaround times and eliminate recurring dispatch errors across our regional hubs.\n```"
+    },
+    {
+      "blankNumber": 3,
+      "question": "[3]번 빈칸 (알맞은 문장 선택)",
+      "options": [
+        "The installation was postponed indefinitely.",
+        "Please review the attached manual beforehand.",
+        "We regret to announce the workshop is canceled.",
+        "Outside visitors are barred from the premises."
+      ],
+      "answerIndex": 1,
+      "explanation": "앞 문장에서 목요일 워크숍 진행을 알리고, 뒤 문장에서 일정 관련 문의처를 안내하므로, 세션 참가 전 준비 사항을 당부하는 문장(첨부된 매뉴얼을 사전에 검토해 주시기 바랍니다)이 문맥상 가장 매끄럽습니다.",
+      "optionExplanations": [
+        "The installation was postponed indefinitely.: 설치가 무기한 연기되었다는 내용은 워크숍 진행 내용과 모순됨",
+        "Please review the attached manual beforehand.: 세션 전 매뉴얼 검토를 요청하는 자연스러운 연결 (정답)",
+        "We regret to announce the workshop is canceled.: 워크숍 취소 내용은 뒤 문장의 일정 충돌 문의와 충돌함",
+        "Outside visitors are barred from the premises.: 외부인 출입 제한은 사내 직원 대상 교육 문맥과 무관함"
+      ],
+      "id": "TOEIC_Q8",
+      "number": 8,
+      "part": "Part 6 · Text Completion",
+      "scenario": "```\n[Business Internal Memo]\n\nTo: All Operations Staff\nFrom: Danielle Park, Director of Systems Modernization\nDate: September 9, 2026\nSubject: Implementation of ApexTrack Logistics Platform\n\nAs we prepare for the transition to the automated inventory system next month, it is [1] that all shift supervisors complete the prerequisite certification modules. [2] updating product tracking protocols in real time, the new platform will automatically generate regulatory compliance reports.\n\nThe interactive walkthrough sessions will be held on Thursday afternoon in Conference Room C. [3] Any questions regarding scheduling conflicts should be directed to Human Resources immediately.\n\nManagement expects that this upgrade will significantly [4] our fulfillment turnaround times and eliminate recurring dispatch errors across our regional hubs.\n```"
+    },
+    {
+      "blankNumber": 4,
+      "question": "[4]번 빈칸 선택",
+      "options": [
+        "relinquish",
+        "fluctuate",
+        "expedite",
+        "terminate"
+      ],
+      "answerIndex": 2,
+      "explanation": "주문 처리 소요 시간(turnaround times)을 단축하고 신속하게 처리한다는 맥락에 부합하는 타동사는 'expedite(촉진하다, 신속히 처리하다)'입니다.",
+      "optionExplanations": [
+        "relinquish: (권리 등을) 포기하다, 양도하다",
+        "fluctuate: 변동하다 (자동사)",
+        "expedite: 신속히 처리하다, 진척시키다 (정답)",
+        "terminate: 종료하다, 해고하다"
+      ],
+      "id": "TOEIC_Q9",
+      "number": 9,
+      "part": "Part 6 · Text Completion",
+      "scenario": "```\n[Business Internal Memo]\n\nTo: All Operations Staff\nFrom: Danielle Park, Director of Systems Modernization\nDate: September 9, 2026\nSubject: Implementation of ApexTrack Logistics Platform\n\nAs we prepare for the transition to the automated inventory system next month, it is [1] that all shift supervisors complete the prerequisite certification modules. [2] updating product tracking protocols in real time, the new platform will automatically generate regulatory compliance reports.\n\nThe interactive walkthrough sessions will be held on Thursday afternoon in Conference Room C. [3] Any questions regarding scheduling conflicts should be directed to Human Resources immediately.\n\nManagement expects that this upgrade will significantly [4] our fulfillment turnaround times and eliminate recurring dispatch errors across our regional hubs.\n```"
+    },
+    {
+      "question": "According to Document 1, what is a mandatory requirement for catering vendors?",
+      "options": [
+        "Providing weekend dinner deliveries",
+        "Operating within five miles of Aegis",
+        "Offering on-site kitchen staff",
+        "Using sustainable packaging materials"
+      ],
+      "answerIndex": 3,
+      "explanation": "문서 1의 '2. Mandatory Requirements' 섹션에 명시된 'All meal containers and utensils must be 100% biodegradable or commercially compostable plant-based materials'를 통해 친환경/지속 가능한 포장재 사용이 필수 요건임을 알 수 있습니다.",
+      "optionExplanations": [
+        "Providing weekend dinner deliveries: 주말 석식 배달 언급 없음",
+        "Operating within five miles of Aegis: 거리 제한 규정 없음",
+        "Offering on-site kitchen staff: 상주 조리 인력 요구 없음",
+        "Using sustainable packaging materials: 100% 생분해성 포장재 사용 의무와 정확히 일치 (정답)"
+      ],
+      "id": "TOEIC_Q10",
+      "number": 10,
+      "part": "Part 7 · Double Passage (이중 연계 지문)",
+      "scenario": "```\n[Document 1: Request for Proposals (RFP)]\n\nAegis Financial Group — Headquarters Procurement Office\nRequest for Proposals (RFP #AFG-2026-CAT)\nProject: Corporate Catering Services\nIssue Date: September 28, 2026\nClosing Date: October 12, 2026, 5:00 PM PST\n\n1. Project Overview\nAegis Financial Group is seeking bids from established catering providers to supply daily executive lunches (approx. 50 servings/day) for our Seattle downtown office. The initial contract term is one year, commencing December 1, 2026, with an option for renewal based on an annual performance audit.\n\n2. Mandatory Requirements\n- Packaging: All meal containers and utensils must be 100% biodegradable or commercially compostable plant-based materials.\n- Dietary Compliance: Menus must incorporate dedicated options for gluten-free, vegan, and certified halal diets.\n- Budget Ceilings: Standard daily executive lunch tier must not exceed $28 per person; VIP boardroom dining tier must not exceed $45 per person.\n\n3. Submission Guidelines\nProspective vendors must submit a sample weekly menu, itemized fee schedules, and at least three corporate client references by the closing date.\n```\n\n```\n[Document 2: Proposal Submission Email]\n\nTo: Marcus Vance, Procurement Coordinator (m.vance@aegisfinancial.com)\nFrom: Clara Higgins, Director of Accounts (c.higgins@artisantable.com)\nDate: October 8, 2026\nSubject: Bid Submission: RFP #AFG-2026-CAT\n\nDear Mr. Vance,\n\nOn behalf of Artisan Table Catering Ltd., I am pleased to submit our formal proposal for RFP #AFG-2026-CAT. Over the past eight years, we have provided bespoke dining solutions to prominent corporations throughout downtown Seattle.\n\nWe strictly comply with all stated environmental criteria; our tableware is manufactured exclusively from sugarcane fiber, ensuring full compostability within 60 days. Our proposed rate structure is $25 per person for the standard executive tier and $42 per person for the VIP package.\n\nAttached to this email, you will find our rotational menu featuring certified halal, vegan, and gluten-free entrees, alongside recommendation letters from three client partners, including Northwest Tech Partners. Furthermore, we would like to invite your selection committee to a complimentary tasting session at your office on October 16.\n\nSincerely,\nClara Higgins\nDirector of Accounts, Artisan Table Catering Ltd.\n```"
+    },
+    {
+      "question": "What does Ms. Higgins offer to organize on October 16?",
+      "options": [
+        "A food tasting session for the committee",
+        "A revised pricing proposal for VIP dining",
+        "A facility tour of the commercial kitchen",
+        "An onboarding workshop for staff"
+      ],
+      "answerIndex": 0,
+      "explanation": "문서 2의 마지막 문단 'we would like to invite your selection committee to a complimentary tasting session at your office on October 16'에서 선정 위원회를 위한 무료 시식회를 개최하겠다고 제안하고 있습니다.",
+      "optionExplanations": [
+        "A food tasting session for the committee: 10월 16일 시식회 제안과 일치 (정답)",
+        "A revised pricing proposal for VIP dining: 가격 수정안 언급 없음",
+        "A facility tour of the commercial kitchen: 주방 견학 언급 없음",
+        "An onboarding workshop for staff: 직원 교육 워크숍 언급 없음"
+      ],
+      "id": "TOEIC_Q11",
+      "number": 11,
+      "part": "Part 7 · Double Passage (이중 연계 지문)",
+      "scenario": "```\n[Document 1: Request for Proposals (RFP)]\n\nAegis Financial Group — Headquarters Procurement Office\nRequest for Proposals (RFP #AFG-2026-CAT)\nProject: Corporate Catering Services\nIssue Date: September 28, 2026\nClosing Date: October 12, 2026, 5:00 PM PST\n\n1. Project Overview\nAegis Financial Group is seeking bids from established catering providers to supply daily executive lunches (approx. 50 servings/day) for our Seattle downtown office. The initial contract term is one year, commencing December 1, 2026, with an option for renewal based on an annual performance audit.\n\n2. Mandatory Requirements\n- Packaging: All meal containers and utensils must be 100% biodegradable or commercially compostable plant-based materials.\n- Dietary Compliance: Menus must incorporate dedicated options for gluten-free, vegan, and certified halal diets.\n- Budget Ceilings: Standard daily executive lunch tier must not exceed $28 per person; VIP boardroom dining tier must not exceed $45 per person.\n\n3. Submission Guidelines\nProspective vendors must submit a sample weekly menu, itemized fee schedules, and at least three corporate client references by the closing date.\n```\n\n```\n[Document 2: Proposal Submission Email]\n\nTo: Marcus Vance, Procurement Coordinator (m.vance@aegisfinancial.com)\nFrom: Clara Higgins, Director of Accounts (c.higgins@artisantable.com)\nDate: October 8, 2026\nSubject: Bid Submission: RFP #AFG-2026-CAT\n\nDear Mr. Vance,\n\nOn behalf of Artisan Table Catering Ltd., I am pleased to submit our formal proposal for RFP #AFG-2026-CAT. Over the past eight years, we have provided bespoke dining solutions to prominent corporations throughout downtown Seattle.\n\nWe strictly comply with all stated environmental criteria; our tableware is manufactured exclusively from sugarcane fiber, ensuring full compostability within 60 days. Our proposed rate structure is $25 per person for the standard executive tier and $42 per person for the VIP package.\n\nAttached to this email, you will find our rotational menu featuring certified halal, vegan, and gluten-free entrees, alongside recommendation letters from three client partners, including Northwest Tech Partners. Furthermore, we would like to invite your selection committee to a complimentary tasting session at your office on October 16.\n\nSincerely,\nClara Higgins\nDirector of Accounts, Artisan Table Catering Ltd.\n```"
+    },
+    {
+      "question": "What is indicated about Artisan Table Catering Ltd. in Document 2?",
+      "options": [
+        "It was established less than two years ago.",
+        "Its rates fall below Aegis's spending limits.",
+        "It serves only vegetarian and vegan foods.",
+        "It has previously catered for Aegis."
+      ],
+      "answerIndex": 1,
+      "explanation": "문서 1에서 예산 상한선이 일반 $28, VIP $45로 설정되어 있고, 문서 2에서 제시된 가격은 일반 $25, VIP $42이므로 회사의 가격 책정이 Aegis의 예산 한도 이내(below spending limits)에 해당합니다.",
+      "optionExplanations": [
+        "It was established less than two years ago.: 지난 8년간 운영되어 왔으므로 오답",
+        "Its rates fall below Aegis's spending limits.: $25 및 $42로 상한선($28, $45) 미만이므로 정답",
+        "It serves only vegetarian and vegan foods.: 다양한 메뉴 중 비건/할랄 옵션이 포함된 것이지 전용 업체가 아님",
+        "It has previously catered for Aegis.: Aegis와 기존 거래 관계가 있었다는 언급 없음"
+      ],
+      "id": "TOEIC_Q12",
+      "number": 12,
+      "part": "Part 7 · Double Passage (이중 연계 지문)",
+      "scenario": "```\n[Document 1: Request for Proposals (RFP)]\n\nAegis Financial Group — Headquarters Procurement Office\nRequest for Proposals (RFP #AFG-2026-CAT)\nProject: Corporate Catering Services\nIssue Date: September 28, 2026\nClosing Date: October 12, 2026, 5:00 PM PST\n\n1. Project Overview\nAegis Financial Group is seeking bids from established catering providers to supply daily executive lunches (approx. 50 servings/day) for our Seattle downtown office. The initial contract term is one year, commencing December 1, 2026, with an option for renewal based on an annual performance audit.\n\n2. Mandatory Requirements\n- Packaging: All meal containers and utensils must be 100% biodegradable or commercially compostable plant-based materials.\n- Dietary Compliance: Menus must incorporate dedicated options for gluten-free, vegan, and certified halal diets.\n- Budget Ceilings: Standard daily executive lunch tier must not exceed $28 per person; VIP boardroom dining tier must not exceed $45 per person.\n\n3. Submission Guidelines\nProspective vendors must submit a sample weekly menu, itemized fee schedules, and at least three corporate client references by the closing date.\n```\n\n```\n[Document 2: Proposal Submission Email]\n\nTo: Marcus Vance, Procurement Coordinator (m.vance@aegisfinancial.com)\nFrom: Clara Higgins, Director of Accounts (c.higgins@artisantable.com)\nDate: October 8, 2026\nSubject: Bid Submission: RFP #AFG-2026-CAT\n\nDear Mr. Vance,\n\nOn behalf of Artisan Table Catering Ltd., I am pleased to submit our formal proposal for RFP #AFG-2026-CAT. Over the past eight years, we have provided bespoke dining solutions to prominent corporations throughout downtown Seattle.\n\nWe strictly comply with all stated environmental criteria; our tableware is manufactured exclusively from sugarcane fiber, ensuring full compostability within 60 days. Our proposed rate structure is $25 per person for the standard executive tier and $42 per person for the VIP package.\n\nAttached to this email, you will find our rotational menu featuring certified halal, vegan, and gluten-free entrees, alongside recommendation letters from three client partners, including Northwest Tech Partners. Furthermore, we would like to invite your selection committee to a complimentary tasting session at your office on October 16.\n\nSincerely,\nClara Higgins\nDirector of Accounts, Artisan Table Catering Ltd.\n```"
+    },
+    {
+      "question": "What can be inferred about Artisan Table Catering Ltd.'s proposal?",
+      "options": [
+        "It was submitted after the formal deadline.",
+        "It lacked the required customer references.",
+        "It complies with all specific RFP guidelines.",
+        "It requires Aegis to purchase serving wares."
+      ],
+      "answerIndex": 2,
+      "explanation": "[연계 추론] 문서 1의 마감일(10월 12일), 포장재 규정(생분해성), 식단(할랄/비건/글루텐프리), 추천서 3부, 예산 기준을 문서 2에서 모두 충족(10월 8일 제출, 사탕수수 섬유 포장재, 맞춤 메뉴, 추천서 3부 첨부, 예산 내 견적)하고 있으므로 모든 RFP 가이드라인을 준수하고 있음을 알 수 있습니다.",
+      "optionExplanations": [
+        "It was submitted after the formal deadline.: 마감일(10/12) 전인 10/8에 제출함",
+        "It lacked the required customer references.: 추천서 3부를 첨부했으므로 오답",
+        "It complies with all specific RFP guidelines.: 모든 제안 요구 조건을 충족하여 정답",
+        "It requires Aegis to purchase serving wares.: 식기 구매 요구 내용 없음"
+      ],
+      "id": "TOEIC_Q13",
+      "number": 13,
+      "part": "Part 7 · Double Passage (이중 연계 지문)",
+      "scenario": "```\n[Document 1: Request for Proposals (RFP)]\n\nAegis Financial Group — Headquarters Procurement Office\nRequest for Proposals (RFP #AFG-2026-CAT)\nProject: Corporate Catering Services\nIssue Date: September 28, 2026\nClosing Date: October 12, 2026, 5:00 PM PST\n\n1. Project Overview\nAegis Financial Group is seeking bids from established catering providers to supply daily executive lunches (approx. 50 servings/day) for our Seattle downtown office. The initial contract term is one year, commencing December 1, 2026, with an option for renewal based on an annual performance audit.\n\n2. Mandatory Requirements\n- Packaging: All meal containers and utensils must be 100% biodegradable or commercially compostable plant-based materials.\n- Dietary Compliance: Menus must incorporate dedicated options for gluten-free, vegan, and certified halal diets.\n- Budget Ceilings: Standard daily executive lunch tier must not exceed $28 per person; VIP boardroom dining tier must not exceed $45 per person.\n\n3. Submission Guidelines\nProspective vendors must submit a sample weekly menu, itemized fee schedules, and at least three corporate client references by the closing date.\n```\n\n```\n[Document 2: Proposal Submission Email]\n\nTo: Marcus Vance, Procurement Coordinator (m.vance@aegisfinancial.com)\nFrom: Clara Higgins, Director of Accounts (c.higgins@artisantable.com)\nDate: October 8, 2026\nSubject: Bid Submission: RFP #AFG-2026-CAT\n\nDear Mr. Vance,\n\nOn behalf of Artisan Table Catering Ltd., I am pleased to submit our formal proposal for RFP #AFG-2026-CAT. Over the past eight years, we have provided bespoke dining solutions to prominent corporations throughout downtown Seattle.\n\nWe strictly comply with all stated environmental criteria; our tableware is manufactured exclusively from sugarcane fiber, ensuring full compostability within 60 days. Our proposed rate structure is $25 per person for the standard executive tier and $42 per person for the VIP package.\n\nAttached to this email, you will find our rotational menu featuring certified halal, vegan, and gluten-free entrees, alongside recommendation letters from three client partners, including Northwest Tech Partners. Furthermore, we would like to invite your selection committee to a complimentary tasting session at your office on October 16.\n\nSincerely,\nClara Higgins\nDirector of Accounts, Artisan Table Catering Ltd.\n```"
+    },
+    {
+      "question": "If Aegis Financial Group selects Artisan Table Catering, when will the service start?",
+      "options": [
+        "On December 1",
+        "On October 12",
+        "On October 16",
+        "On November 1"
+      ],
+      "answerIndex": 0,
+      "explanation": "[연계 추론] 문서 1의 '1. Project Overview'에 명시된 계약 시작일은 'commencing December 1, 2026'입니다. 따라서 제안이 채택될 경우 서비스가 공식 시작되는 시점은 12월 1일입니다.",
+      "optionExplanations": [
+        "On December 1: 문서 1에 명시된 계약 개시일 (정답)",
+        "On October 12: 제안서 접수 마감일",
+        "On October 16: 시식회 제안 날짜",
+        "On November 1: 지문에 언급되지 않은 날짜"
+      ],
+      "id": "TOEIC_Q14",
+      "number": 14,
+      "part": "Part 7 · Double Passage (이중 연계 지문)",
+      "scenario": "```\n[Document 1: Request for Proposals (RFP)]\n\nAegis Financial Group — Headquarters Procurement Office\nRequest for Proposals (RFP #AFG-2026-CAT)\nProject: Corporate Catering Services\nIssue Date: September 28, 2026\nClosing Date: October 12, 2026, 5:00 PM PST\n\n1. Project Overview\nAegis Financial Group is seeking bids from established catering providers to supply daily executive lunches (approx. 50 servings/day) for our Seattle downtown office. The initial contract term is one year, commencing December 1, 2026, with an option for renewal based on an annual performance audit.\n\n2. Mandatory Requirements\n- Packaging: All meal containers and utensils must be 100% biodegradable or commercially compostable plant-based materials.\n- Dietary Compliance: Menus must incorporate dedicated options for gluten-free, vegan, and certified halal diets.\n- Budget Ceilings: Standard daily executive lunch tier must not exceed $28 per person; VIP boardroom dining tier must not exceed $45 per person.\n\n3. Submission Guidelines\nProspective vendors must submit a sample weekly menu, itemized fee schedules, and at least three corporate client references by the closing date.\n```\n\n```\n[Document 2: Proposal Submission Email]\n\nTo: Marcus Vance, Procurement Coordinator (m.vance@aegisfinancial.com)\nFrom: Clara Higgins, Director of Accounts (c.higgins@artisantable.com)\nDate: October 8, 2026\nSubject: Bid Submission: RFP #AFG-2026-CAT\n\nDear Mr. Vance,\n\nOn behalf of Artisan Table Catering Ltd., I am pleased to submit our formal proposal for RFP #AFG-2026-CAT. Over the past eight years, we have provided bespoke dining solutions to prominent corporations throughout downtown Seattle.\n\nWe strictly comply with all stated environmental criteria; our tableware is manufactured exclusively from sugarcane fiber, ensuring full compostability within 60 days. Our proposed rate structure is $25 per person for the standard executive tier and $42 per person for the VIP package.\n\nAttached to this email, you will find our rotational menu featuring certified halal, vegan, and gluten-free entrees, alongside recommendation letters from three client partners, including Northwest Tech Partners. Furthermore, we would like to invite your selection committee to a complimentary tasting session at your office on October 16.\n\nSincerely,\nClara Higgins\nDirector of Accounts, Artisan Table Catering Ltd.\n```"
+    }
+  ]
+}
