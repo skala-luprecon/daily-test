@@ -1,0 +1,267 @@
+{
+  "type": "TOEIC",
+  "title": "TOEIC RC 실전 평가 (단일 지문 집중)",
+  "part7Info": "Part 7 단일 3Q",
+  "part7Label": "단일 지문 독해 (3문항)",
+  "testId": "TOEIC_20260914",
+  "date": "2026-09-14",
+  "model": "gemini-3.8-flash",
+  "questions": [
+    {
+      "question": "The regulatory board insisted that the lead auditor ------- all financial disclosures before the quarterly filing deadline.",
+      "options": [
+        "reviews",
+        "reviewed",
+        "review",
+        "reviewing"
+      ],
+      "answerIndex": 2,
+      "explanation": "주장, 요구, 제안, 명령을 나타내는 동사(insist, demand, recommend, request 등) 뒤에 이어지는 that절에는 당위성을 나타내는 '조동사 should + 동사원형' 또는 '동사원형'이 와야 합니다. 따라서 the lead auditor가 3인칭 단수임에도 불구하고 원형인 review가 정답입니다.",
+      "optionExplanations": [
+        "주어가 단수이지만 that절 내에 should가 생략되어 동사원형이 와야 하므로 3인칭 단수 현재형 reviews는 오답입니다.",
+        "과거시제 동사로, 당위성을 표현하는 가정법 현재 구문에 부합하지 않습니다.",
+        "that절 내에 'should'가 생략된 동사원형(review)으로 어법상 가장 적절한 정답입니다.",
+        "현재분사/동명사 형태로 본동사 자리에 단독으로 올 수 없습니다."
+      ],
+      "id": "TOEIC_Q1",
+      "number": 1,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": ""
+    },
+    {
+      "question": "Salaries for the senior engineering positions will be strictly ------- with each candidate's specialized certifications and prior field experience.",
+      "options": [
+        "commensurate",
+        "susceptible",
+        "redundant",
+        "tentative"
+      ],
+      "answerIndex": 0,
+      "explanation": "'be commensurate with ~'는 '~에 비례하다, 부합하다'라는 뜻의 대표적인 비즈니스 빈출 숙어 표현입니다. 급여가 후보자의 전문 자격증 및 이전 현장 경력에 부합하여 책정될 것이라는 문맥이 자연스럽습니다.",
+      "optionExplanations": [
+        "'~에 상응하는, 비례하는'이라는 뜻으로 전치사 with와 결합하여 자연스럽게 문맥을 완성하는 정답입니다.",
+        "'~에 취약한, 걸리기 쉬운'이라는 의미로 전치사 to와 주로 쓰이며 문맥상 부적절합니다.",
+        "'불필요한, 중복되는'이라는 의미로 적절하지 않습니다.",
+        "'임시의, 잠정적인'이라는 의미로 문맥에 맞지 않습니다."
+      ],
+      "id": "TOEIC_Q2",
+      "number": 2,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": ""
+    },
+    {
+      "question": "------- had the negotiations between the two pharmaceutical giants concluded than rumors of a regulatory inquiry surfaced.",
+      "options": [
+        "Hardly",
+        "Seldom",
+        "Not until",
+        "No sooner"
+      ],
+      "answerIndex": 3,
+      "explanation": "'No sooner had + 주어 + p.p. ~ than ...' 구문은 '~하자마자 ...하다'라는 의미를 나타내는 도치 구문입니다. 뒤에 접속사 than이 있으므로 상관관계를 이루는 No sooner가 정답입니다.",
+      "optionExplanations": [
+        "Hardly는 보통 뒤에 when이나 before와 호응하므로 than과 함께 쓰이지 않습니다.",
+        "Seldom은 '좀처럼 ~않다'는 부정 부사로 than과 호응하지 않습니다.",
+        "Not until은 보통 부사절/전치사구를 이끌며 than과 상관관계를 이루지 않습니다.",
+        "'No sooner ~ than ...' 상관 접속 도치 구문을 완성하는 올바른 부사구입니다."
+      ],
+      "id": "TOEIC_Q3",
+      "number": 3,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": ""
+    },
+    {
+      "question": "To ------- potential disruptions during the cloud server transition, IT specialists have scheduled redundant backups overnight.",
+      "options": [
+        "prolong",
+        "mitigate",
+        "exacerbate",
+        "simulate"
+      ],
+      "answerIndex": 1,
+      "explanation": "문맥상 클라우드 서버 전환 중에 발생할 수 있는 잠재적 혼선/장애(disruptions)를 '완화/경감하기 위해' 백업 작업을 예약했다는 흐름이 되어야 하므로 '완화하다, 줄이다'를 뜻하는 mitigate가 정답입니다.",
+      "optionExplanations": [
+        "'연장하다'라는 의미로 위험이나 혼선을 연장한다는 문맥은 어색합니다.",
+        "'완화하다, 경감하다'라는 의미로 potential disruptions와 의미상 정확히 호응합니다.",
+        "'악화시키다'라는 의미로 문맥상 반대되는 의미입니다.",
+        "'모의실험하다, 흉내 내다'라는 의미로 문맥에 적절하지 않습니다."
+      ],
+      "id": "TOEIC_Q4",
+      "number": 4,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": ""
+    },
+    {
+      "question": "------- by unanticipated supply bottlenecks, the manufacturing team still met their revised monthly output quotas.",
+      "options": [
+        "Hampering",
+        "To hamper",
+        "Although hampered",
+        "Having hampered"
+      ],
+      "answerIndex": 2,
+      "explanation": "주절의 주어인 'the manufacturing team'이 방해를 '받은' 수동의 입장이므로 과거분사구가 와야 하며, 양보 접속사 Although 뒤에 주어와 be동사(they were)가 생략된 분사구문 'Although (they were) hampered' 형태가 가장 자연스럽고 명확합니다.",
+      "optionExplanations": [
+        "현재분사 능동형으로 팀이 병목현상을 방해했다는 의미가 되어 어색합니다.",
+        "to부정사는 목적이나 결과를 나타내어 주절과의 양보적 의미 관계를 형성하지 못합니다.",
+        "접속사가 남아있는 수동태 분사구문으로 '비록 ~에 의해 지장을 받았지만'이라는 양보의 의미를 매끄럽게 연결합니다.",
+        "완료 능동 분사구문으로 주어와의 수동 관계에 위배됩니다."
+      ],
+      "id": "TOEIC_Q5",
+      "number": 5,
+      "part": "Part 5 · Incomplete Sentences",
+      "scenario": ""
+    },
+    {
+      "blankNumber": 1,
+      "question": "[1]번 빈칸 선택",
+      "options": [
+        "warrant",
+        "warranted",
+        "warranting",
+        "to warrant"
+      ],
+      "answerIndex": 0,
+      "explanation": "조건 접속사 'provided that'이 이끄는 부사절의 주어는 복수명사인 'their departmental duties'입니다. 따라서 절을 완성할 복수 현재시제 동사인 'warrant'(정당화하다, 필요로 하다/허용하다)가 정답입니다.",
+      "optionExplanations": [
+        "복수 주어(duties)에 상응하는 현재형 복수 본동사로 적절합니다.",
+        "과거시제 동사로 전반적인 현재 시제 문맥과 부합하지 않습니다.",
+        "현재분사 형태로 절의 본동사 자리에 올 수 없습니다.",
+        "to부정사로 본동사 역할을 수행할 수 없습니다."
+      ],
+      "id": "TOEIC_Q6",
+      "number": 6,
+      "part": "Part 6 · Text Completion",
+      "scenario": "```\n[Internal Memo]\n\nTo: All Regional Managers\nFrom: Sandra Vance, Director of Human Resources\nDate: September 14, 2026\nSubject: Revised Remote Work Policy\n\nBeginning next month, Crestview Logistics will implement an updated flexible working arrangement designed to enhance operational efficiency. Under this framework, full-time staff members are eligible to work remotely up to two days per week, provided that their departmental duties [1] such an arrangement. Managers should carefully assess coverage needs before granting approvals.\n\nTo support this transition, the finance division has established an ergonomic equipment allowance. Employees may request reimbursement for home office purchases, [2] their expenses do not exceed the $500 annual cap. Receipts must be submitted through the staff portal within thirty days of purchase.\n\n[3] . Detailed instructions regarding this submission workflow are accessible on our internal intranet.\n\nPlease note that team performance will be continually monitored during the initial quarter. Should any productivity issues arise, department heads are urged to consult HR [4] rather than waiting for formal performance evaluations. Thank you for your leadership during this transition.\n```"
+    },
+    {
+      "blankNumber": 2,
+      "question": "[2]번 빈칸 선택",
+      "options": [
+        "even if",
+        "in order that",
+        "as though",
+        "as long as"
+      ],
+      "answerIndex": 3,
+      "explanation": "앞 문장의 환급 요청과 뒷문장의 500달러 한도 조건 사이를 연결하는 조건 접속사가 필요합니다. '~하는 한'이라는 조건을 나타내는 'as long as'가 논리적으로 알맞습니다.",
+      "optionExplanations": [
+        "'비록 ~일지라도'라는 양보 접속사로 문맥상 논리가 맞지 않습니다.",
+        "'~하기 위하여'라는 목적 접속사로 어색합니다.",
+        "'마치 ~인 것처럼'이라는 양태 접속사로 문맥에 맞지 않습니다.",
+        "'~하는 한'이라는 조건을 부여하는 접속사로 가장 적절합니다."
+      ],
+      "id": "TOEIC_Q7",
+      "number": 7,
+      "part": "Part 6 · Text Completion",
+      "scenario": "```\n[Internal Memo]\n\nTo: All Regional Managers\nFrom: Sandra Vance, Director of Human Resources\nDate: September 14, 2026\nSubject: Revised Remote Work Policy\n\nBeginning next month, Crestview Logistics will implement an updated flexible working arrangement designed to enhance operational efficiency. Under this framework, full-time staff members are eligible to work remotely up to two days per week, provided that their departmental duties [1] such an arrangement. Managers should carefully assess coverage needs before granting approvals.\n\nTo support this transition, the finance division has established an ergonomic equipment allowance. Employees may request reimbursement for home office purchases, [2] their expenses do not exceed the $500 annual cap. Receipts must be submitted through the staff portal within thirty days of purchase.\n\n[3] . Detailed instructions regarding this submission workflow are accessible on our internal intranet.\n\nPlease note that team performance will be continually monitored during the initial quarter. Should any productivity issues arise, department heads are urged to consult HR [4] rather than waiting for formal performance evaluations. Thank you for your leadership during this transition.\n```"
+    },
+    {
+      "blankNumber": 3,
+      "question": "[3]번 빈칸 (알맞은 문장 선택)",
+      "options": [
+        "The physical office will undergo extensive renovations.",
+        "Claims submitted after this timeframe will be declined.",
+        "Corporate travel budgets will be reduced accordingly.",
+        "New employees must wait six months before applying."
+      ],
+      "answerIndex": 1,
+      "explanation": "빈칸 바로 앞 문장에서 '구매 후 30일 이내에 영수증을 제출해야 한다(within thirty days of purchase)'고 명시했으므로, 이 기한을 지키지 않을 경우에 대한 안내인 '이 기한 이후에 제출된 청구는 거부됩니다'가 오는 것이 흐름상 완벽합니다.",
+      "optionExplanations": [
+        "사무실 보수 공사에 대한 내용은 장비 구입 환급 기한 흐름과 무관합니다.",
+        "앞 문장의 'within thirty days'를 'this timeframe'으로 자연스럽게 받아 문맥이 연결됩니다.",
+        "기업 출장 예산 감축은 장비 환급 제출 규정과 관련이 없습니다.",
+        "신입 사원의 6개월 대기 기간은 앞뒤의 제출 절차 설명과 어울리지 않습니다."
+      ],
+      "id": "TOEIC_Q8",
+      "number": 8,
+      "part": "Part 6 · Text Completion",
+      "scenario": "```\n[Internal Memo]\n\nTo: All Regional Managers\nFrom: Sandra Vance, Director of Human Resources\nDate: September 14, 2026\nSubject: Revised Remote Work Policy\n\nBeginning next month, Crestview Logistics will implement an updated flexible working arrangement designed to enhance operational efficiency. Under this framework, full-time staff members are eligible to work remotely up to two days per week, provided that their departmental duties [1] such an arrangement. Managers should carefully assess coverage needs before granting approvals.\n\nTo support this transition, the finance division has established an ergonomic equipment allowance. Employees may request reimbursement for home office purchases, [2] their expenses do not exceed the $500 annual cap. Receipts must be submitted through the staff portal within thirty days of purchase.\n\n[3] . Detailed instructions regarding this submission workflow are accessible on our internal intranet.\n\nPlease note that team performance will be continually monitored during the initial quarter. Should any productivity issues arise, department heads are urged to consult HR [4] rather than waiting for formal performance evaluations. Thank you for your leadership during this transition.\n```"
+    },
+    {
+      "blankNumber": 4,
+      "question": "[4]번 빈칸 선택",
+      "options": [
+        "reluctantly",
+        "excessively",
+        "promptly",
+        "marginally"
+      ],
+      "answerIndex": 2,
+      "explanation": "뒤에 이어지는 'rather than waiting for formal performance evaluations(공식 평가를 기다리기보다는)'와의 대조를 고려할 때, 생산성 문제가 생기면 지체하지 말고 '즉시(promptly)' 상의하라는 의미가 되어야 합니다.",
+      "optionExplanations": [
+        "'마지못해'라는 의미로 문맥에 맞지 않습니다.",
+        "'지나치게'라는 의미로 어색합니다.",
+        "'지체 없이, 즉각'이라는 의미로 뒤따르는 표현과 자연스러운 대조를 이룹니다.",
+        "'미미하게'라는 의미로 문맥상 부적절합니다."
+      ],
+      "id": "TOEIC_Q9",
+      "number": 9,
+      "part": "Part 6 · Text Completion",
+      "scenario": "```\n[Internal Memo]\n\nTo: All Regional Managers\nFrom: Sandra Vance, Director of Human Resources\nDate: September 14, 2026\nSubject: Revised Remote Work Policy\n\nBeginning next month, Crestview Logistics will implement an updated flexible working arrangement designed to enhance operational efficiency. Under this framework, full-time staff members are eligible to work remotely up to two days per week, provided that their departmental duties [1] such an arrangement. Managers should carefully assess coverage needs before granting approvals.\n\nTo support this transition, the finance division has established an ergonomic equipment allowance. Employees may request reimbursement for home office purchases, [2] their expenses do not exceed the $500 annual cap. Receipts must be submitted through the staff portal within thirty days of purchase.\n\n[3] . Detailed instructions regarding this submission workflow are accessible on our internal intranet.\n\nPlease note that team performance will be continually monitored during the initial quarter. Should any productivity issues arise, department heads are urged to consult HR [4] rather than waiting for formal performance evaluations. Thank you for your leadership during this transition.\n```"
+    },
+    {
+      "question": "What is the main purpose of the article?",
+      "options": [
+        "To report on a major renewable energy project",
+        "To announce the closure of an industrial harbor",
+        "To advertise new vocational training programs",
+        "To detail environmental lawsuits against a firm"
+      ],
+      "answerIndex": 0,
+      "explanation": "기사는 Vantage Renewable Energy가 포트 탤벗 항구에 4,500만 파운드를 투자하여 대규모 해상 풍력 터빈 조립 공장을 건설한다는 주요 재생 에너지 프로젝트 계획을 보도하고 있으므로 (A)가 정답입니다.",
+      "optionExplanations": [
+        "해상 풍력 발전 설비 프로젝트 투자를 보도하는 기사의 주 목적과 일치합니다.",
+        "산업 항구 폐쇄가 아닌 항구에 신규 시설을 건설하는 내용입니다.",
+        "직업 훈련 과정은 프로젝트의 일환일 뿐 기사 전체의 목적이 아닙니다.",
+        "환경 소송에 관한 내용은 언급되지 않았습니다."
+      ],
+      "id": "TOEIC_Q10",
+      "number": 10,
+      "part": "Part 7 · Single Passage (단일 지문)",
+      "scenario": "```\n[Document 1: Business Article]\n\nPORT TALBOT (September 14, 2026) — Vantage Renewable Energy announced today that it has finalized a £45 million investment to develop an offshore wind turbine assembly plant at the Port Talbot industrial harbor. The facility, scheduled to break ground early next spring, represents the multinational energy firm’s largest infrastructure project in the region to date.\n\nAccording to chief executive officer Martin Lindqvist, the site was selected primarily for its deepwater access and proximity to existing North Sea transmission networks. Once operational in late 2028, the hub will construct next-generation 15-megawatt turbine units designed to supply clean electricity to approximately 650,000 households. The initiative is projected to generate roughly 400 permanent manufacturing roles, alongside an estimated 250 temporary construction jobs.\n\nTo accommodate specialized fabrication demands, Vantage will partner with local vocational institutes to establish an advanced technical training academy. This curriculum will provide apprenticeships focused on composite blade maintenance and precision welding, with initial enrollment slated for January.\n\nFurthermore, municipal authorities have granted Vantage expedited zoning approvals to ensure seamless construction timelines. While environmental groups initially voiced concerns regarding coastal sediment disruption during foundation dredging, Vantage has pledged to utilize acoustic deterrent devices and deploy silt containment barriers throughout underwater operations to protect indigenous marine wildlife.\n```"
+    },
+    {
+      "question": "What is indicated about the new manufacturing facility?",
+      "options": [
+        "It will begin operations early next spring.",
+        "It will rely entirely on overseas technicians.",
+        "It will construct 250 turbines every year.",
+        "It was chosen partly for its deepwater access."
+      ],
+      "answerIndex": 3,
+      "explanation": "2문단에서 CEO인 Martin Lindqvist가 밝힌 바에 따르면, 해당 부지는 'deepwater access(심수 접근성)'와 북해 송전망과의 근접성을 이유로 주로 선정되었다고 명시되어 있으므로 (D)가 사실입니다.",
+      "optionExplanations": [
+        "내년 초 착공(break ground) 예정이며, 운영 시작은 2028년 말이므로 오답입니다.",
+        "지역 직업 전문 기관과 협력하여 훈련하므로 완전히 해외 인력에 의존한다는 것은 잘못되었습니다.",
+        "250은 연간 터빈 수가 아니라 임시 건설 일자리 수입니다.",
+        "본문에 명시된 부지 선정 주요 요건(deepwater access)과 정확히 일치합니다."
+      ],
+      "id": "TOEIC_Q11",
+      "number": 11,
+      "part": "Part 7 · Single Passage (단일 지문)",
+      "scenario": "```\n[Document 1: Business Article]\n\nPORT TALBOT (September 14, 2026) — Vantage Renewable Energy announced today that it has finalized a £45 million investment to develop an offshore wind turbine assembly plant at the Port Talbot industrial harbor. The facility, scheduled to break ground early next spring, represents the multinational energy firm’s largest infrastructure project in the region to date.\n\nAccording to chief executive officer Martin Lindqvist, the site was selected primarily for its deepwater access and proximity to existing North Sea transmission networks. Once operational in late 2028, the hub will construct next-generation 15-megawatt turbine units designed to supply clean electricity to approximately 650,000 households. The initiative is projected to generate roughly 400 permanent manufacturing roles, alongside an estimated 250 temporary construction jobs.\n\nTo accommodate specialized fabrication demands, Vantage will partner with local vocational institutes to establish an advanced technical training academy. This curriculum will provide apprenticeships focused on composite blade maintenance and precision welding, with initial enrollment slated for January.\n\nFurthermore, municipal authorities have granted Vantage expedited zoning approvals to ensure seamless construction timelines. While environmental groups initially voiced concerns regarding coastal sediment disruption during foundation dredging, Vantage has pledged to utilize acoustic deterrent devices and deploy silt containment barriers throughout underwater operations to protect indigenous marine wildlife.\n```"
+    },
+    {
+      "question": "In the article, the word 'voiced' in paragraph 4 is closest in meaning to",
+      "options": [
+        "amplified",
+        "expressed",
+        "recited",
+        "commanded"
+      ],
+      "answerIndex": 1,
+      "explanation": "4문단의 'voiced concerns regarding coastal sediment disruption'에서 'voiced'는 우려나 의견을 '표명했다, 표출했다'는 의미이므로 'expressed'가 문맥상 동의어입니다.",
+      "optionExplanations": [
+        "'증폭시켰다'는 의미로 우려를 표명했다는 문맥과 거리가 있습니다.",
+        "'표현했다, 나타냈다'는 뜻으로 voiced와 가장 가까운 문맥적 유의어입니다.",
+        "'암송했다, 낭독했다'는 뜻으로 적절하지 않습니다.",
+        "'명령했다'는 뜻으로 문맥에 맞지 않습니다."
+      ],
+      "id": "TOEIC_Q12",
+      "number": 12,
+      "part": "Part 7 · Single Passage (단일 지문)",
+      "scenario": "```\n[Document 1: Business Article]\n\nPORT TALBOT (September 14, 2026) — Vantage Renewable Energy announced today that it has finalized a £45 million investment to develop an offshore wind turbine assembly plant at the Port Talbot industrial harbor. The facility, scheduled to break ground early next spring, represents the multinational energy firm’s largest infrastructure project in the region to date.\n\nAccording to chief executive officer Martin Lindqvist, the site was selected primarily for its deepwater access and proximity to existing North Sea transmission networks. Once operational in late 2028, the hub will construct next-generation 15-megawatt turbine units designed to supply clean electricity to approximately 650,000 households. The initiative is projected to generate roughly 400 permanent manufacturing roles, alongside an estimated 250 temporary construction jobs.\n\nTo accommodate specialized fabrication demands, Vantage will partner with local vocational institutes to establish an advanced technical training academy. This curriculum will provide apprenticeships focused on composite blade maintenance and precision welding, with initial enrollment slated for January.\n\nFurthermore, municipal authorities have granted Vantage expedited zoning approvals to ensure seamless construction timelines. While environmental groups initially voiced concerns regarding coastal sediment disruption during foundation dredging, Vantage has pledged to utilize acoustic deterrent devices and deploy silt containment barriers throughout underwater operations to protect indigenous marine wildlife.\n```"
+    }
+  ]
+}
